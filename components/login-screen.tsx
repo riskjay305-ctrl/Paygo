@@ -14,7 +14,10 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   const [password, setPassword] = useState("")
 
   const handleNeedHelp = () => {
-    window.open("https://wa.me/2347078515833", "_blank")
+    const whatsappNumber = "+2348123456789" // WhatsApp number from support section
+    const message = "Hello, I need help with login on PayGo app"
+    const whatsappUrl = `https://wa.me/${whatsappNumber.replace("+", "")}?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, "_blank")
   }
 
   const handleLogin = () => {

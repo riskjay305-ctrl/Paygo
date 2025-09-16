@@ -3,6 +3,8 @@
 import { useState } from "react"
 import RegisterScreen from "@/components/register-screen"
 import LoginScreen from "@/components/login-screen"
+import LoadingScreen from "@/components/loading-screen"
+import OnboardingScreen from "@/components/onboarding-screen"
 import WelcomeScreen from "@/components/welcome-screen"
 import DashboardScreen from "@/components/dashboard-screen"
 import BuyPayIdScreen from "@/components/buy-pay-id-screen"
@@ -21,6 +23,8 @@ export default function PaygoApp() {
   const [currentScreen, setCurrentScreen] = useState<
     | "register"
     | "login"
+    | "loading"
+    | "onboarding"
     | "welcome"
     | "dashboard"
     | "buyPayId"
@@ -53,7 +57,15 @@ export default function PaygoApp() {
   const handleSuccessfulRegistration = (name: string, email: string) => {
     setUserData({ name, email })
     setRegisteredEmails((prev) => [...prev, email])
-    setCurrentScreen("welcome")
+    setCurrentScreen("loading")
+  }
+
+  const handleLoadingComplete = () => {
+    setCurrentScreen("onboarding")
+  }
+
+  const handleOnboardingComplete = () => {
+    setCurrentScreen("dashboard")
   }
 
   const handleContinueToDashboard = () => {
@@ -153,6 +165,10 @@ export default function PaygoApp() {
         />
       ) : currentScreen === "login" ? (
         <LoginScreen onSwitchToRegister={() => setCurrentScreen("register")} onLogin={handleLogin} />
+      ) : currentScreen === "loading" ? (
+        <LoadingScreen onComplete={handleLoadingComplete} />
+      ) : currentScreen === "onboarding" ? (
+        <OnboardingScreen userName={userData?.name || "User"} onComplete={handleOnboardingComplete} />
       ) : currentScreen === "welcome" ? (
         <WelcomeScreen onContinueToDashboard={handleContinueToDashboard} />
       ) : currentScreen === "dashboard" ? (

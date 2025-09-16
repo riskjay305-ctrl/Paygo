@@ -31,10 +31,19 @@ export default function RegisterScreen({
     }
   }
 
+  const handleNeedHelp = () => {
+    const whatsappNumber = "+2348123456789" // WhatsApp number from support section
+    const message = "Hello, I need help with registration on PayGo app"
+    const whatsappUrl = `https://wa.me/${whatsappNumber.replace("+", "")}?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, "_blank")
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
       <div className="absolute top-2 right-6">
-        <span className="text-purple-500 text-lg font-medium">Need Help?</span>
+        <button onClick={handleNeedHelp} className="text-purple-500 text-lg font-medium hover:text-purple-600">
+          Need Help?
+        </button>
       </div>
 
       {/* Main content container */}

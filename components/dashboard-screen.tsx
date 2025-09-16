@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Bell, Eye, EyeOff, ChevronLeft, ChevronRight } from "lucide-react"
+import { Bell, Eye, EyeOff } from "lucide-react"
 import { useState, useEffect } from "react"
 
 interface DashboardScreenProps {
@@ -210,33 +210,7 @@ export default function DashboardScreen({
             </div>
           </div>
 
-          {/* Winners Promotion Card */}
-          <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl p-6 mb-4 relative overflow-hidden">
-            <div className="relative z-10">
-              <h4 className="text-white text-2xl font-bold mb-2">Winners</h4>
-              <p className="text-white text-lg mb-1">of K20 airtime</p>
-              <div className="text-white text-sm space-y-1">
-                <p>Patience Ng'andwe</p>
-                <p>John</p>
-              </div>
-            </div>
-
-            {/* Navigation arrows */}
-            <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
-              <Button variant="ghost" size="icon" className="bg-white/20 hover:bg-white/30 text-white rounded-full">
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-              <Button variant="ghost" size="icon" className="bg-white/20 hover:bg-white/30 text-white rounded-full">
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            </div>
-
-            {/* Winner image placeholder */}
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-t from-orange-400 to-transparent rounded-tl-full"></div>
-          </div>
-
+          {/* Withdrawal History */}
           <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-6 relative overflow-hidden">
             <h4 className="text-white text-2xl font-bold mb-4">Withdrawal History</h4>
             <div className="space-y-3 max-h-32 overflow-y-auto">
