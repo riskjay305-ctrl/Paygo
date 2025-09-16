@@ -6,16 +6,32 @@ import { Input } from "@/components/ui/input"
 
 interface LoginScreenProps {
   onSwitchToRegister: () => void
+  onLogin: () => void
 }
 
-export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
+export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreenProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const handleNeedHelp = () => {
+    window.open("https://wa.me/2347078515833", "_blank")
+  }
+
+  const handleLogin = () => {
+    if (email && password) {
+      onLogin()
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
       <div className="absolute top-2 right-6">
-        <span className="text-purple-500 text-lg font-medium">Need Help?</span>
+        <button
+          onClick={handleNeedHelp}
+          className="text-purple-500 text-lg font-medium hover:text-purple-600 underline"
+        >
+          Need Help?
+        </button>
       </div>
 
       {/* Main content container */}
@@ -57,7 +73,10 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
             />
 
             {/* Login Button */}
-            <Button className="w-full h-10 bg-black hover:bg-gray-800 text-white text-sm font-medium rounded-lg mt-4">
+            <Button
+              onClick={handleLogin}
+              className="w-full h-10 bg-black hover:bg-gray-800 text-white text-sm font-medium rounded-lg mt-4"
+            >
               Login
             </Button>
 

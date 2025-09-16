@@ -39,6 +39,16 @@ export default function PaygoApp() {
   const [transactionDetails, setTransactionDetails] = useState<any>(null)
   const [userBalance, setUserBalance] = useState(180000)
   const [registeredEmails, setRegisteredEmails] = useState<string[]>([])
+  const [withdrawalHistory, setWithdrawalHistory] = useState<
+    Array<{
+      id: string
+      type: string
+      amount: number
+      recipient?: string
+      phone?: string
+      date: string
+    }>
+  >([])
 
   const handleSuccessfulRegistration = (name: string, email: string) => {
     setUserData({ name, email })
@@ -95,8 +105,25 @@ export default function PaygoApp() {
     setCurrentScreen("upgrade")
   }
 
+  const handleLogin = () => {
+    setCurrentScreen("dashboard")
+  }
+
   const handleTransactionSuccess = (details: any) => {
     setTransactionDetails(details)
+
+    // Add to withdrawal history
+    const newTransaction = {
+      id: Date.now().toString(),
+      type: details.type || "Transfer",
+      amount:
+        typeof details.amount === "string" ? Number.parseFloat(details.amount.replace(/[₦,]/g, "")) : details.amount,
+      recipient: details.recipient,
+      phone: details.phone,
+      date: new Date().toLocaleDateString(),
+    }
+    setWithdrawalHistory((prev) => [newTransaction, ...prev])
+
     if (details.amount && typeof details.amount === "string") {
       const numericAmount = Number.parseFloat(details.amount.replace(/[₦,]/g, ""))
       if (!isNaN(numericAmount)) {
@@ -125,13 +152,14 @@ export default function PaygoApp() {
           registeredEmails={registeredEmails}
         />
       ) : currentScreen === "login" ? (
-        <LoginScreen onSwitchToRegister={() => setCurrentScreen("register")} />
+        <LoginScreen onSwitchToRegister={() => setCurrentScreen("register")} onLogin={handleLogin} />
       ) : currentScreen === "welcome" ? (
         <WelcomeScreen onContinueToDashboard={handleContinueToDashboard} />
       ) : currentScreen === "dashboard" ? (
         <DashboardScreen
           userName={userData?.name || "User"}
           userBalance={userBalance}
+          withdrawalHistory={withdrawalHistory}
           onLogout={handleLogout}
           onBuyPayId={handleBuyPayId}
           onTransfer={handleTransfer}

@@ -2,11 +2,19 @@
 
 import { Button } from "@/components/ui/button"
 import { Bell, Eye, EyeOff, ChevronLeft, ChevronRight } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface DashboardScreenProps {
   userName: string
   userBalance: number
+  withdrawalHistory: Array<{
+    id: string
+    type: string
+    amount: number
+    recipient?: string
+    phone?: string
+    date: string
+  }>
   onLogout: () => void
   onBuyPayId: () => void
   onTransfer: () => void
@@ -23,6 +31,7 @@ interface DashboardScreenProps {
 export default function DashboardScreen({
   userName,
   userBalance,
+  withdrawalHistory,
   onLogout,
   onBuyPayId,
   onTransfer,
@@ -36,6 +45,24 @@ export default function DashboardScreen({
   onUpgrade,
 }: DashboardScreenProps) {
   const [balanceVisible, setBalanceVisible] = useState(true)
+  const [currentPromoIndex, setCurrentPromoIndex] = useState(0)
+
+  const promoImages = [
+    "/images/paygo-promo-1.jpg",
+    "/images/paygo-promo-2.jpg",
+    "/images/paygo-promo-3.png",
+    "/images/paygo-promo-4.jpg",
+    "/images/paygo-promo-5.jpg",
+    "/images/paygo-promo-6.jpg",
+    "/images/paygo-promo-7.jpg",
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPromoIndex((prev) => (prev + 1) % promoImages.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [promoImages.length])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50 relative">
@@ -146,6 +173,43 @@ export default function DashboardScreen({
         <div className="mb-6">
           <h3 className="text-gray-800 text-lg font-semibold mb-4">Current Promotions</h3>
 
+          <div className="relative mb-4 h-48 rounded-2xl overflow-hidden">
+            {promoImages.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-all duration-1000 ${
+                  index === currentPromoIndex
+                    ? "opacity-100 transform translate-x-0"
+                    : index === (currentPromoIndex - 1 + promoImages.length) % promoImages.length
+                      ? "opacity-0 transform -translate-x-full"
+                      : "opacity-0 transform translate-x-full"
+                }`}
+                style={{
+                  animation: index === currentPromoIndex ? "fadeInSlide 1s ease-in-out" : undefined,
+                }}
+              >
+                <img
+                  src={image || "/placeholder.svg"}
+                  alt={`Promotion ${index + 1}`}
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+              </div>
+            ))}
+
+            {/* Navigation dots */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              {promoImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPromoIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentPromoIndex ? "bg-white" : "bg-white/50"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
           {/* Winners Promotion Card */}
           <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl p-6 mb-4 relative overflow-hidden">
             <div className="relative z-10">
@@ -173,10 +237,25 @@ export default function DashboardScreen({
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-t from-orange-400 to-transparent rounded-tl-full"></div>
           </div>
 
-          {/* Transaction Promotion Card */}
           <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-6 relative overflow-hidden">
-            <h4 className="text-white text-2xl font-bold">Transact</h4>
-            <p className="text-gray-300 text-sm mt-2">More transactions, more rewards</p>
+            <h4 className="text-white text-2xl font-bold mb-4">Withdrawal History</h4>
+            <div className="space-y-3 max-h-32 overflow-y-auto">
+              {withdrawalHistory.length > 0 ? (
+                withdrawalHistory.slice(0, 3).map((transaction) => (
+                  <div key={transaction.id} className="flex justify-between items-center text-sm">
+                    <div>
+                      <p className="text-white font-medium">{transaction.type}</p>
+                      <p className="text-gray-300 text-xs">
+                        {transaction.recipient || transaction.phone} • {transaction.date}
+                      </p>
+                    </div>
+                    <p className="text-red-400 font-medium">-₦{transaction.amount.toLocaleString()}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-300 text-sm">No withdrawal history yet</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -188,6 +267,16 @@ export default function DashboardScreen({
         }
         .animate-scroll {
           animation: scroll 30s linear infinite;
+        }
+        @keyframes fadeInSlide {
+          0% { 
+            opacity: 0; 
+            transform: translateX(50px) scale(0.95);
+          }
+          100% { 
+            opacity: 1; 
+            transform: translateX(0) scale(1);
+          }
         }
       `}</style>
     </div>
