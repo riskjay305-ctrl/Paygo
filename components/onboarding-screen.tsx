@@ -25,7 +25,7 @@ export default function OnboardingScreen({ userName, onComplete }: OnboardingScr
       title: "Get Your PAY ID",
       icon: "💳",
       iconColor: "text-blue-500",
-      content: `To withdraw funds, you'll need to purchase a PAY ID for ₦7,250. This is a one-time purchase that unlocks all features of the app.`,
+      content: `To withdraw funds, you'll need to purchase a PAY ID for ₦8,500.00. This is a one-time purchase that unlocks all features of the app.`,
     },
     {
       step: 3,
@@ -61,7 +61,7 @@ export default function OnboardingScreen({ userName, onComplete }: OnboardingScr
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50 relative">
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black/50 z-10"></div>
 

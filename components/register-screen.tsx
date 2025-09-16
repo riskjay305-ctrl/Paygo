@@ -23,7 +23,7 @@ export default function RegisterScreen({
   const handleRegister = () => {
     if (name && email && password) {
       if (registeredEmails.includes(email)) {
-        setEmailError("Email has been registered")
+        setEmailError("Email registered, kindly choose LOGIN option")
         return
       }
       setEmailError("")
@@ -32,7 +32,7 @@ export default function RegisterScreen({
   }
 
   const handleNeedHelp = () => {
-    const whatsappNumber = "+2348123456789" // WhatsApp number from support section
+    const whatsappNumber = "+2347078515833" // WhatsApp number from support section
     const message = "Hello, I need help with registration on PayGo app"
     const whatsappUrl = `https://wa.me/${whatsappNumber.replace("+", "")}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, "_blank")
@@ -87,7 +87,7 @@ export default function RegisterScreen({
               className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
             />
 
-            {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
+            {emailError && <p className="text-red-500 text-xs mt-1">Email registered, kindly choose LOGIN option</p>}
 
             {emailError && (
               <div className="text-center">
