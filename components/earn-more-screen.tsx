@@ -27,7 +27,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
       id: "1",
       title: "Daily Check-in",
       description: "Open the app and check in daily",
-      reward: 45000,
+      reward: 4500, // Updated price from 45000 to 4500
       icon: CheckCircle,
       completed: false,
       timeLeft: "23:45:12",
@@ -36,7 +36,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
       id: "2",
       title: "Watch Tutorial Video",
       description: "Watch a PAYGO tutorial video",
-      reward: 45000,
+      reward: 4500, // Updated price from 45000 to 4500
       icon: Star,
       completed: false,
     },
@@ -44,7 +44,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
       id: "3",
       title: "Invite a Friend",
       description: "Share PAYGO with friends",
-      reward: 45000,
+      reward: 4500, // Updated price from 45000 to 4500
       icon: Users,
       completed: false,
     },
@@ -52,7 +52,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
       id: "4",
       title: "Share on Social Media",
       description: "Share PAYGO on your social media",
-      reward: 45000,
+      reward: 4500, // Updated price from 45000 to 4500
       icon: Share2,
       completed: false,
     },
@@ -60,7 +60,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
       id: "5",
       title: "Complete Profile",
       description: "Fill out your complete profile",
-      reward: 45000,
+      reward: 4500, // Updated price from 45000 to 4500
       icon: Gift,
       completed: false,
     },
