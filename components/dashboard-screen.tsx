@@ -46,6 +46,7 @@ export default function DashboardScreen({
 }: DashboardScreenProps) {
   const [balanceVisible, setBalanceVisible] = useState(true)
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0)
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
   const promoImages = [
     "/images/paygo-promo-1.jpg",
@@ -63,6 +64,19 @@ export default function DashboardScreen({
     }, 4000)
     return () => clearInterval(interval)
   }, [promoImages.length])
+
+  const handleLogoutClick = () => {
+    setShowLogoutConfirm(true)
+  }
+
+  const handleLogoutConfirm = () => {
+    setShowLogoutConfirm(false)
+    onLogout()
+  }
+
+  const handleLogoutCancel = () => {
+    setShowLogoutConfirm(false)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50 relative">
@@ -95,7 +109,7 @@ export default function DashboardScreen({
               <Bell className="h-5 w-5" />
             </Button>
             <Button
-              onClick={onLogout}
+              onClick={handleLogoutClick}
               variant="secondary"
               className="bg-purple-500 hover:bg-purple-400 text-white px-4 py-2 rounded-lg"
             >
@@ -233,6 +247,28 @@ export default function DashboardScreen({
           </div>
         </div>
       </div>
+
+      {/* Logout Confirmation Dialog */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 mx-4 max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">Log Out</h3>
+            <p className="text-gray-600 text-center mb-6">Are you sure you want to log out?</p>
+            <div className="flex space-x-3">
+              <Button
+                onClick={handleLogoutCancel}
+                variant="outline"
+                className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
+              >
+                NO
+              </Button>
+              <Button onClick={handleLogoutConfirm} className="flex-1 bg-red-500 hover:bg-red-600 text-white">
+                YES
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes scroll {
