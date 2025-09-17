@@ -20,6 +20,9 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false)
+  const [updateProgress, setUpdateProgress] = useState(0)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -38,6 +41,30 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
     }
     return () => clearInterval(interval)
   }, [isLoading])
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+    if (isUpdatingPassword) {
+      interval = setInterval(() => {
+        setUpdateProgress((prev) => {
+          if (prev >= 100) {
+            setIsUpdatingPassword(false)
+            setShowNewPasswordForm(false)
+            setShowSuccessMessage(true)
+            setTimeout(() => {
+              setShowSuccessMessage(false)
+              setNewPassword("")
+              setConfirmPassword("")
+              setResetEmail("")
+            }, 3000)
+            return 0
+          }
+          return prev + 100 / 60
+        })
+      }, 100)
+    }
+    return () => clearInterval(interval)
+  }, [isUpdatingPassword])
 
   const handleNeedHelp = () => {
     setShowPaygoInfo(!showPaygoInfo)
@@ -77,19 +104,21 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
         const userIndex = registeredUsers.findIndex((user: any) => user.email === resetEmail)
 
         if (userIndex !== -1) {
-          registeredUsers[userIndex].password = newPassword
-          localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
-          alert("Password updated successfully! You can now login with your new password.")
-          setShowNewPasswordForm(false)
-          setNewPassword("")
-          setConfirmPassword("")
-          setResetEmail("")
+          setIsUpdatingPassword(true)
+          setUpdateProgress(0)
+
+          setTimeout(() => {
+            registeredUsers[userIndex].password = newPassword
+            localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
+          }, 6000)
         } else {
-          alert("Email not found. Please register first.")
+          alert("Email not found. Please make sure you entered the correct registered email address.")
         }
       } else {
         alert("Passwords do not match. Please try again.")
       }
+    } else {
+      alert("Please fill in both password fields.")
     }
   }
 
@@ -196,7 +225,7 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
         </div>
       )}
 
-      {showNewPasswordForm && (
+      {showNewPasswordForm && !isUpdatingPassword && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
           <div className="bg-white rounded-xl p-6 w-80 mx-4">
             <div className="flex justify-between items-center mb-4">
@@ -212,7 +241,9 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
                 ×
               </button>
             </div>
-            <p className="text-sm text-gray-600 mb-4">Enter your new password for {resetEmail}</p>
+            <p className="text-sm text-gray-600 mb-4">
+              Creating new password for: <span className="font-semibold text-purple-600">{resetEmail}</span>
+            </p>
             <div className="space-y-3">
               <Input
                 type="password"
@@ -242,6 +273,50 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
               >
                 Update Password
               </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isUpdatingPassword && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+          <div className="bg-white rounded-xl p-6 w-80 mx-4">
+            <div className="text-center">
+              <div className="mb-4">
+                <div className="w-16 h-16 mx-auto border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-800 mb-2">Updating Password</h3>
+              <p className="text-sm text-gray-600 mb-4">Please wait while we securely update your password...</p>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-green-600 h-2 rounded-full transition-all duration-100"
+                  style={{ width: `${updateProgress}%` }}
+                ></div>
+              </div>
+              <p className="text-xs text-gray-500 mt-2">{Math.round(updateProgress)}%</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showSuccessMessage && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+          <div className="bg-white rounded-xl p-6 w-80 mx-4">
+            <div className="text-center">
+              <div className="mb-4">
+                <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-green-600 mb-2">Password Changed Successfully!</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Your password has been updated successfully. You can now login with your new password.
+              </p>
+              <p className="text-xs text-gray-500">
+                Your old password is no longer valid and cannot be used for login.
+              </p>
             </div>
           </div>
         </div>
