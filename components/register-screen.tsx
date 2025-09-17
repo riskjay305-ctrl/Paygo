@@ -19,6 +19,7 @@ export default function RegisterScreen({
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [emailError, setEmailError] = useState("")
+  const [showPaygoInfo, setShowPaygoInfo] = useState(false)
 
   const handleRegister = () => {
     if (name && email && password) {
@@ -32,11 +33,21 @@ export default function RegisterScreen({
   }
 
   const handleNeedHelp = () => {
-    const whatsappNumber = "+2347078515833" // WhatsApp number from support section
-    const message = "Hello, I need help with registration on PayGo app"
-    const whatsappUrl = `https://wa.me/${whatsappNumber.replace("+", "")}?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, "_blank")
+    setShowPaygoInfo(!showPaygoInfo)
   }
+
+  const paygoExplanations = [
+    "PAYgO is Nigeria's leading digital payment platform that revolutionizes how you handle money transactions.",
+    "With PAYgO, you can send and receive money instantly across Nigeria using just your mobile phone.",
+    "PAYgO offers secure virtual cards for online shopping and international transactions without traditional bank requirements.",
+    "Our platform provides affordable data and airtime purchases with instant delivery to any network in Nigeria.",
+    "PAYgO enables seamless bill payments including electricity, water, cable TV, and internet subscriptions.",
+    "You can earn money through our referral program by inviting friends and family to join the PAYgO community.",
+    "PAYgO supports QR code payments for quick and contactless transactions at participating merchants nationwide.",
+    "Our mobile POS system allows small businesses to accept digital payments and grow their customer base.",
+    "PAYgO provides real-time transaction notifications and detailed spending analytics to help you manage finances better.",
+    "With PAYgO, you get 24/7 customer support and bank-level security to protect all your financial transactions.",
+  ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
@@ -45,6 +56,25 @@ export default function RegisterScreen({
           Need Help?
         </button>
       </div>
+
+      {showPaygoInfo && (
+        <div className="absolute top-12 right-6 w-80 bg-white rounded-xl shadow-xl p-4 z-10 max-h-96 overflow-y-auto">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-bold text-purple-600">About PAYgO</h3>
+            <button onClick={() => setShowPaygoInfo(false)} className="text-gray-500 hover:text-gray-700 text-xl">
+              ×
+            </button>
+          </div>
+          <div className="space-y-3">
+            {paygoExplanations.map((explanation, index) => (
+              <div key={index} className="text-sm text-gray-700 p-2 bg-gray-50 rounded-lg">
+                <span className="font-semibold text-purple-600">{index + 1}. </span>
+                {explanation}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Main content container */}
       <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">

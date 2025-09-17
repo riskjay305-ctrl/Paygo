@@ -12,12 +12,12 @@ interface LoginScreenProps {
 export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreenProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPaygoInfo, setShowPaygoInfo] = useState(false)
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
+  const [resetEmail, setResetEmail] = useState("")
 
   const handleNeedHelp = () => {
-    const whatsappNumber = "+2347078515833" // Updated WhatsApp number to +2347078515833
-    const message = "Hello, I need help with login on PayGo app"
-    const whatsappUrl = `https://wa.me/${whatsappNumber.replace("+", "")}?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, "_blank")
+    setShowPaygoInfo(!showPaygoInfo)
   }
 
   const handleLogin = () => {
@@ -26,16 +26,98 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
     }
   }
 
+  const handleForgotPassword = () => {
+    setShowForgotPassword(true)
+  }
+
+  const handleResetPassword = () => {
+    if (resetEmail) {
+      // Simulate password reset email sent
+      alert(`Password reset link sent to ${resetEmail}`)
+      setShowForgotPassword(false)
+      setResetEmail("")
+    }
+  }
+
+  const paygoExplanations = [
+    "PAYgO is Nigeria's leading digital payment platform that revolutionizes how you handle money transactions.",
+    "With PAYgO, you can send and receive money instantly across Nigeria using just your mobile phone.",
+    "PAYgO offers secure virtual cards for online shopping and international transactions without traditional bank requirements.",
+    "Our platform provides affordable data and airtime purchases with instant delivery to any network in Nigeria.",
+    "PAYgO enables seamless bill payments including electricity, water, cable TV, and internet subscriptions.",
+    "You can earn money through our referral program by inviting friends and family to join the PAYgO community.",
+    "PAYgO supports QR code payments for quick and contactless transactions at participating merchants nationwide.",
+    "Our mobile POS system allows small businesses to accept digital payments and grow their customer base.",
+    "PAYgO provides real-time transaction notifications and detailed spending analytics to help you manage finances better.",
+    "With PAYgO, you get 24/7 customer support and bank-level security to protect all your financial transactions.",
+  ]
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
       <div className="absolute top-2 right-6">
-        <button
-          onClick={handleNeedHelp}
-          className="text-purple-500 text-lg font-medium hover:text-purple-600 underline"
-        >
+        <button onClick={handleNeedHelp} className="text-purple-500 text-lg font-medium hover:text-purple-600">
           Need Help?
         </button>
       </div>
+
+      {showPaygoInfo && (
+        <div className="absolute top-12 right-6 w-80 bg-white rounded-xl shadow-xl p-4 z-10 max-h-96 overflow-y-auto">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-bold text-purple-600">About PAYgO</h3>
+            <button onClick={() => setShowPaygoInfo(false)} className="text-gray-500 hover:text-gray-700 text-xl">
+              ×
+            </button>
+          </div>
+          <div className="space-y-3">
+            {paygoExplanations.map((explanation, index) => (
+              <div key={index} className="text-sm text-gray-700 p-2 bg-gray-50 rounded-lg">
+                <span className="font-semibold text-purple-600">{index + 1}. </span>
+                {explanation}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {showForgotPassword && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+          <div className="bg-white rounded-xl p-6 w-80 mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-800">Reset Password</h3>
+              <button
+                onClick={() => setShowForgotPassword(false)}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              Enter your email address and we'll send you a link to reset your password.
+            </p>
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+              className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none mb-4"
+            />
+            <div className="flex space-x-3">
+              <Button
+                onClick={() => setShowForgotPassword(false)}
+                className="flex-1 h-10 bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm font-medium rounded-lg"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleResetPassword}
+                className="flex-1 h-10 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg"
+              >
+                Send Reset Link
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main content container */}
       <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">
@@ -74,6 +156,15 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
               onChange={(e) => setPassword(e.target.value)}
               className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
             />
+
+            <div className="text-right">
+              <button
+                onClick={handleForgotPassword}
+                className="text-purple-500 text-xs font-medium hover:text-purple-600"
+              >
+                Forgot Password?
+              </button>
+            </div>
 
             {/* Login Button */}
             <Button
