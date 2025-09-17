@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -15,6 +15,29 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   const [showPaygoInfo, setShowPaygoInfo] = useState(false)
   const [showForgotPassword, setShowForgotPassword] = useState(false)
   const [resetEmail, setResetEmail] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [showNewPasswordForm, setShowNewPasswordForm] = useState(false)
+  const [newPassword, setNewPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [loadingProgress, setLoadingProgress] = useState(0)
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+    if (isLoading) {
+      interval = setInterval(() => {
+        setLoadingProgress((prev) => {
+          if (prev >= 100) {
+            setIsLoading(false)
+            setShowForgotPassword(false)
+            setShowNewPasswordForm(true)
+            return 0
+          }
+          return prev + 100 / 60
+        })
+      }, 100)
+    }
+    return () => clearInterval(interval)
+  }, [isLoading])
 
   const handleNeedHelp = () => {
     setShowPaygoInfo(!showPaygoInfo)
@@ -22,20 +45,51 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
 
   const handleLogin = () => {
     if (email && password) {
-      onLogin()
+      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
+      const existingUser = registeredUsers.find((user: any) => user.email === email && user.password === password)
+
+      if (existingUser) {
+        console.log("[v0] User found, logging in immediately")
+        onLogin()
+      } else {
+        alert("Invalid email or password. Please check your credentials or register if you don't have an account.")
+      }
     }
   }
 
   const handleForgotPassword = () => {
     setShowForgotPassword(true)
+    setResetEmail("")
+    setLoadingProgress(0)
   }
 
   const handleResetPassword = () => {
     if (resetEmail) {
-      // Simulate password reset email sent
-      alert(`Password reset link sent to ${resetEmail}`)
-      setShowForgotPassword(false)
-      setResetEmail("")
+      setIsLoading(true)
+      setLoadingProgress(0)
+    }
+  }
+
+  const handleCreateNewPassword = () => {
+    if (newPassword && confirmPassword) {
+      if (newPassword === confirmPassword) {
+        const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
+        const userIndex = registeredUsers.findIndex((user: any) => user.email === resetEmail)
+
+        if (userIndex !== -1) {
+          registeredUsers[userIndex].password = newPassword
+          localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
+          alert("Password updated successfully! You can now login with your new password.")
+          setShowNewPasswordForm(false)
+          setNewPassword("")
+          setConfirmPassword("")
+          setResetEmail("")
+        } else {
+          alert("Email not found. Please register first.")
+        }
+      } else {
+        alert("Passwords do not match. Please try again.")
+      }
     }
   }
 
@@ -85,41 +139,114 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold text-gray-800">Reset Password</h3>
               <button
-                onClick={() => setShowForgotPassword(false)}
+                onClick={() => {
+                  setShowForgotPassword(false)
+                  setIsLoading(false)
+                  setLoadingProgress(0)
+                }}
                 className="text-gray-500 hover:text-gray-700 text-xl"
               >
                 ×
               </button>
             </div>
-            <p className="text-sm text-gray-600 mb-4">
-              Enter your email address and we'll send you a link to reset your password.
-            </p>
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={resetEmail}
-              onChange={(e) => setResetEmail(e.target.value)}
-              className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none mb-4"
-            />
-            <div className="flex space-x-3">
+
+            {!isLoading ? (
+              <>
+                <p className="text-sm text-gray-600 mb-4">
+                  Enter your email address and we'll send you a link to reset your password.
+                </p>
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                  className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none mb-4"
+                />
+                <div className="flex space-x-3">
+                  <Button
+                    onClick={() => setShowForgotPassword(false)}
+                    className="flex-1 h-10 bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm font-medium rounded-lg"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleResetPassword}
+                    className="flex-1 h-10 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg"
+                  >
+                    Send Reset Link
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center">
+                <div className="mb-4">
+                  <div className="w-16 h-16 mx-auto border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">Sending reset link...</p>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-purple-600 h-2 rounded-full transition-all duration-100"
+                    style={{ width: `${loadingProgress}%` }}
+                  ></div>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">{Math.round(loadingProgress)}%</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {showNewPasswordForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+          <div className="bg-white rounded-xl p-6 w-80 mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-800">Create New Password</h3>
+              <button
+                onClick={() => {
+                  setShowNewPasswordForm(false)
+                  setNewPassword("")
+                  setConfirmPassword("")
+                }}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">Enter your new password for {resetEmail}</p>
+            <div className="space-y-3">
+              <Input
+                type="password"
+                placeholder="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
+              />
+              <Input
+                type="password"
+                placeholder="Confirm New Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
+              />
+            </div>
+            <div className="flex space-x-3 mt-4">
               <Button
-                onClick={() => setShowForgotPassword(false)}
+                onClick={() => setShowNewPasswordForm(false)}
                 className="flex-1 h-10 bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm font-medium rounded-lg"
               >
                 Cancel
               </Button>
               <Button
-                onClick={handleResetPassword}
+                onClick={handleCreateNewPassword}
                 className="flex-1 h-10 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg"
               >
-                Send Reset Link
+                Update Password
               </Button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Main content container */}
       <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">
         <div className="mb-10">
           <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl px-8 py-4 shadow-lg">
@@ -139,7 +266,6 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
           <h2 className="text-lg font-bold text-black text-center mb-5">Login to continue</h2>
 
           <div className="space-y-3">
-            {/* Email Input */}
             <Input
               type="email"
               placeholder="Enter Email"
@@ -148,7 +274,6 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
               className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
             />
 
-            {/* Password Input */}
             <Input
               type="password"
               placeholder="Enter Password"
@@ -166,7 +291,6 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
               </button>
             </div>
 
-            {/* Login Button */}
             <Button
               onClick={handleLogin}
               className="w-full h-10 bg-black hover:bg-gray-800 text-white text-sm font-medium rounded-lg mt-4"
