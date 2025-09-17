@@ -46,7 +46,7 @@ export default function OnboardingScreen({ userName, onComplete }: OnboardingScr
       title: "Ready to Start",
       icon: "⚡",
       iconColor: "text-orange-500",
-      content: `You're all set! Explore the dashboard, manage your balance, make transfers, buy services, and enjoy all the features PayGo has to offer.`,
+      content: `You're all set! Explore the dashboard, manage your balance, make transfers, buy services, and enjoy all the features PAYgO has to offer.`,
     },
   ]
 
@@ -77,7 +77,7 @@ export default function OnboardingScreen({ userName, onComplete }: OnboardingScr
               <X className="h-5 w-5" />
             </button>
 
-            <h2 className="text-white text-xl font-bold mb-2">Welcome to PayGo, {userName} !</h2>
+            <h2 className="text-white text-xl font-bold mb-2">Welcome to PAYgO, {userName} !</h2>
 
             <p className="text-purple-200 text-sm mb-4">Step {currentStep} of 5</p>
 

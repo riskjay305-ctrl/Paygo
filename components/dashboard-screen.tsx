@@ -161,14 +161,14 @@ export default function DashboardScreen({
       <div className="px-4 py-6">
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { name: "Buy PAY ID", icon: "💳", color: "bg-yellow-500", onClick: onBuyPayId },
-            { name: "Watch", icon: "📺", color: "bg-blue-500", onClick: onWatch },
-            { name: "Airtime", icon: "📊", color: "bg-green-500", onClick: onAirtime },
-            { name: "Data", icon: "💾", color: "bg-purple-500", onClick: onData },
-            { name: "Support", icon: "🎧", color: "bg-gray-700", onClick: onSupport },
-            { name: "Group", icon: "🌐", color: "bg-blue-400", onClick: onGroup },
-            { name: "Earn More", icon: "💰", color: "bg-yellow-600", onClick: onEarnMore },
-            { name: "Profile", icon: "👤", color: "bg-gray-600", onClick: onProfile },
+            { name: "Buy PAY ID", icon: "💳", color: "bg-amber-500", onClick: onBuyPayId }, // Gold for premium service
+            { name: "Watch", icon: "📺", color: "bg-red-500", onClick: onWatch }, // Red like YouTube
+            { name: "Airtime", icon: "📊", color: "bg-green-500", onClick: onAirtime }, // Green for money/credit
+            { name: "Data", icon: "💾", color: "bg-blue-500", onClick: onData }, // Blue for data/internet
+            { name: "Support", icon: "🎧", color: "bg-orange-500", onClick: onSupport }, // Orange for help/support
+            { name: "Group", icon: "🌐", color: "bg-indigo-500", onClick: onGroup }, // Indigo for community/network
+            { name: "Earn More", icon: "💰", color: "bg-emerald-600", onClick: onEarnMore }, // Emerald for earning money
+            { name: "Profile", icon: "👤", color: "bg-slate-600", onClick: onProfile }, // Slate for personal/profile
           ].map((service, index) => (
             <div key={index} className="text-center">
               <button

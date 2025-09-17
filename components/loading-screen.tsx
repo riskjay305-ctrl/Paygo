@@ -25,9 +25,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               className="text-white text-3xl font-bold tracking-wide"
               style={{
                 textShadow: "2px 2px 6px rgba(0,0,0,0.8)",
+                animation: "slideRightToLeft 4s ease-in-out infinite",
               }}
             >
-              PAYGO
+              PAYgO
             </h1>
           </div>
         </div>
@@ -58,6 +59,11 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         @keyframes loading {
           0% { width: 0%; }
           100% { width: 100%; }
+        }
+        @keyframes slideRightToLeft {
+          0% { transform: translateX(20px); }
+          50% { transform: translateX(-20px); }
+          100% { transform: translateX(20px); }
         }
       `}</style>
     </div>
