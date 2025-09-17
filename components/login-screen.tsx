@@ -23,6 +23,8 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false)
   const [updateProgress, setUpdateProgress] = useState(0)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -98,6 +100,9 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   }
 
   const handleCreateNewPassword = () => {
+    setEmailError("")
+    setPasswordError("")
+
     if (newPassword && confirmPassword) {
       if (newPassword === confirmPassword) {
         const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
@@ -112,13 +117,43 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
             localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
           }, 6000)
         } else {
-          alert("Email not found. Please make sure you entered the correct registered email address.")
+          setEmailError("email not found")
         }
       } else {
-        alert("Passwords do not match. Please try again.")
+        setPasswordError("re-enter password")
       }
     } else {
-      alert("Please fill in both password fields.")
+      if (!newPassword) setPasswordError("re-enter password")
+      if (!confirmPassword) setPasswordError("re-enter password")
+    }
+  }
+
+  const handleEmailChange = (value: string) => {
+    setResetEmail(value)
+    if (emailError) {
+      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
+      const userExists = registeredUsers.find((user: any) => user.email === value)
+      if (userExists) {
+        setEmailError("")
+      }
+    }
+  }
+
+  const handlePasswordChange = (value: string, isConfirm: boolean) => {
+    if (isConfirm) {
+      setConfirmPassword(value)
+      if (newPassword && value !== newPassword) {
+        setPasswordError("re-enter password")
+      } else if (newPassword && value === newPassword) {
+        setPasswordError("")
+      }
+    } else {
+      setNewPassword(value)
+      if (confirmPassword && value !== confirmPassword) {
+        setPasswordError("re-enter password")
+      } else if (confirmPassword && value === confirmPassword) {
+        setPasswordError("")
+      }
     }
   }
 
@@ -188,7 +223,7 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
                   type="email"
                   placeholder="Enter your email"
                   value={resetEmail}
-                  onChange={(e) => setResetEmail(e.target.value)}
+                  onChange={(e) => handleEmailChange(e.target.value)}
                   className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none mb-4"
                 />
                 <div className="flex space-x-3">
@@ -233,36 +268,56 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
               <button
                 onClick={() => {
                   setShowNewPasswordForm(false)
-                  setNewPassword("")
-                  setConfirmPassword("")
+                  setEmailError("")
+                  setPasswordError("")
                 }}
                 className="text-gray-500 hover:text-gray-700 text-xl"
               >
                 ×
               </button>
             </div>
-            <p className="text-sm text-gray-600 mb-4">
-              Creating new password for: <span className="font-semibold text-purple-600">{resetEmail}</span>
-            </p>
+            <div className="mb-4">
+              <p className="text-sm text-gray-600">
+                Creating new password for: <span className="font-semibold text-purple-600">{resetEmail}</span>
+              </p>
+              {emailError && (
+                <div className="flex items-center mt-1">
+                  <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+                  <span className="text-xs text-red-500">{emailError}</span>
+                </div>
+              )}
+            </div>
             <div className="space-y-3">
               <Input
                 type="password"
                 placeholder="New Password"
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => handlePasswordChange(e.target.value, false)}
                 className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
               />
-              <Input
-                type="password"
-                placeholder="Confirm New Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
-              />
+              <div>
+                <Input
+                  type="password"
+                  placeholder="Confirm New Password"
+                  value={confirmPassword}
+                  onChange={(e) => handlePasswordChange(e.target.value, true)}
+                  className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
+                />
+                {passwordError && (
+                  <div className="flex items-center mt-1">
+                    <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+                    <span className="text-xs text-red-500">{passwordError}</span>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex space-x-3 mt-4">
               <Button
-                onClick={() => setShowNewPasswordForm(false)}
+                onClick={() => {
+                  setShowNewPasswordForm(false)
+                  setEmailError("")
+                  setPasswordError("")
+                }}
                 className="flex-1 h-10 bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm font-medium rounded-lg"
               >
                 Cancel
