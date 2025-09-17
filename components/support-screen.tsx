@@ -9,7 +9,7 @@ interface SupportScreenProps {
 
 export default function SupportScreen({ onBack }: SupportScreenProps) {
   const handleCall = () => {
-    window.open("tel:+2347078515833", "_self")
+    window.open("tel:+234567890", "_self")
   }
 
   const handleSendEmail = () => {
@@ -46,7 +46,7 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
               <h3 className="font-semibold text-gray-800">Call Us</h3>
             </div>
             <p className="text-gray-600 mb-4">Speak directly with our support team</p>
-            <p className="font-mono text-lg font-bold text-green-700 mb-4">+234 707 851 5833</p>
+            <p className="font-mono text-lg font-bold text-green-700 mb-4">+234-567-890</p>
             <Button onClick={handleCall} className="w-full bg-green-600 hover:bg-green-700 text-white">
               Call Now
             </Button>
