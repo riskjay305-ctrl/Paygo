@@ -49,13 +49,16 @@ export default function DashboardScreen({
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
   const promoImages = [
-    "/images/paygo-promo-1.jpg",
-    "/images/paygo-promo-2.jpg",
-    "/images/paygo-promo-3.png",
-    "/images/paygo-promo-4.jpg",
-    "/images/paygo-promo-5.jpg",
-    "/images/paygo-promo-6.jpg",
-    "/images/paygo-promo-7.jpg",
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2837%29-cFFExaGXK4TPfm9OGZVpgC2yZfjTs4.jpeg", // Mobile payment banner
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download%20%288%29-18i79PONNGcSuekOcXM6M1laNewTiA.jpeg", // PaygO card
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2844%29-if7DUaB2uiNxPVVnrY8I8avjw3MFI0.jpeg", // Traveling Abroad banner
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download%20%289%29-k2wzZIT86jEFilylZwUBvNCoMPRq5r.jpeg", // Purple PaygO card
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FB_IMG_1758090621579.jpg-1FA6TjpcxzU6GDLcBIbN82wP3Kw0Ct.jpeg", // Person with PAY WITH card
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2834%29-oEviSEP6dnE2ATExy8gCb8NMbPDFD7.jpeg", // Get Virtual Card banner
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download%20%287%29-ZhCkPba47EeH6a05kEpbsjru0GjYzB.jpeg", // Mobile device
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%282%29.jpg-rbCivw69A0yhyjcOvYZLeqC6ZReUHc.jpeg", // Orange POS terminal
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FB_IMG_1758090764459.jpg-HRW19pvckGpr4urSXszmcJBNuxkpfK.jpeg", // PaygO receipt
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2835%29-xIlGozykrIYIWBQMuhwnZgxjzkemPp.jpeg", // GO CASHLESS banner
   ]
 
   useEffect(() => {
@@ -188,27 +191,40 @@ export default function DashboardScreen({
           <h3 className="text-gray-800 text-lg font-semibold mb-4">Current Promotions</h3>
 
           <div className="relative mb-4 h-48 rounded-2xl overflow-hidden">
-            {promoImages.map((image, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-all duration-1000 ${
-                  index === currentPromoIndex
-                    ? "opacity-100 transform translate-x-0"
-                    : index === (currentPromoIndex - 1 + promoImages.length) % promoImages.length
-                      ? "opacity-0 transform -translate-x-full"
+            {promoImages.map((image, index) => {
+              const animationClass = [
+                "fadeInOut",
+                "slideFromTop",
+                "slideFromBottom",
+                "rotateIn",
+                "scaleIn",
+                "bounceIn",
+                "slideLeft",
+                "flipIn",
+                "zoomRotate",
+                "pulseGlow",
+              ][index % 10]
+
+              return (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-all duration-1000 ${
+                    index === currentPromoIndex
+                      ? `opacity-100 transform translate-x-0 ${animationClass}`
                       : "opacity-0 transform translate-x-full"
-                }`}
-                style={{
-                  animation: index === currentPromoIndex ? "fadeInSlide 1s ease-in-out" : undefined,
-                }}
-              >
-                <img
-                  src={image || "/placeholder.svg"}
-                  alt={`Promotion ${index + 1}`}
-                  className="w-full h-full object-cover rounded-2xl"
-                />
-              </div>
-            ))}
+                  }`}
+                  style={{
+                    animation: index === currentPromoIndex ? `${animationClass} 4s ease-in-out` : undefined,
+                  }}
+                >
+                  <img
+                    src={image || "/placeholder.svg"}
+                    alt={`Promotion ${index + 1}`}
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                </div>
+              )
+            })}
 
             {/* Navigation dots */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
@@ -278,14 +294,69 @@ export default function DashboardScreen({
         .animate-scroll {
           animation: scroll 30s linear infinite;
         }
-        @keyframes fadeInSlide {
-          0% { 
-            opacity: 0; 
-            transform: translateX(50px) scale(0.95);
-          }
-          100% { 
+        
+        /* Added multiple beautiful animation effects for promotion banners */
+        @keyframes fadeInOut {
+          0%, 100% { opacity: 0.8; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.02); }
+        }
+        
+        @keyframes slideFromTop {
+          0% { transform: translateY(-100px) scale(0.9); opacity: 0; }
+          100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        
+        @keyframes slideFromBottom {
+          0% { transform: translateY(100px) scale(0.9); opacity: 0; }
+          100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        
+        @keyframes rotateIn {
+          0% { transform: rotate(-180deg) scale(0.5); opacity: 0; }
+          100% { transform: rotate(0deg) scale(1); opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+          0% { transform: scale(0.3); opacity: 0; }
+          50% { transform: scale(1.1); opacity: 0.8; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes bounceIn {
+          0% { transform: scale(0.3) translateY(-50px); opacity: 0; }
+          50% { transform: scale(1.05) translateY(10px); opacity: 0.8; }
+          70% { transform: scale(0.95) translateY(-5px); opacity: 0.9; }
+          100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideLeft {
+          0% { transform: translateX(-100px) rotate(-10deg); opacity: 0; }
+          100% { transform: translateX(0) rotate(0deg); opacity: 1; }
+        }
+        
+        @keyframes flipIn {
+          0% { transform: perspective(400px) rotateY(90deg); opacity: 0; }
+          40% { transform: perspective(400px) rotateY(-10deg); opacity: 0.8; }
+          70% { transform: perspective(400px) rotateY(10deg); opacity: 0.9; }
+          100% { transform: perspective(400px) rotateY(0deg); opacity: 1; }
+        }
+        
+        @keyframes zoomRotate {
+          0% { transform: scale(0.1) rotate(180deg); opacity: 0; }
+          50% { transform: scale(1.1) rotate(90deg); opacity: 0.7; }
+          100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        @keyframes pulseGlow {
+          0%, 100% { 
+            transform: scale(1); 
             opacity: 1; 
-            transform: translateX(0) scale(1);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+          }
+          50% { 
+            transform: scale(1.05); 
+            opacity: 0.9; 
+            box-shadow: 0 0 40px rgba(147, 51, 234, 0.6);
           }
         }
       `}</style>
