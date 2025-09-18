@@ -25,6 +25,7 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [emailError, setEmailError] = useState("")
   const [passwordError, setPasswordError] = useState("")
+  const [loginError, setLoginError] = useState("")
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -73,6 +74,8 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   }
 
   const handleLogin = () => {
+    setLoginError("")
+
     if (email && password) {
       const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
       const existingUser = registeredUsers.find((user: any) => user.email === email && user.password === password)
@@ -81,7 +84,12 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
         console.log("[v0] User found, logging in immediately")
         onLogin()
       } else {
-        alert("Invalid email or password. Please check your credentials or register if you don't have an account.")
+        const userWithEmail = registeredUsers.find((user: any) => user.email === email)
+        if (userWithEmail) {
+          setLoginError("Incorrect password")
+        } else {
+          setLoginError("Invalid email or password")
+        }
       }
     }
   }
@@ -129,31 +137,16 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
   }
 
   const handleEmailChange = (value: string) => {
-    setResetEmail(value)
-    if (emailError) {
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-      const userExists = registeredUsers.find((user: any) => user.email === value)
-      if (userExists) {
-        setEmailError("")
-      }
+    setEmail(value)
+    if (loginError) {
+      setLoginError("")
     }
   }
 
-  const handlePasswordChange = (value: string, isConfirm: boolean) => {
-    if (isConfirm) {
-      setConfirmPassword(value)
-      if (newPassword && value !== newPassword) {
-        setPasswordError("re-enter password")
-      } else if (newPassword && value === newPassword) {
-        setPasswordError("")
-      }
-    } else {
-      setNewPassword(value)
-      if (confirmPassword && value !== confirmPassword) {
-        setPasswordError("re-enter password")
-      } else if (confirmPassword && value === confirmPassword) {
-        setPasswordError("")
-      }
+  const handlePasswordChange = (value: string) => {
+    setPassword(value)
+    if (loginError) {
+      setLoginError("")
     }
   }
 
@@ -223,7 +216,7 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
                   type="email"
                   placeholder="Enter your email"
                   value={resetEmail}
-                  onChange={(e) => handleEmailChange(e.target.value)}
+                  onChange={(e) => setResetEmail(e.target.value)}
                   className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none mb-4"
                 />
                 <div className="flex space-x-3">
@@ -292,7 +285,7 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
                 type="password"
                 placeholder="New Password"
                 value={newPassword}
-                onChange={(e) => handlePasswordChange(e.target.value, false)}
+                onChange={(e) => setNewPassword(e.target.value)}
                 className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
               />
               <div>
@@ -300,7 +293,7 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
                   type="password"
                   placeholder="Confirm New Password"
                   value={confirmPassword}
-                  onChange={(e) => handlePasswordChange(e.target.value, true)}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
                 />
                 {passwordError && (
@@ -400,17 +393,24 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
               type="email"
               placeholder="Enter Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => handleEmailChange(e.target.value)}
               className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
             />
 
-            <Input
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
-            />
+            <div>
+              <Input
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => handlePasswordChange(e.target.value)}
+                className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
+              />
+              {loginError && (
+                <div className="mt-1">
+                  <span className="text-xs text-red-500">{loginError}</span>
+                </div>
+              )}
+            </div>
 
             <div className="text-right">
               <button
