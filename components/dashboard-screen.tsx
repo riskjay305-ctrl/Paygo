@@ -71,6 +71,12 @@ export default function DashboardScreen({
     return () => clearInterval(interval)
   }, [promoImages.length])
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("paygo-theme") || "default"
+    setCurrentTheme(savedTheme)
+    document.documentElement.setAttribute("data-theme", savedTheme)
+  }, [])
+
   const handleLogoutClick = () => {
     setShowLogoutConfirm(true)
   }
@@ -91,6 +97,8 @@ export default function DashboardScreen({
   const handleThemeChange = (theme: string) => {
     setCurrentTheme(theme)
     localStorage.setItem("paygo-theme", theme)
+    // Apply theme changes to document root for global theming
+    document.documentElement.setAttribute("data-theme", theme)
   }
 
   return (
@@ -307,7 +315,7 @@ export default function DashboardScreen({
             <div className="space-y-4">
               {/* Theme Selection */}
               <div className="bg-white rounded-xl p-4 shadow-sm">
-                <h4 className="font-semibold text-gray-800 mb-3">Choose Theme</h4>
+                <h4 className="font-semibold text-gray-800 mb-3">🎨 Choose Theme</h4>
                 <div className="grid grid-cols-2 gap-3">
                   {[
                     { name: "Default", value: "default", colors: "from-purple-600 to-orange-500" },
@@ -322,7 +330,7 @@ export default function DashboardScreen({
                       onClick={() => handleThemeChange(theme.value)}
                       className={`p-3 rounded-lg border-2 transition-all ${
                         currentTheme === theme.value
-                          ? "border-purple-500 bg-purple-50"
+                          ? "border-purple-500 bg-purple-50 shadow-md"
                           : "border-gray-200 hover:border-gray-300"
                       }`}
                     >
@@ -333,9 +341,32 @@ export default function DashboardScreen({
                 </div>
               </div>
 
+              {/* Quick Actions */}
+              <div className="bg-white rounded-xl p-4 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3">⚡ Quick Actions</h4>
+                <div className="grid grid-cols-2 gap-3">
+                  <button className="p-3 rounded-lg bg-gradient-to-r from-purple-600 to-orange-500 text-white hover:from-purple-700 hover:to-orange-600 transition-all">
+                    <div className="text-2xl mb-1">💳</div>
+                    <p className="text-sm font-medium">Cards</p>
+                  </button>
+                  <button className="p-3 rounded-lg bg-gradient-to-r from-purple-600 to-orange-500 text-white hover:from-purple-700 hover:to-orange-600 transition-all">
+                    <div className="text-2xl mb-1">📊</div>
+                    <p className="text-sm font-medium">Analytics</p>
+                  </button>
+                  <button className="p-3 rounded-lg bg-gradient-to-r from-purple-600 to-orange-500 text-white hover:from-purple-700 hover:to-orange-600 transition-all">
+                    <div className="text-2xl mb-1">🎁</div>
+                    <p className="text-sm font-medium">Rewards</p>
+                  </button>
+                  <button className="p-3 rounded-lg bg-gradient-to-r from-purple-600 to-orange-500 text-white hover:from-purple-700 hover:to-orange-600 transition-all">
+                    <div className="text-2xl mb-1">📱</div>
+                    <p className="text-sm font-medium">QR Code</p>
+                  </button>
+                </div>
+              </div>
+
               {/* Account Settings */}
               <div className="bg-white rounded-xl p-4 shadow-sm">
-                <h4 className="font-semibold text-gray-800 mb-3">Account</h4>
+                <h4 className="font-semibold text-gray-800 mb-3">👤 Account</h4>
                 <div className="space-y-2">
                   <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
                     <span className="text-gray-700">Account Information</span>
@@ -349,23 +380,54 @@ export default function DashboardScreen({
                     <span className="text-gray-700">Privacy Settings</span>
                     <span className="text-gray-400">→</span>
                   </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Linked Accounts</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
                 </div>
               </div>
 
               {/* App Settings */}
               <div className="bg-white rounded-xl p-4 shadow-sm">
-                <h4 className="font-semibold text-gray-800 mb-3">App Settings</h4>
+                <h4 className="font-semibold text-gray-800 mb-3">⚙️ App Settings</h4>
                 <div className="space-y-2">
                   <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
                     <span className="text-gray-700">Notifications</span>
                     <span className="text-gray-400">→</span>
                   </button>
                   <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
-                    <span className="text-gray-700">Language</span>
+                    <span className="text-gray-700">Language & Region</span>
                     <span className="text-gray-400">→</span>
                   </button>
                   <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
-                    <span className="text-gray-700">Currency</span>
+                    <span className="text-gray-700">Currency Settings</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Biometric Login</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Financial Tools */}
+              <div className="bg-white rounded-xl p-4 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3">💰 Financial Tools</h4>
+                <div className="space-y-2">
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Budget Tracker</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Savings Goals</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Investment Options</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Loan Calculator</span>
                     <span className="text-gray-400">→</span>
                   </button>
                 </div>
@@ -373,7 +435,7 @@ export default function DashboardScreen({
 
               {/* Support & Help */}
               <div className="bg-white rounded-xl p-4 shadow-sm">
-                <h4 className="font-semibold text-gray-800 mb-3">Support & Help</h4>
+                <h4 className="font-semibold text-gray-800 mb-3">🎧 Support & Help</h4>
                 <div className="space-y-2">
                   <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
                     <span className="text-gray-700">Help Center</span>
@@ -387,12 +449,16 @@ export default function DashboardScreen({
                     <span className="text-gray-700">Report Issue</span>
                     <span className="text-gray-400">→</span>
                   </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Live Chat</span>
+                    <span className="text-green-500">●</span>
+                  </button>
                 </div>
               </div>
 
               {/* About */}
               <div className="bg-white rounded-xl p-4 shadow-sm">
-                <h4 className="font-semibold text-gray-800 mb-3">About</h4>
+                <h4 className="font-semibold text-gray-800 mb-3">ℹ️ About</h4>
                 <div className="space-y-2">
                   <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
                     <span className="text-gray-700">Terms of Service</span>
@@ -406,6 +472,10 @@ export default function DashboardScreen({
                     <span className="text-gray-700">App Version</span>
                     <span className="text-gray-400">v2.1.0</span>
                   </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Rate App</span>
+                    <span className="text-yellow-500">⭐</span>
+                  </button>
                 </div>
               </div>
 
@@ -418,7 +488,7 @@ export default function DashboardScreen({
                   }}
                   className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl"
                 >
-                  Logout
+                  🚪 Logout
                 </Button>
               </div>
             </div>

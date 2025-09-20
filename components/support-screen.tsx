@@ -16,14 +16,18 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
     window.open("mailto:paygoservicelimited@gmail.com", "_self")
   }
 
+  const handleJoinChannel = () => {
+    window.open("https://t.me/paygofinancial", "_blank")
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-orange-500 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:bg-white/20">
+        <Button variant="ghost" size="icon" onClick={onBack} className="text-gray-800 hover:bg-white/20">
           <ArrowLeft className="h-6 w-6" />
         </Button>
-        <h1 className="text-2xl font-bold text-white">Customer Support</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Customer Support</h1>
         <div className="w-10" />
       </div>
 
@@ -65,6 +69,22 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
             </Button>
           </div>
 
+          {/* Join Channel */}
+          <div className="bg-purple-50 rounded-2xl p-6 border border-purple-200">
+            <div className="flex items-center mb-3">
+              <MessageCircle className="h-6 w-6 text-purple-600 mr-3" />
+              <h3 className="font-semibold text-gray-800">Join Our Channel</h3>
+            </div>
+            <p className="text-gray-600 mb-4">Get updates and connect with our community</p>
+            <p className="text-sm font-medium text-purple-700 mb-4">@paygofinancial</p>
+            <Button
+              onClick={handleJoinChannel}
+              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white"
+            >
+              Join Channel
+            </Button>
+          </div>
+
           {/* Support Hours */}
           <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
             <div className="flex items-center mb-3">
@@ -86,6 +106,11 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* PAYgO Financial Limited */}
+        <div className="mt-6 text-center">
+          <p className="text-gray-500 text-sm">PAYgO Financial Limited</p>
         </div>
       </div>
     </div>
