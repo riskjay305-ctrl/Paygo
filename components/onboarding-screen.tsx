@@ -69,7 +69,7 @@ export default function OnboardingScreen({ userName, onComplete }: OnboardingScr
       <div className="absolute inset-0 z-20 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-auto overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-4 relative">
+          <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-6 py-4 relative">
             <button
               onClick={onComplete}
               className="absolute top-4 right-4 text-white hover:bg-purple-500 rounded-full p-1"
@@ -102,7 +102,7 @@ export default function OnboardingScreen({ userName, onComplete }: OnboardingScr
 
             <Button
               onClick={handleNext}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-medium"
+              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-medium"
             >
               {currentStep === 5 ? "Continue to Dashboard →" : "Next →"}
             </Button>
