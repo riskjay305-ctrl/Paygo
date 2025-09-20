@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Bell, Eye, EyeOff } from "lucide-react"
+import { Bell, Eye, EyeOff, MoreVertical } from "lucide-react"
 import { useState, useEffect } from "react"
 
 interface DashboardScreenProps {
@@ -48,6 +48,8 @@ export default function DashboardScreen({
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [showPaymentWarning, setShowPaymentWarning] = useState(true)
+  const [showSettingsMenu, setShowSettingsMenu] = useState(false)
+  const [currentTheme, setCurrentTheme] = useState("default")
 
   const promoImages = [
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2837%29-cFFExaGXK4TPfm9OGZVpgC2yZfjTs4.jpeg", // Mobile payment banner
@@ -80,6 +82,15 @@ export default function DashboardScreen({
 
   const handleLogoutCancel = () => {
     setShowLogoutConfirm(false)
+  }
+
+  const handleSettingsClick = () => {
+    setShowSettingsMenu(true)
+  }
+
+  const handleThemeChange = (theme: string) => {
+    setCurrentTheme(theme)
+    localStorage.setItem("paygo-theme", theme)
   }
 
   return (
@@ -127,11 +138,11 @@ export default function DashboardScreen({
               <Bell className="h-5 w-5" />
             </Button>
             <Button
-              onClick={handleLogoutClick}
+              onClick={handleSettingsClick}
               variant="secondary"
               className="bg-purple-500 hover:bg-purple-400 text-white px-4 py-2 rounded-lg"
             >
-              Logout
+              <MoreVertical className="h-5 w-5" />
             </Button>
           </div>
         </div>
@@ -276,6 +287,148 @@ export default function DashboardScreen({
           </div>
         </div>
       </div>
+
+      {/* Settings Menu Modal */}
+      {showSettingsMenu && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 rounded-2xl p-6 mx-4 max-w-md w-full max-h-[80vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-800">Settings & More</h3>
+              <Button
+                onClick={() => setShowSettingsMenu(false)}
+                variant="ghost"
+                size="icon"
+                className="text-gray-600 hover:bg-gray-200"
+              >
+                ✕
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Theme Selection */}
+              <div className="bg-white rounded-xl p-4 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3">Choose Theme</h4>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { name: "Default", value: "default", colors: "from-purple-600 to-orange-500" },
+                    { name: "Ocean Blue", value: "ocean", colors: "from-blue-600 to-cyan-500" },
+                    { name: "Forest Green", value: "forest", colors: "from-green-600 to-emerald-500" },
+                    { name: "Sunset Red", value: "sunset", colors: "from-red-600 to-pink-500" },
+                    { name: "Royal Purple", value: "royal", colors: "from-purple-800 to-indigo-600" },
+                    { name: "Golden Yellow", value: "golden", colors: "from-yellow-500 to-orange-400" },
+                  ].map((theme) => (
+                    <button
+                      key={theme.value}
+                      onClick={() => handleThemeChange(theme.value)}
+                      className={`p-3 rounded-lg border-2 transition-all ${
+                        currentTheme === theme.value
+                          ? "border-purple-500 bg-purple-50"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
+                      <div className={`w-full h-8 rounded bg-gradient-to-r ${theme.colors} mb-2`}></div>
+                      <p className="text-sm font-medium text-gray-700">{theme.name}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Account Settings */}
+              <div className="bg-white rounded-xl p-4 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3">Account</h4>
+                <div className="space-y-2">
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Account Information</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Security Settings</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Privacy Settings</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* App Settings */}
+              <div className="bg-white rounded-xl p-4 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3">App Settings</h4>
+                <div className="space-y-2">
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Notifications</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Language</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Currency</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Support & Help */}
+              <div className="bg-white rounded-xl p-4 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3">Support & Help</h4>
+                <div className="space-y-2">
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Help Center</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Contact Support</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Report Issue</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* About */}
+              <div className="bg-white rounded-xl p-4 shadow-sm">
+                <h4 className="font-semibold text-gray-800 mb-3">About</h4>
+                <div className="space-y-2">
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Terms of Service</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">Privacy Policy</span>
+                    <span className="text-gray-400">→</span>
+                  </button>
+                  <button className="w-full text-left p-3 rounded-lg hover:bg-gray-50 flex items-center justify-between">
+                    <span className="text-gray-700">App Version</span>
+                    <span className="text-gray-400">v2.1.0</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Logout Button */}
+              <div className="pt-4">
+                <Button
+                  onClick={() => {
+                    setShowSettingsMenu(false)
+                    setShowLogoutConfirm(true)
+                  }}
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl"
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <p className="text-gray-500 text-sm">PAYgO Financial Limited</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Logout Confirmation Dialog */}
       {showLogoutConfirm && (
