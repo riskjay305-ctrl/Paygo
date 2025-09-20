@@ -96,10 +96,10 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showPaymentNotReceived) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
-        <div className="bg-gradient-to-r from-orange-600 to-orange-700 px-4 py-6">
+      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
+        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
           <div className="flex items-center space-x-4 mb-4">
-            <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-orange-500">
+            <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-white text-xl font-semibold">Payment Status</h1>
@@ -107,38 +107,57 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
         </div>
 
         <div className="px-4 py-8">
-          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-sm mx-auto">
             <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <div className="text-2xl">⏳</div>
+              <div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="text-white text-3xl font-bold">×</div>
               </div>
-              <h2 className="text-orange-600 text-xl font-bold mb-2">Payment Not Received</h2>
-              <p className="text-gray-600 text-sm">
-                We haven't received your payment yet. Please check your transaction and try again.
-              </p>
+              <h2 className="text-orange-500 text-xl font-bold mb-2">Transaction verification failed!</h2>
+              <p className="text-gray-800 text-sm font-medium mb-1">Your payment could not be completed.</p>
+              <p className="text-gray-600 text-sm">Reason: No Payment received from you/ invalid payment method.</p>
             </div>
 
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
-              <h3 className="font-semibold text-orange-800 mb-2">What to do next:</h3>
-              <ul className="text-sm text-orange-700 space-y-1">
-                <li>• Check if payment was successful from your bank</li>
-                <li>• Ensure you sent the exact amount: ₦8,500.00</li>
-                <li>• Upload a clear screenshot of your receipt</li>
-                <li>• Contact support if payment was successful</li>
-              </ul>
+            <div className="mb-6">
+              <div className="relative">
+                <input
+                  type="password"
+                  value="••••••••••••••"
+                  readOnly
+                  className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-center"
+                />
+                <button className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <div className="space-y-3">
-              <Button onClick={handleResubmit} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-                Resubmit Payment
+              <Button
+                onClick={handleResubmit}
+                className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold"
+              >
+                Try Again
               </Button>
 
               <Button
                 onClick={onBack}
                 variant="outline"
-                className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
+                className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent py-3 rounded-lg font-semibold"
               >
-                Back to Dashboard
+                Go to Dashboard
               </Button>
             </div>
           </div>
@@ -149,14 +168,14 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showPaymentDetails) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
-        <div className="bg-gradient-to-r from-green-600 to-green-700 px-4 py-6">
+      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
+        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
           <div className="flex items-center space-x-4 mb-4">
             <Button
               onClick={() => setShowPaymentDetails(false)}
               variant="ghost"
               size="icon"
-              className="text-white hover:bg-green-500"
+              className="text-white hover:bg-purple-500"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -165,12 +184,12 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
         </div>
 
         <div className="px-4 py-8">
-          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
-            <h2 className="text-gray-800 text-lg font-semibold mb-6 text-center">Payment Instructions</h2>
+          <div className="bg-white rounded-2xl p-4 shadow-lg max-w-sm mx-auto">
+            <h2 className="text-gray-800 text-lg font-semibold mb-4 text-center">Payment Instructions</h2>
 
             {/* Account Details */}
-            <div className="space-y-4 mb-6">
-              <div className="bg-gray-50 rounded-2xl p-4">
+            <div className="space-y-3 mb-4">
+              <div className="bg-gray-50 rounded-2xl p-3">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600">Bank Name</p>
@@ -187,7 +206,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-2xl p-4">
+              <div className="bg-gray-50 rounded-2xl p-3">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600">Account Number</p>
@@ -204,7 +223,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-2xl p-4">
+              <div className="bg-gray-50 rounded-2xl p-3">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600">Account Name</p>
@@ -221,7 +240,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                 </div>
               </div>
 
-              <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200">
+              <div className="bg-purple-50 rounded-2xl p-3 border border-purple-200">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-purple-600">Amount to Pay</p>
@@ -240,11 +259,11 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             </div>
 
             {/* Receipt Upload */}
-            <div className="mb-6">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">Upload Payment Receipt</label>
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-purple-400 hover:bg-purple-50 transition-colors"
+                className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-purple-400 hover:bg-purple-50 transition-colors"
               >
                 <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
                 {uploadedReceipt ? (
@@ -254,7 +273,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                   </div>
                 ) : (
                   <div>
-                    <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                    <Upload className="h-6 w-6 text-gray-400 mx-auto mb-2" />
                     <p className="text-sm text-gray-600">Click to upload receipt</p>
                     <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
                   </div>
@@ -263,10 +282,22 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             </div>
 
             {isSubmittingPayment && (
-              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                  <span className="text-blue-800 text-sm">Verifying payment...</span>
+              <div className="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                <div className="text-center">
+                  <div className="text-purple-800 text-lg font-semibold mb-2">Confirming Payment</div>
+                  <div className="flex justify-center mb-3">
+                    <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
+                  </div>
+                  <div className="text-gray-600 text-sm mb-3">Confirming Your Payment</div>
+                  <div className="text-gray-500 text-xs mb-3">Please wait while we verify your transaction...</div>
+                  <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                    <div className="bg-orange-500 h-2 rounded-full animate-pulse" style={{ width: "30%" }}></div>
+                  </div>
+                  <div className="text-gray-500 text-xs">
+                    This may take a few moments
+                    <br />
+                    Please do not close this page
+                  </div>
                 </div>
               </div>
             )}
@@ -274,10 +305,12 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             <Button
               onClick={handleMadePayment}
               disabled={!uploadedReceipt || isSubmittingPayment}
-              className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 rounded-lg font-semibold"
+              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold mb-4"
             >
               {isSubmittingPayment ? "Verifying..." : "I'VE MADE PAYMENT"}
             </Button>
+
+            <div className="text-center text-gray-500 text-sm">PAYgO Financial Limited</div>
           </div>
         </div>
       </div>

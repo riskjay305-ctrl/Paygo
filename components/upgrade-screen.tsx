@@ -112,47 +112,47 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
 
   if (showPayment && selectedTierData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-orange-500 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 p-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setShowPayment(false)}
-            className="text-white hover:bg-white/20"
+            className="text-purple-600 hover:bg-white/20"
           >
             <ArrowLeft className="h-6 w-6" />
           </Button>
-          <h1 className="text-2xl font-bold text-white">VIP Payment</h1>
+          <h1 className="text-2xl font-bold text-purple-600">VIP Payment</h1>
           <div className="w-10" />
         </div>
 
         {/* Payment Card */}
-        <div className="bg-white rounded-3xl p-6 shadow-2xl max-w-md mx-auto">
+        <div className="bg-white rounded-3xl p-4 shadow-2xl max-w-sm mx-auto">
           {/* Selected Tier */}
-          <div className={`bg-gradient-to-r ${selectedTierData.color} rounded-2xl p-4 text-white mb-6`}>
+          <div className={`bg-gradient-to-r ${selectedTierData.color} rounded-2xl p-3 text-white mb-4`}>
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold">{selectedTierData.name}</h3>
-                <p className="text-white/80">{selectedTierData.duration}</p>
+                <h3 className="text-lg font-bold">{selectedTierData.name}</h3>
+                <p className="text-white/80 text-sm">{selectedTierData.duration}</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold">₦{selectedTierData.price.toLocaleString()}</p>
+                <p className="text-xl font-bold">₦{selectedTierData.price.toLocaleString()}</p>
               </div>
             </div>
           </div>
 
           {/* Payment Instructions */}
-          <div className="mb-6">
-            <h3 className="font-bold text-gray-800 mb-4">Payment Instructions</h3>
-            <p className="text-sm text-gray-600 mb-4">
+          <div className="mb-4">
+            <h3 className="font-bold text-gray-800 mb-3 text-sm">Payment Instructions</h3>
+            <p className="text-xs text-gray-600 mb-3">
               Transfer the exact amount to the account details below to activate your VIP subscription.
             </p>
           </div>
 
           {/* Account Details */}
-          <div className="space-y-4 mb-6">
-            <div className="bg-gray-50 rounded-2xl p-4">
+          <div className="space-y-3 mb-4">
+            <div className="bg-gray-50 rounded-2xl p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600">Bank Name</p>
@@ -169,7 +169,7 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
               </div>
             </div>
 
-            <div className="bg-gray-50 rounded-2xl p-4">
+            <div className="bg-gray-50 rounded-2xl p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600">Account Number</p>
@@ -186,7 +186,7 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
               </div>
             </div>
 
-            <div className="bg-gray-50 rounded-2xl p-4">
+            <div className="bg-gray-50 rounded-2xl p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600">Account Name</p>
@@ -203,11 +203,11 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
               </div>
             </div>
 
-            <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200">
+            <div className="bg-purple-50 rounded-2xl p-3 border border-purple-200">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-purple-600">Amount to Pay</p>
-                  <p className="font-bold text-purple-800 text-xl">₦{selectedTierData.price.toLocaleString()}</p>
+                  <p className="font-bold text-purple-800 text-lg">₦{selectedTierData.price.toLocaleString()}</p>
                 </div>
                 <Button
                   variant="ghost"
@@ -222,9 +222,9 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
           </div>
 
           {/* Important Note */}
-          <div className="bg-orange-50 rounded-2xl p-4 border border-orange-200 mb-6">
-            <h4 className="font-semibold text-orange-800 mb-2">Important:</h4>
-            <ul className="text-sm text-orange-700 space-y-1">
+          <div className="bg-orange-50 rounded-2xl p-3 border border-orange-200 mb-4">
+            <h4 className="font-semibold text-orange-800 mb-2 text-sm">Important:</h4>
+            <ul className="text-xs text-orange-700 space-y-1">
               <li>• Transfer the exact amount shown above</li>
               <li>• VIP activation takes 5-10 minutes after payment</li>
               <li>• Contact support if payment is not reflected within 30 minutes</li>
@@ -232,9 +232,15 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
             </ul>
           </div>
 
-          <Button onClick={onBack} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+          <Button
+            onClick={onBack}
+            className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white mb-4"
+          >
             Back to Dashboard
           </Button>
+
+          {/* Added PAYgO Financial Limited at the bottom */}
+          <div className="text-center text-gray-500 text-sm">PAYgO Financial Limited</div>
         </div>
       </div>
     )
