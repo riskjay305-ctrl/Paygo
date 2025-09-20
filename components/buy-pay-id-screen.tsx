@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Volume2, Upload, CheckCircle, Copy } from "lucide-react"
+import { ArrowLeft, Volume2 } from "lucide-react"
 import { useState, useRef } from "react"
 import Image from "next/image"
 
@@ -109,8 +109,17 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
               <h2 className="text-gray-800 text-xl font-bold mb-2">Confirming Your Payment</h2>
               <p className="text-gray-600 text-sm mb-4">Please wait while we verify your transaction...</p>
 
-              <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-                <div className="bg-orange-500 h-2 rounded-full animate-pulse" style={{ width: "40%" }}></div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
+                <div className="bg-orange-500 h-2 rounded-full animate-pulse relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
+                  <div
+                    className="h-full bg-orange-500 rounded-full transition-all duration-1000 ease-in-out"
+                    style={{
+                      width: "40%",
+                      animation: "moveProgress 2s ease-in-out infinite",
+                    }}
+                  ></div>
+                </div>
               </div>
 
               <p className="text-gray-500 text-xs">
@@ -123,6 +132,14 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             <div className="text-center text-gray-500 text-sm">PAYgO Financial Limited</div>
           </div>
         </div>
+
+        <style jsx>{`
+          @keyframes moveProgress {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(100%); }
+          }
+        `}</style>
       </div>
     )
   }
@@ -159,7 +176,14 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                   className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-center"
                 />
                 <button
-                  onClick={() => setShowPaymentDetails(true)}
+                  onClick={() => {
+                    const input = document.querySelector('input[type="password"]') as HTMLInputElement
+                    if (input.value === "••••••••••••••") {
+                      input.value = "Payment not confirmed ******"
+                    } else {
+                      input.value = "••••••••••••••"
+                    }
+                  }}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2"
                 >
                   👁️
@@ -183,136 +207,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                 Go to Dashboard
               </Button>
             </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
-  if (showPaymentDetails) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
-        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
-          <div className="flex items-center space-x-4 mb-4">
-            <Button
-              onClick={() => setShowPaymentDetails(false)}
-              variant="ghost"
-              size="icon"
-              className="text-white hover:bg-purple-500"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-white text-xl font-semibold">Complete Payment</h1>
-          </div>
-        </div>
-
-        <div className="px-4 py-8">
-          <div className="bg-white rounded-2xl p-4 shadow-lg max-w-sm mx-auto">
-            <h2 className="text-gray-800 text-lg font-semibold mb-4 text-center">Payment Instructions</h2>
-
-            {/* Account Details */}
-            <div className="space-y-3 mb-4">
-              <div className="bg-gray-50 rounded-2xl p-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Bank Name</p>
-                    <p className="font-bold text-gray-800">{paymentDetails.bankName}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleCopy(paymentDetails.bankName, "bank")}
-                    className="text-purple-600 hover:bg-purple-50"
-                  >
-                    {copiedField === "bank" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  </Button>
-                </div>
-              </div>
-
-              <div className="bg-gray-50 rounded-2xl p-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Account Number</p>
-                    <p className="font-bold text-gray-800 font-mono">{paymentDetails.accountNumber}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleCopy(paymentDetails.accountNumber, "account")}
-                    className="text-purple-600 hover:bg-purple-50"
-                  >
-                    {copiedField === "account" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  </Button>
-                </div>
-              </div>
-
-              <div className="bg-gray-50 rounded-2xl p-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Account Name</p>
-                    <p className="font-bold text-gray-800">{paymentDetails.accountName}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleCopy(paymentDetails.accountName, "name")}
-                    className="text-purple-600 hover:bg-purple-50"
-                  >
-                    {copiedField === "name" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  </Button>
-                </div>
-              </div>
-
-              <div className="bg-purple-50 rounded-2xl p-3 border border-purple-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-purple-600">Amount to Pay</p>
-                    <p className="font-bold text-purple-800 text-xl">₦8,500.00</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleCopy("8500", "amount")}
-                    className="text-purple-600 hover:bg-purple-100"
-                  >
-                    {copiedField === "amount" ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Receipt Upload */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Upload Payment Receipt</label>
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-purple-400 hover:bg-purple-50 transition-colors"
-              >
-                <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
-                {uploadedReceipt ? (
-                  <div className="flex items-center justify-center space-x-2 text-green-600">
-                    <CheckCircle className="h-5 w-5" />
-                    <span className="text-sm font-medium">{uploadedReceipt.name}</span>
-                  </div>
-                ) : (
-                  <div>
-                    <Upload className="h-6 w-6 text-gray-400 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600">Click to upload receipt</p>
-                    <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <Button
-              onClick={handleMadePayment}
-              disabled={!uploadedReceipt}
-              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold mb-4"
-            >
-              I'VE MADE PAYMENT
-            </Button>
-
-            <div className="text-center text-gray-500 text-sm">PAYgO Financial Limited</div>
+            <div className="text-center text-gray-500 text-sm mt-4">PAYgO Financial Limited</div>
           </div>
         </div>
       </div>
@@ -359,10 +255,10 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showWarning) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
-        <div className="bg-gradient-to-r from-red-600 to-red-700 px-4 py-6">
+      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
+        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
           <div className="flex items-center space-x-4 mb-4">
-            <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-red-500">
+            <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-white text-xl font-semibold">Payment Warning</h1>
@@ -413,6 +309,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             >
               {isUnderstanding ? "Processing..." : "I UNDERSTAND"}
             </Button>
+
+            <div className="text-center text-gray-500 text-sm mt-4">PAYgO Financial Limited</div>
           </div>
         </div>
       </div>
@@ -420,9 +318,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
+      <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
         <div className="flex items-center space-x-4 mb-4">
           <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
             <ArrowLeft className="h-5 w-5" />
@@ -475,6 +372,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
           >
             {isProcessing ? "Processing..." : "PAY"}
           </Button>
+
+          <div className="text-center text-gray-500 text-sm mt-4">PAYgO Financial Limited</div>
         </div>
       </div>
     </div>
