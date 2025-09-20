@@ -253,6 +253,105 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
     )
   }
 
+  if (showPaymentDetails) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
+        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
+          <div className="flex items-center space-x-4 mb-4">
+            <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-white text-xl font-semibold">Account Details</h1>
+          </div>
+        </div>
+
+        <div className="px-4 py-8">
+          <div className="bg-white rounded-2xl p-6 shadow-lg max-w-sm mx-auto">
+            <h2 className="text-gray-800 text-lg font-semibold mb-6 text-center">Payment Account Details</h2>
+
+            <div className="space-y-4 mb-6">
+              <div className="bg-gray-50 p-4 rounded-lg border">
+                <label className="text-gray-600 text-sm font-medium block mb-2">Bank Name</label>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-800 font-semibold">{paymentDetails.bankName}</span>
+                  <Button
+                    onClick={() => handleCopy(paymentDetails.bankName, "bankName")}
+                    variant="ghost"
+                    size="sm"
+                    className="text-purple-600 hover:bg-purple-50"
+                  >
+                    {copiedField === "bankName" ? "✓ Copied" : "Copy"}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg border">
+                <label className="text-gray-600 text-sm font-medium block mb-2">Account Number</label>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-800 font-semibold">{paymentDetails.accountNumber}</span>
+                  <Button
+                    onClick={() => handleCopy(paymentDetails.accountNumber, "accountNumber")}
+                    variant="ghost"
+                    size="sm"
+                    className="text-purple-600 hover:bg-purple-50"
+                  >
+                    {copiedField === "accountNumber" ? "✓ Copied" : "Copy"}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg border">
+                <label className="text-gray-600 text-sm font-medium block mb-2">Account Name</label>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-800 font-semibold">{paymentDetails.accountName}</span>
+                  <Button
+                    onClick={() => handleCopy(paymentDetails.accountName, "accountName")}
+                    variant="ghost"
+                    size="sm"
+                    className="text-purple-600 hover:bg-purple-50"
+                  >
+                    {copiedField === "accountName" ? "✓ Copied" : "Copy"}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                <label className="text-gray-600 text-sm font-medium block mb-2">Amount to Pay</label>
+                <span className="text-orange-600 font-bold text-lg">₦8,500.00</span>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <label className="text-gray-600 text-sm font-medium block mb-2">Upload Payment Receipt</label>
+              <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+              <Button
+                onClick={() => fileInputRef.current?.click()}
+                variant="outline"
+                className="w-full border-dashed border-2 border-gray-300 hover:border-purple-500 hover:bg-purple-50 bg-transparent py-6"
+              >
+                {uploadedReceipt ? (
+                  <span className="text-green-600">✓ {uploadedReceipt.name}</span>
+                ) : (
+                  <span className="text-gray-600">📎 Upload Receipt</span>
+                )}
+              </Button>
+            </div>
+
+            <Button
+              onClick={handleMadePayment}
+              disabled={!uploadedReceipt}
+              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold disabled:opacity-50"
+            >
+              I'VE MADE PAYMENT
+            </Button>
+
+            <div className="text-center text-gray-500 text-sm mt-4">PAYgO Financial Limited</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (showWarning) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
