@@ -47,6 +47,7 @@ export default function DashboardScreen({
   const [balanceVisible, setBalanceVisible] = useState(true)
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+  const [showPaymentWarning, setShowPaymentWarning] = useState(true)
 
   const promoImages = [
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2837%29-cFFExaGXK4TPfm9OGZVpgC2yZfjTs4.jpeg", // Mobile payment banner
@@ -82,11 +83,25 @@ export default function DashboardScreen({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50 relative">
-      <div
-        className="absolute top-20 right-4 w-32 h-24 rounded-2xl opacity-20"
-        style={{ backgroundColor: "#C154C1" }}
-      ></div>
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
+      <div className="absolute top-20 right-4 w-32 h-24 rounded-2xl opacity-20 bg-gradient-to-r from-purple-600 to-orange-500"></div>
+
+      {showPaymentWarning && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 mx-4 max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">Payment Warning</h3>
+            <p className="text-gray-600 text-center mb-6">
+              Please ensure you complete your payment within the specified time limit to avoid transaction failure.
+            </p>
+            <Button
+              onClick={() => setShowPaymentWarning(false)}
+              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white"
+            >
+              I understand
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 text-sm overflow-hidden">
         <div className="animate-scroll whitespace-nowrap">
@@ -96,7 +111,7 @@ export default function DashboardScreen({
       </div>
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-6">
+      <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
@@ -122,7 +137,7 @@ export default function DashboardScreen({
         </div>
 
         {/* Balance Card */}
-        <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl p-6 shadow-lg">
+        <div className="bg-gradient-to-r from-purple-500 to-orange-400 rounded-2xl p-6 shadow-lg">
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-purple-200 text-sm mb-1">Available Balance</p>
@@ -161,23 +176,21 @@ export default function DashboardScreen({
       <div className="px-4 py-6">
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { name: "Buy PAY ID", icon: "💳", color: "bg-amber-500", onClick: onBuyPayId }, // Gold for premium service
-            { name: "Watch", icon: "📺", color: "bg-red-500", onClick: onWatch }, // Red like YouTube
-            { name: "Airtime", icon: "📊", color: "bg-green-500", onClick: onAirtime }, // Green for money/credit
-            { name: "Data", icon: "💾", color: "bg-blue-500", onClick: onData }, // Blue for data/internet
-            { name: "Support", icon: "🎧", color: "bg-orange-500", onClick: onSupport }, // Orange for help/support
-            { name: "Group", icon: "🌐", color: "bg-indigo-500", onClick: onGroup }, // Indigo for community/network
-            { name: "Earn More", icon: "💰", color: "bg-emerald-600", onClick: onEarnMore }, // Emerald for earning money
-            { name: "Profile", icon: "👤", color: "bg-slate-600", onClick: onProfile }, // Slate for personal/profile
+            { name: "Buy PAY ID", icon: "💳", onClick: onBuyPayId },
+            { name: "Watch", icon: "📺", onClick: onWatch },
+            { name: "Airtime", icon: "📊", onClick: onAirtime },
+            { name: "Data", icon: "💾", onClick: onData },
+            { name: "Support", icon: "🎧", onClick: onSupport },
+            { name: "Group", icon: "🌐", onClick: onGroup },
+            { name: "Earn More", icon: "💰", onClick: onEarnMore },
+            { name: "Profile", icon: "👤", onClick: onProfile },
           ].map((service, index) => (
             <div key={index} className="text-center">
               <button
                 onClick={service.onClick}
                 className="bg-white rounded-2xl p-4 shadow-sm mb-2 w-full hover:shadow-md transition-shadow"
               >
-                <div
-                  className={`w-12 h-12 ${service.color} rounded-xl flex items-center justify-center mx-auto text-white text-xl`}
-                >
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-orange-500 rounded-xl flex items-center justify-center mx-auto text-white text-xl">
                   {service.icon}
                 </div>
               </button>
