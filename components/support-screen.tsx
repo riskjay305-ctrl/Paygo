@@ -16,7 +16,7 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
     window.open("mailto:paygoservicelimited@gmail.com", "_self")
   }
 
-  const handleJoinChannel = () => {
+  const handleJoinWhatsAppGroup = () => {
     window.open("https://chat.whatsapp.com/FMRV4nBj7Af66rGbJJrIly?mode=ems_copy_t", "_blank")
   }
 
@@ -69,16 +69,15 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
             </Button>
           </div>
 
-          {/* Join WhatsApp Group */}
           <div className="bg-green-50 rounded-2xl p-6 border border-green-200">
             <div className="flex items-center mb-3">
               <MessageCircle className="h-6 w-6 text-green-600 mr-3" />
               <h3 className="font-semibold text-gray-800">Join Our WhatsApp Group</h3>
             </div>
-            <p className="text-gray-600 mb-4">Get updates and connect with our community</p>
-            <p className="text-sm font-medium text-green-700 mb-4">PAYgO Community</p>
+            <p className="text-gray-600 mb-4">Connect with our community on WhatsApp</p>
+            <p className="text-sm font-medium text-green-700 mb-4">PAYgO WhatsApp Community</p>
             <Button
-              onClick={handleJoinChannel}
+              onClick={handleJoinWhatsAppGroup}
               className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white"
             >
               Join WhatsApp Group
