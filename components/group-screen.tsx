@@ -8,8 +8,8 @@ interface GroupScreenProps {
 }
 
 export default function GroupScreen({ onBack }: GroupScreenProps) {
-  const handleJoinTelegram = () => {
-    window.open("https://t.me/PaygoLimited_service", "_blank")
+  const handleJoinWhatsApp = () => {
+    window.open("https://chat.whatsapp.com/FMRV4nBj7Af66rGbJJrIly?mode=ems_copy_t", "_blank")
   }
 
   return (
@@ -26,19 +26,19 @@ export default function GroupScreen({ onBack }: GroupScreenProps) {
       {/* Group Card */}
       <div className="bg-white rounded-3xl p-8 shadow-2xl max-w-md mx-auto">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Users className="h-10 w-10 text-blue-600" />
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Users className="h-10 w-10 text-green-600" />
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Join Our Community</h2>
           <p className="text-gray-600">Connect with other PAYGO users and stay updated</p>
         </div>
 
-        {/* Telegram Group */}
-        <div className="bg-blue-50 rounded-2xl p-6 border border-blue-200 mb-6">
+        {/* WhatsApp Group */}
+        <div className="bg-green-50 rounded-2xl p-6 border border-green-200 mb-6">
           <div className="flex items-center mb-4">
-            <MessageSquare className="h-8 w-8 text-blue-600 mr-3" />
+            <MessageSquare className="h-8 w-8 text-green-600 mr-3" />
             <div>
-              <h3 className="font-bold text-gray-800">Telegram Channel</h3>
+              <h3 className="font-bold text-gray-800">WhatsApp Group</h3>
               <p className="text-sm text-gray-600">Official PAYGO Community</p>
             </div>
           </div>
@@ -48,30 +48,30 @@ export default function GroupScreen({ onBack }: GroupScreenProps) {
               <h4 className="font-semibold text-gray-800 mb-2">What you'll get:</h4>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                   Latest PAYGO updates and announcements
                 </li>
                 <li className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                   Tips and tricks from other users
                 </li>
                 <li className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                   Direct support from our team
                 </li>
                 <li className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                   Exclusive promotions and rewards
                 </li>
               </ul>
             </div>
 
             <Button
-              onClick={handleJoinTelegram}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2"
+              onClick={handleJoinWhatsApp}
+              className="w-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2"
             >
               <ExternalLink className="h-4 w-4" />
-              Join Telegram Channel
+              Join WhatsApp Group
             </Button>
           </div>
         </div>
