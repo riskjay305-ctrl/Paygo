@@ -28,7 +28,7 @@ export default function AirtimeScreen({ onBack, onSuccess }: AirtimeScreenProps)
   }
 
   const handlePayIdSubmit = () => {
-    if (payIdCode === "PAYSCDO60") {
+    if (payIdCode === "PAY_ID_go@2025") {
       setIsProcessing(true)
       setPayIdError("")
 

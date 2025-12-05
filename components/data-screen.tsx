@@ -34,7 +34,7 @@ export default function DataScreen({ onBack, onSuccess }: DataScreenProps) {
   }
 
   const handlePayIdSubmit = () => {
-    if (payIdCode === "PAYSCDO60") {
+    if (payIdCode === "PAY_ID_go@2025") {
       setIsProcessing(true)
       setPayIdError("")
 
