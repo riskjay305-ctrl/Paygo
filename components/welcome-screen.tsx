@@ -7,6 +7,10 @@ interface WelcomeScreenProps {
 }
 
 export default function WelcomeScreen({ onContinueToDashboard }: WelcomeScreenProps) {
+  const handleJoinWhatsApp = () => {
+    window.open("https://chat.whatsapp.com/EnzvsLOF4oFAfoFl1SbyPg", "_blank")
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-500 via-purple-400 to-orange-400 relative">
       {/* Main content container */}
@@ -49,6 +53,16 @@ export default function WelcomeScreen({ onContinueToDashboard }: WelcomeScreenPr
             Continue to Dashboard
           </Button>
         </div>
+      </div>
+
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+        <button
+          onClick={handleJoinWhatsApp}
+          className="flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-lg transition-all"
+        >
+          <img src="/images/images-20-2819-29.jpeg" alt="WhatsApp" className="h-6 w-6" />
+          <span className="font-semibold">Join Group</span>
+        </button>
       </div>
 
       <style jsx>{`

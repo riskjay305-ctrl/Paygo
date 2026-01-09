@@ -52,16 +52,16 @@ export default function DashboardScreen({
   const [currentTheme, setCurrentTheme] = useState("default")
 
   const promoImages = [
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2837%29-cFFExaGXK4TPfm9OGZVpgC2yZfjTs4.jpeg", // Mobile payment banner
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download%20%288%29-18i79PONNGcSuekOcXM6M1laNewTiA.jpeg", // PaygO card
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2844%29-if7DUaB2uiNxPVVnrY8I8avjw3MFI0.jpeg", // Traveling Abroad banner
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download%20%289%29-k2wzZIT86jEFilylZwUBvNCoMPRq5r.jpeg", // Purple PaygO card
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FB_IMG_1758090621579.jpg-1FA6TjpcxzU6GDLcBIbN82wP3Kw0Ct.jpeg", // Person with PAY WITH card
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2834%29-oEviSEP6dnE2ATExy8gCb8NMbPDFD7.jpeg", // Get Virtual Card banner
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download%20%287%29-ZhCkPba47EeH6a05kEpbsjru0GjYzB.jpeg", // Mobile device
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%282%29.jpg-rbCivw69A0yhyjcOvYZLeqC6ZReUHc.jpeg", // Orange POS terminal
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FB_IMG_1758090764459.jpg-HRW19pvckGpr4urSXszmcJBNuxkpfK.jpeg", // PaygO receipt
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/images%20%2835%29-xIlGozykrIYIWBQMuhwnZgxjzkemPp.jpeg", // GO CASHLESS banner
+    "/images/images-20-2837-29.jpeg", // Mobile payment banner
+    "/images/download-20-288-29.jpeg", // PaygO card
+    "/images/images-20-2844-29.jpeg", // Traveling Abroad banner
+    "/images/download-20-289-29.jpeg", // Purple PaygO card
+    "/images/fb-img-1758090621579.jpeg", // Person with PAY WITH card
+    "/images/images-20-2834-29.jpeg", // Get Virtual Card banner
+    "/images/download-20-287-29.jpeg", // Mobile device
+    "/images/images-20-282-29.jpeg", // Orange POS terminal
+    "/images/fb-img-1758090764459.jpeg", // PaygO receipt
+    "/images/images-20-2835-29.jpeg", // GO CASHLESS banner
   ]
 
   useEffect(() => {
@@ -101,8 +101,12 @@ export default function DashboardScreen({
     document.documentElement.setAttribute("data-theme", theme)
   }
 
+  const handleJoinWhatsApp = () => {
+    window.open("https://chat.whatsapp.com/EnzvsLOF4oFAfoFl1SbyPg", "_blank")
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative pb-24">
       <div className="absolute top-20 right-4 w-32 h-24 rounded-2xl opacity-20 bg-gradient-to-r from-purple-600 to-orange-500"></div>
 
       {showPaymentWarning && (
@@ -522,6 +526,19 @@ export default function DashboardScreen({
         </div>
       )}
 
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40">
+        <button
+          onClick={handleJoinWhatsApp}
+          className="flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-lg transition-all animate-bounce"
+          style={{
+            animation: "float 2s ease-in-out infinite",
+          }}
+        >
+          <img src="/images/images-20-2819-29.jpeg" alt="WhatsApp" className="h-6 w-6" />
+          <span className="font-semibold">Join Group</span>
+        </button>
+      </div>
+
       <style jsx>{`
         @keyframes scroll {
           0% { transform: translateX(100%); }
@@ -594,6 +611,11 @@ export default function DashboardScreen({
             opacity: 0.9; 
             box-shadow: 0 0 40px rgba(147, 51, 234, 0.6);
           }
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
         }
       `}</style>
     </div>
