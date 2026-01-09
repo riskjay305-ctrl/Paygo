@@ -36,6 +36,10 @@ export default function RegisterScreen({
     setShowPaygoInfo(!showPaygoInfo)
   }
 
+  const handleJoinGroup = () => {
+    window.open("https://chat.whatsapp.com/EnzvsLOF4oFAfoFl1SbyPg", "_blank")
+  }
+
   const paygoExplanations = [
     "PAYgO is Nigeria's leading digital payment platform that revolutionizes how you handle money transactions.",
     "With PAYgO, you can send and receive money instantly across Nigeria using just your mobile phone.",
@@ -151,6 +155,15 @@ export default function RegisterScreen({
             </div>
           </div>
         </div>
+
+        {/* Join Group Button */}
+        <button
+          onClick={handleJoinGroup}
+          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg shadow-lg transition-all duration-300"
+        >
+          <img src="/images/images-20-2819-29.jpeg" alt="WhatsApp" className="w-5 h-5" />
+          Join Group
+        </button>
       </div>
 
       <style jsx>{`
