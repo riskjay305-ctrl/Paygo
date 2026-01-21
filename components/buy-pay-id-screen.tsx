@@ -29,8 +29,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const paymentDetails = {
-    bankName: "Moniepoint MFB",
-    accountNumber: "5631869661",
+    bankName: "Palmpay",
+    accountNumber: "8998790636",
     accountName: "Elom OBIANUJU CYNTHIA",
   }
 
@@ -317,7 +317,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
               <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
                 <label className="text-gray-600 text-sm font-medium block mb-2">Amount to Pay</label>
-                <span className="text-orange-600 font-bold text-lg">#9,520.00</span>
+                <span className="text-orange-600 font-bold text-lg">#9,780.00</span>
               </div>
             </div>
 
@@ -450,7 +450,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             <div>
               <label className="text-gray-600 text-sm font-medium">Amount</label>
               <div className="mt-1 p-3 bg-gray-50 rounded-lg border">
-                <span className="text-gray-800 font-semibold">#9,520.00</span>
+                <span className="text-gray-800 font-semibold">#9,780.00</span>
               </div>
             </div>
           </div>
