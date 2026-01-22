@@ -17,7 +17,7 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
   }
 
   const handleJoinWhatsAppGroup = () => {
-    window.open("https://chat.whatsapp.com/FMRV4nBj7Af66rGbJJrIly?mode=ems_copy_t", "_blank")
+    window.open("https://chat.whatsapp.com/JKI1SxG2d7r8Vw4AHLqP2B", "_blank")
   }
 
   return (
