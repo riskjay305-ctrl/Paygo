@@ -92,9 +92,9 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
   ]
 
   const paymentDetails = {
-    bankName: "PALMPAY",
-    accountNumber: "8998790636",
-    accountName: "ELOM CYNTHIA OBIANUJU",
+    bankName: "OPay Limited",
+    accountNumber: "6538745612",
+    accountName: "CYNTHIA OBIANUJU ELOM",
   }
 
   const handleSelectTier = (tierId: string) => {
