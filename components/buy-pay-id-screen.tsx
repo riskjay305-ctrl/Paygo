@@ -317,7 +317,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
               <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
                 <label className="text-gray-600 text-sm font-medium block mb-2">Amount to Pay</label>
-                <span className="text-orange-600 font-bold text-lg">#9,980.00</span>
+                <span className="text-orange-600 font-bold text-lg">#10,050.00</span>
               </div>
             </div>
 
