@@ -29,8 +29,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const paymentDetails = {
-    bankName: "PALMPAY MFB",
-    accountNumber: "8998790636",
+    bankName: "FAIRMONEY MFB",
+    accountNumber: "2015715822",
     accountName: "Elom OBIANUJU CYNTHIA",
   }
 
