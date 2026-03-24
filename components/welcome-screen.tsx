@@ -8,7 +8,7 @@ interface WelcomeScreenProps {
 
 export default function WelcomeScreen({ onContinueToDashboard }: WelcomeScreenProps) {
   const handleJoinWhatsApp = () => {
-    window.open("https://chat.whatsapp.com/D7QQdFRMCEH13H9lH0kTN3?mode=gi_t", "_blank")
+    window.open("https://chat.whatsapp.com/GK108OCiEdd5zPIsOwZXMR?mode=gi_t", "_blank")
   }
 
   return (
