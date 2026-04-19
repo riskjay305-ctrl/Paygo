@@ -102,7 +102,7 @@ export default function DashboardScreen({
   }
 
   const handleJoinWhatsApp = () => {
-    window.open("https://chat.whatsapp.com/GK108OCiEdd5zPIsOwZXMR?mode=gi_t", "_blank")
+    window.open("https://chat.whatsapp.com/G0GwbUmnoOLHGehZVtX0e8?mode=gi_t", "_blank")
   }
 
   return (
