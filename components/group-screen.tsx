@@ -9,7 +9,7 @@ interface GroupScreenProps {
 
 export default function GroupScreen({ onBack }: GroupScreenProps) {
   const handleJoinWhatsApp = () => {
-    window.open("https://chat.whatsapp.com/G0GwbUmnoOLHGehZVtX0e8?mode=gi_t", "_blank")
+    window.open("https://chat.whatsapp.com/D7QQdFRMCEH13H9lH0kTN3", "_blank")
   }
 
   return (
