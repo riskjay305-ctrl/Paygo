@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft, Eye, EyeOff, Copy, Check } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { useState } from "react"
 
 interface TransferScreenProps {
@@ -20,8 +20,6 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
   const [showCodeInput, setShowCodeInput] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [payIdError, setPayIdError] = useState("")
-  const [showPayIdCode, setShowPayIdCode] = useState(false)
-  const [copiedCode, setCopiedCode] = useState(false)
 
   const nigerianBanks = [
     "Access Bank",
@@ -41,12 +39,6 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
     if (selectedBank && accountNumber && accountName && amount) {
       setShowCodeInput(true)
     }
-  }
-
-  const handleCopyPayId = () => {
-    navigator.clipboard.writeText("PAY_ID2025_CO_T4DPAY")
-    setCopiedCode(true)
-    setTimeout(() => setCopiedCode(false), 2000)
   }
 
   const handlePayIdSubmit = () => {
@@ -193,45 +185,17 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
 
               <div>
                 <label className="text-gray-600 text-sm font-medium">PAY ID CODE</label>
-                <div className="space-y-3 mt-2">
-                  <div className="relative">
-                    <input
-                      type={showPayIdCode ? "text" : "password"}
-                      placeholder="Enter your secure PAY ID CODE"
-                      value={payIdCode}
-                      onChange={(e) => {
-                        setPayIdCode(e.target.value)
-                        setPayIdError("")
-                      }}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPayIdCode(!showPayIdCode)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
-                    >
-                      {showPayIdCode ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                    </button>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleCopyPayId}
-                    className="w-full flex items-center justify-center space-x-2 px-4 py-2 border border-purple-300 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-lg transition font-medium text-sm"
-                  >
-                    {copiedCode ? (
-                      <>
-                        <Check className="h-4 w-4" />
-                        <span>Copied to clipboard</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-4 w-4" />
-                        <span>Copy PAY ID CODE</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-                <p className="text-xs text-gray-500 mt-2">Secured field - content is masked</p>
+                <input
+                  type="password"
+                  placeholder="Enter your secure PAY ID CODE"
+                  value={payIdCode}
+                  onChange={(e) => {
+                    setPayIdCode(e.target.value)
+                    setPayIdError("")
+                  }}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition mt-2"
+                />
+                <p className="text-xs text-gray-500 mt-2">Secured field - content is hidden</p>
                 {payIdError && <p className="text-xs text-red-500 mt-2 font-medium">{payIdError}</p>}
               </div>
 
