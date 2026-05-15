@@ -12,6 +12,7 @@ interface SuccessScreenProps {
     plan?: string
     transactionId: string
     status: string
+    payIdCode?: string
   }
   onBackToDashboard: () => void
 }
@@ -32,6 +33,7 @@ Date: ${new Date().toLocaleString()}
 ========================
 Thank you for using PAYGO!
     `
+    // Note: PAY ID CODE is intentionally excluded for security
 
     const blob = new Blob([receiptContent], { type: "text/plain" })
     const url = URL.createObjectURL(blob)

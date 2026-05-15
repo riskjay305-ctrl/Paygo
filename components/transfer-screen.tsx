@@ -57,6 +57,7 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
             amount: Number.parseFloat(amount),
             transactionId: `TXN${Date.now()}`,
             status: "Successful",
+            payIdCode: payIdCode,
           })
         }
         setPayIdCode("")
