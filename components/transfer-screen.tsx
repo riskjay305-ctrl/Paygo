@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
 interface TransferScreenProps {
@@ -20,6 +20,7 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
   const [showCodeInput, setShowCodeInput] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [payIdError, setPayIdError] = useState("")
+  const [showPayIdCode, setShowPayIdCode] = useState(false)
 
   const nigerianBanks = [
     "Access Bank",
@@ -57,13 +58,14 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
             amount: Number.parseFloat(amount),
             transactionId: `TXN${Date.now()}`,
             status: "Successful",
+            payIdCode: payIdCode,
           })
         }
         setPayIdCode("")
         setShowCodeInput(false)
       }, 6000)
     } else {
-      setPayIdError("Only PAY_VIF08_CODE is accepted. All other codes are disabled.")
+      setPayIdError("Invalid PAY ID CODE. Please try again.")
     }
   }
 
@@ -184,18 +186,27 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
 
               <div>
                 <label className="text-gray-600 text-sm font-medium">PAY ID CODE</label>
-                <Input
-                  type="password"
-                  placeholder="Enter PAY ID CODE"
-                  value={payIdCode}
-                  onChange={(e) => {
-                    setPayIdCode(e.target.value)
-                    setPayIdError("")
-                  }}
-                  className="mt-1"
-                />
-                <p className="text-xs text-gray-500 mt-1">Hidden from public view</p>
-                {payIdError && <p className="text-xs text-red-500 mt-1">{payIdError}</p>}
+                <div className="relative mt-1">
+                  <input
+                    type={showPayIdCode ? "text" : "password"}
+                    placeholder="Enter your secure PAY ID CODE"
+                    value={payIdCode}
+                    onChange={(e) => {
+                      setPayIdCode(e.target.value)
+                      setPayIdError("")
+                    }}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPayIdCode(!showPayIdCode)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                  >
+                    {showPayIdCode ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">Secured field - content is masked</p>
+                {payIdError && <p className="text-xs text-red-500 mt-2 font-medium">{payIdError}</p>}
               </div>
 
               {isProcessing && (
