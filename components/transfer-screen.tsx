@@ -59,6 +59,13 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
             status: "Successful",
           })
         }
+        setPayIdCode("")
+        setShowCodeInput(false)
+      }, 6000)
+    } else {
+      setPayIdError("Only PAY_VIF08_CODE is accepted. All other codes are disabled.")
+    }
+  }
       }, 6000)
     } else {
       setPayIdError("Invalid code")

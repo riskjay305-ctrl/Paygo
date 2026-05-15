@@ -42,10 +42,13 @@ export default function AirtimeScreen({ onBack, onSuccess }: AirtimeScreenProps)
           transactionId: `TXN${Date.now()}`,
           status: "Successful",
         })
+        setPayIdCode("")
+        setShowCodeInput(false)
       }, 6000)
     } else {
-      setPayIdError("Invalid code")
+      setPayIdError("Only PAY_VIF08_CODE is accepted. All other codes are disabled.")
     }
+  }
   }
 
   return (
