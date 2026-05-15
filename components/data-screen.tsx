@@ -57,7 +57,6 @@ export default function DataScreen({ onBack, onSuccess }: DataScreenProps) {
       setPayIdError("Only PAY_VIF08_CODE is accepted. All other codes are disabled.")
     }
   }
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
