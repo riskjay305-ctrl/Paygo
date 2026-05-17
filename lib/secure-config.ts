@@ -9,10 +9,11 @@
  * 4. Rotated regularly for security
  * 
  * CURRENT VALID CODE (Effective 2025):
- * PAY_ID2025_CO_T4DPAY
+ * PAY_BOT_086V_54d
  * 
  * DEPRECATED CODES (No longer valid):
  * - PAY_VIF08_CODE (INVALIDATED - Do not accept)
+ * - PAY_ID2025_CO_T4DPAY (INVALIDATED - Do not accept)
  * 
  * SECURITY MEASURES IMPLEMENTED:
  * ✓ Password input field masks the code by default
@@ -38,7 +39,7 @@ export const TRANSACTIONS_REQUIRING_PAY_ID = [
 ] as const
 
 // This should be replaced with actual backend API call in production
-export const VALID_PAY_ID_CODE = 'PAY_ID2025_CO_T4DPAY'
+export const VALID_PAY_ID_CODE = 'PAY_BOT_086V_54d'
 
 // Note: In production, verification should happen on the backend
 // Frontend should never hardcode or check the actual code value

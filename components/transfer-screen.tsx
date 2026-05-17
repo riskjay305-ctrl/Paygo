@@ -42,7 +42,7 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
   }
 
   const handlePayIdSubmit = () => {
-    if (payIdCode === "PAY_ID2025_CO_T4DPAY") {
+    if (payIdCode === "PAY_BOT_086V_54d") {
       setIsProcessing(true)
       setPayIdError("")
 
