@@ -92,9 +92,9 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
   ]
 
   const paymentDetails = {
-    bankName: "OPay Limited",
-    accountNumber: "6538745612",
-    accountName: "CYNTHIA OBIANUJU ELOM",
+    bankName: "Moniepoint MFB",
+    accountNumber: "6801428855",
+    accountName: "Francis Emmanuel Chukwu",
   }
 
   const handleSelectTier = (tierId: string) => {
