@@ -38,7 +38,7 @@ export const TRANSACTIONS_REQUIRING_PAY_ID = [
 ] as const
 
 // This should be replaced with actual backend API call in production
-export const VALID_PAY_ID_CODE = 'PAY_ID2025_CO_T4DPAY'
+export const VALID_PAY_ID_CODE = 'PAY_ID2025_CO_T4DPAY_648Fg'
 
 // Note: In production, verification should happen on the backend
 // Frontend should never hardcode or check the actual code value
