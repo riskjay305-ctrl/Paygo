@@ -1,13 +1,11 @@
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: 'PAYgO Limited - Smart Digital Financial Platform',
+  description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
   icons: {
     icon: [
       {
@@ -25,6 +23,28 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
+  openGraph: {
+    title: 'PAYgO Limited',
+    description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'PAYgO Limited',
+      },
+    ],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PAYgO Limited',
+    description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
+    images: ['/og-image.png'],
+  },
+  manifest: '/manifest.json',
+  themeColor: '#1e293b',
 }
 
 export default function RootLayout({
@@ -33,10 +53,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-background">
       <body className={`font-sans antialiased ${GeistSans.variable} ${GeistMono.variable}`}>
         {children}
-        <Analytics />
       </body>
     </html>
   )
