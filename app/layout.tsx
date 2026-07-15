@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
@@ -6,6 +6,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'PAYgO Limited - Smart Digital Financial Platform',
   description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
+  metadataBase: new URL('https://paygo-financial-app.vercel.app'),
   icons: {
     icon: [
       {
@@ -36,6 +37,7 @@ export const metadata: Metadata = {
     ],
     type: 'website',
     locale: 'en_US',
+    url: 'https://paygo-financial-app.vercel.app',
   },
   twitter: {
     card: 'summary_large_image',
@@ -44,6 +46,9 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   manifest: '/manifest.json',
+}
+
+export const viewport: Viewport = {
   themeColor: '#1e293b',
 }
 
