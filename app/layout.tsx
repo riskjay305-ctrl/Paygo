@@ -5,7 +5,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'PAYgO Limited - Smart Digital Financial Platform',
-  description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
+  description: 'Smart Digital Financial Platform. Register, Fund Wallet, Transfer Money, Buy Airtime, Buy Data and enjoy seamless digital financial services.',
   metadataBase: new URL('https://paygo-financial-app.vercel.app'),
   icons: {
     icon: [
@@ -26,14 +26,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'PAYgO Limited',
-    description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
+    description: 'Smart Digital Financial Platform. Register, Fund Wallet, Transfer Money, Buy Airtime, Buy Data and enjoy seamless digital financial services.',
     images: [
       {
-        url: 'https://paygo-financial-app.vercel.app/og-image.png',
-        width: 1200,
-        height: 630,
-        type: 'image/png',
-        alt: 'PAYgO Limited',
+        url: 'https://paygo-financial-app.vercel.app/og-image.jpg',
+        width: 1280,
+        height: 1280,
+        type: 'image/jpeg',
+        alt: 'PAYgO Limited - Smart Digital Financial Platform',
       },
     ],
     type: 'website',
@@ -43,8 +43,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'PAYgO Limited',
-    description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
-    image: 'https://paygo-financial-app.vercel.app/og-image.png',
+    description: 'Smart Digital Financial Platform.',
+    image: 'https://paygo-financial-app.vercel.app/og-image.jpg',
   },
   manifest: '/manifest.json',
 }
