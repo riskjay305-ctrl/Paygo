@@ -29,21 +29,22 @@ export const metadata: Metadata = {
     description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://paygo-financial-app.vercel.app/og-image.png',
         width: 1200,
         height: 630,
+        type: 'image/png',
         alt: 'PAYgO Limited',
       },
     ],
     type: 'website',
     locale: 'en_US',
-    url: 'https://paygo-financial-app.vercel.app',
+    url: 'https://paygo-financial-app.vercel.app/',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'PAYgO Limited',
     description: 'Smart Digital Financial Platform. Register, fund your wallet, transfer money, withdraw funds, and enjoy secure financial services.',
-    images: ['/og-image.png'],
+    image: 'https://paygo-financial-app.vercel.app/og-image.png',
   },
   manifest: '/manifest.json',
 }
