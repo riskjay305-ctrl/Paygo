@@ -35,10 +35,12 @@ export default function RegisterScreen({
       }
       setEmailError("")
       
-      // Store user in localStorage for login validation
-      const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-      registeredUsers.push({ name, email, password })
-      localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
+      // Store user in localStorage for login validation (client-side only)
+      if (typeof window !== "undefined") {
+        const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
+        registeredUsers.push({ name, email, password })
+        localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
+      }
       
       onSuccessfulRegistration(name, email)
     }
