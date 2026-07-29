@@ -11,9 +11,10 @@ interface BuyPayIdScreenProps {
   userName: string
   userEmail: string
   onBack: () => void
+  userBalance?: number
 }
 
-export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayIdScreenProps) {
+export default function BuyPayIdScreen({ userName, userEmail, onBack, userBalance = 8500 }: BuyPayIdScreenProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
@@ -31,7 +32,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const paymentDetails = {
     bankName: "Moniepoint MFB",
     accountNumber: "6801428855",
-    accountName: "Francis Emmanuel Chukwu",
+    accountName: "FR... EM....CH (PAYgO LIMITED Agent)",
   }
 
   const handlePay = () => {
@@ -303,7 +304,10 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
               <div className="bg-gray-50 p-4 rounded-lg border">
                 <label className="text-gray-600 text-sm font-medium block mb-2">Account Name</label>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-800 font-semibold">{paymentDetails.accountName}</span>
+                  <div className="flex flex-wrap items-center gap-1">
+                    <span className="text-gray-800 font-semibold">FR... EM....CH</span>
+                    <span className="text-gray-600 text-xs">(PAYgO LIMITED Agent)</span>
+                  </div>
                   <Button
                     onClick={() => handleCopy(paymentDetails.accountName, "accountName")}
                     variant="ghost"
@@ -316,8 +320,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
               </div>
 
               <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-                <label className="text-gray-600 text-sm font-medium block mb-2">Amount to Pay</label>
-                <span className="text-orange-600 font-bold text-lg">#10,050.00</span>
+                <label className="text-gray-600 text-sm font-medium block mb-2">Current Wallet Balance</label>
+                <span className="text-orange-600 font-bold text-lg">#{userBalance?.toLocaleString()}.00</span>
               </div>
             </div>
 
