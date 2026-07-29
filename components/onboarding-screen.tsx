@@ -25,7 +25,7 @@ export default function OnboardingScreen({ userName, onComplete }: OnboardingScr
       title: "Get Your PAY ID",
       icon: "💳",
       iconColor: "text-blue-500",
-      content: `To withdraw funds, you'll need to purchase a PAY ID for ₦8,500.00. This is a one-time purchase that unlocks all features of the app.`,
+      content: `To withdraw funds, you'll need to purchase a PAY ID for ₦10,050.00. This is a one-time purchase that unlocks all features of the app.`,
     },
     {
       step: 3,
