@@ -39,8 +39,8 @@ export default function ProfileScreen({ userName, userEmail, onBack }: ProfileSc
             <div className="w-20 h-20 bg-gradient-to-r from-purple-600 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <User className="h-10 w-10 text-white" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-800">{editedName}</h2>
-            <p className="text-gray-600">PAYGO User</p>
+            <h2 className="text-xl font-semibold text-gray-800">E.. F.. C..</h2>
+            <p className="text-gray-600">PAYgO LIMITED Agent</p>
           </div>
 
           <div className="space-y-6">
@@ -53,7 +53,7 @@ export default function ProfileScreen({ userName, userEmail, onBack }: ProfileSc
                 <Input value={editedName} onChange={(e) => setEditedName(e.target.value)} className="w-full" />
               ) : (
                 <div className="p-3 bg-gray-50 rounded-lg border">
-                  <span className="text-gray-800">{editedName}</span>
+                  <span className="text-gray-800">E.. F.. C.. (PAYgO LIMITED Agent)</span>
                 </div>
               )}
             </div>
