@@ -41,7 +41,7 @@ export default function PaygoApp() {
   >("register")
   const [userData, setUserData] = useState<{ name: string; email: string } | null>(null)
   const [transactionDetails, setTransactionDetails] = useState<any>(null)
-  const [userBalance, setUserBalance] = useState(180000)
+  const [userBalance, setUserBalance] = useState(10150)
   const [registeredEmails, setRegisteredEmails] = useState<string[]>([])
   const [registeredNames, setRegisteredNames] = useState<string[]>([])
   const [withdrawalHistory, setWithdrawalHistory] = useState<
