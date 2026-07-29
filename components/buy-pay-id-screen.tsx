@@ -31,7 +31,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const paymentDetails = {
     bankName: "Moniepoint MFB",
     accountNumber: "6801428855",
-    accountName: "Francis Emmanuel Chukwu",
+    accountName: "FR... EM....CH (PAYgO LIMITED Agent)",
   }
 
   const handlePay = () => {
