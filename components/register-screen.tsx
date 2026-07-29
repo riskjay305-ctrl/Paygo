@@ -8,12 +8,14 @@ interface RegisterScreenProps {
   onSwitchToLogin: () => void
   onSuccessfulRegistration: (name: string, email: string) => void
   registeredEmails: string[]
+  registeredNames?: string[]
 }
 
 export default function RegisterScreen({
   onSwitchToLogin,
   onSuccessfulRegistration,
   registeredEmails,
+  registeredNames = [],
 }: RegisterScreenProps) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -23,6 +25,10 @@ export default function RegisterScreen({
 
   const handleRegister = () => {
     if (name && email && password) {
+      if (registeredNames.includes(name)) {
+        setEmailError("Account name already exists, please choose a different name")
+        return
+      }
       if (registeredEmails.includes(email)) {
         setEmailError("Email registered, kindly choose LOGIN option")
         return

@@ -43,6 +43,7 @@ export default function PaygoApp() {
   const [transactionDetails, setTransactionDetails] = useState<any>(null)
   const [userBalance, setUserBalance] = useState(180000)
   const [registeredEmails, setRegisteredEmails] = useState<string[]>([])
+  const [registeredNames, setRegisteredNames] = useState<string[]>([])
   const [withdrawalHistory, setWithdrawalHistory] = useState<
     Array<{
       id: string
@@ -57,6 +58,7 @@ export default function PaygoApp() {
   const handleSuccessfulRegistration = (name: string, email: string) => {
     setUserData({ name, email })
     setRegisteredEmails((prev) => [...prev, email])
+    setRegisteredNames((prev) => [...prev, name])
     setCurrentScreen("loading")
   }
 
@@ -162,6 +164,7 @@ export default function PaygoApp() {
           onSwitchToLogin={() => setCurrentScreen("login")}
           onSuccessfulRegistration={handleSuccessfulRegistration}
           registeredEmails={registeredEmails}
+          registeredNames={registeredNames}
         />
       ) : currentScreen === "login" ? (
         <LoginScreen onSwitchToRegister={() => setCurrentScreen("register")} onLogin={handleLogin} />
@@ -193,6 +196,7 @@ export default function PaygoApp() {
           userName={userData?.name || "User"}
           userEmail={userData?.email || ""}
           onBack={handleBackToDashboard}
+          userBalance={userBalance}
         />
       ) : currentScreen === "transfer" ? (
         <TransferScreen onBack={handleBackToDashboard} onSuccess={handleTransactionSuccess} userBalance={userBalance} />
