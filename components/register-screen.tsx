@@ -7,32 +7,33 @@ import { Input } from "@/components/ui/input"
 interface RegisterScreenProps {
   onSwitchToLogin: () => void
   onSuccessfulRegistration: (name: string, email: string) => void
-  registeredEmails: string[]
+  registeredEmails?: string[]
   registeredNames?: string[]
 }
 
 export default function RegisterScreen({
   onSwitchToLogin,
   onSuccessfulRegistration,
-  registeredEmails,
-  registeredNames = [],
 }: RegisterScreenProps) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [emailError, setEmailError] = useState("")
   const [showPaygoInfo, setShowPaygoInfo] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const handleRegister = () => {
     if (name && email && password) {
-      if (registeredNames.includes(name)) {
-        setEmailError("Account name already exists, please choose a different name")
-        return
+      if (typeof window !== "undefined") {
+        const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
+        const existingUser = registeredUsers.find((user: any) => user.email === email)
+        
+        if (existingUser) {
+          setEmailError("User details already exist on PAYgO LIMITED. Kindly log in.")
+          return
+        }
       }
-      if (registeredEmails.includes(email)) {
-        setEmailError("Email registered, kindly choose LOGIN option")
-        return
-      }
+      
       setEmailError("")
       
       // Store user in localStorage for login validation (client-side only)
@@ -42,7 +43,11 @@ export default function RegisterScreen({
         localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
       }
       
-      onSuccessfulRegistration(name, email)
+      setShowSuccessMessage(true)
+      setTimeout(() => {
+        onSwitchToLogin()
+        setShowSuccessMessage(false)
+      }, 2000)
     }
   }
 
@@ -91,6 +96,13 @@ export default function RegisterScreen({
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <div className="fixed top-4 left-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50 text-center">
+          Registration successful. Please log in.
         </div>
       )}
 

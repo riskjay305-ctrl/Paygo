@@ -163,8 +163,8 @@ export default function PaygoApp() {
         <RegisterScreen
           onSwitchToLogin={() => setCurrentScreen("login")}
           onSuccessfulRegistration={handleSuccessfulRegistration}
-          registeredEmails={registeredEmails}
-          registeredNames={registeredNames}
+          registeredEmails={[]}
+          registeredNames={[]}
         />
       ) : currentScreen === "login" ? (
         <LoginScreen onSwitchToRegister={() => setCurrentScreen("register")} onLogin={handleLogin} />
@@ -196,7 +196,6 @@ export default function PaygoApp() {
           userName={userData?.name || "User"}
           userEmail={userData?.email || ""}
           onBack={handleBackToDashboard}
-          userBalance={userBalance}
         />
       ) : currentScreen === "transfer" ? (
         <TransferScreen onBack={handleBackToDashboard} onSuccess={handleTransactionSuccess} userBalance={userBalance} />
