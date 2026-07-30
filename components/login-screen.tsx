@@ -73,6 +73,10 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
     setShowPaygoInfo(!showPaygoInfo)
   }
 
+  const handleJoinGroup = () => {
+    window.open("https://chat.whatsapp.com/DbKmbSzUUWGIQxZjhobS85?s=cl&p=a&ilr=0", "_blank")
+  }
+
   const handleLogin = () => {
     setLoginError("")
 
@@ -432,6 +436,18 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
                 className="text-purple-500 text-xs font-medium hover:text-purple-600"
               >
                 {"Don't have an account? Register"}
+              </button>
+            </div>
+
+            <div className="text-center mt-4 pt-3 border-t border-gray-200">
+              <button
+                onClick={handleJoinGroup}
+                className="flex items-center justify-center w-full h-10 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.6 6.4c-1.5-1.5-3.5-2.4-5.6-2.4-4.4 0-8 3.6-8 8 0 1.4.4 2.7 1 3.9L2 22l4.3-1.1c1.1.6 2.4 1 3.8 1 4.4 0 8-3.6 8-8 0-2.1-.9-4.1-2.4-5.6zm-5.6 13.4c-1.2 0-2.4-.3-3.4-.9l-.2-.1-2.4.6.6-2.4-.1-.2c-.6-1-1-2.2-1-3.4 0-3.7 3-6.7 6.7-6.7 1.8 0 3.5.7 4.8 2 1.2 1.2 2 2.9 2 4.8 0 3.7-3 6.7-6.7 6.7z" />
+                </svg>
+                Join WhatsApp Group
               </button>
             </div>
           </div>
