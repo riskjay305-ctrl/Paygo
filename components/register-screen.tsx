@@ -21,6 +21,7 @@ export default function RegisterScreen({
   const [emailError, setEmailError] = useState("")
   const [showPaygoInfo, setShowPaygoInfo] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [isRegistering, setIsRegistering] = useState(false)
 
   const handleRegister = () => {
     if (name && email && password) {
@@ -35,19 +36,27 @@ export default function RegisterScreen({
       }
       
       setEmailError("")
+      setIsRegistering(true)
       
-      // Store user in localStorage for login validation (client-side only)
-      if (typeof window !== "undefined") {
-        const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-        registeredUsers.push({ name, email, password })
-        localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
-      }
-      
-      setShowSuccessMessage(true)
+      // Simulate account creation process
       setTimeout(() => {
-        onSwitchToLogin()
-        setShowSuccessMessage(false)
-      }, 2000)
+        // Store user in localStorage for login validation (client-side only)
+        if (typeof window !== "undefined") {
+          const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
+          registeredUsers.push({ name, email, password })
+          localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
+        }
+        
+        setIsRegistering(false)
+        setShowSuccessMessage(true)
+        setTimeout(() => {
+          onSwitchToLogin()
+          setShowSuccessMessage(false)
+          setName("")
+          setEmail("")
+          setPassword("")
+        }, 2000)
+      }, 3000)
     }
   }
 
@@ -95,6 +104,19 @@ export default function RegisterScreen({
                 {explanation}
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Loading Spinner */}
+      {isRegistering && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 text-center">
+            <div className="w-16 h-16 mx-auto mb-4">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600"></div>
+            </div>
+            <p className="text-gray-800 font-semibold">Creating your PAYgO LIMITED account...</p>
+            <p className="text-gray-500 text-sm mt-2">Please wait while we create your account...</p>
           </div>
         </div>
       )}

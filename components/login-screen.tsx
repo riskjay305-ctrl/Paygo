@@ -82,14 +82,11 @@ export default function LoginScreen({ onSwitchToRegister, onLogin }: LoginScreen
         const existingUser = registeredUsers.find((user: any) => user.email === email && user.password === password)
 
         if (existingUser) {
+          // Store current user session
+          localStorage.setItem("currentUser", JSON.stringify({ name: existingUser.name, email: existingUser.email }))
           onLogin()
         } else {
-          const userWithEmail = registeredUsers.find((user: any) => user.email === email)
-          if (userWithEmail) {
-            setLoginError("Incorrect password")
-          } else {
-            setLoginError("Invalid email or password")
-          }
+          setLoginError("Incorrect email or password.")
         }
       }
     }

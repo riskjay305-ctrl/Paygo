@@ -75,7 +75,11 @@ export default function PaygoApp() {
   }
 
   const handleLogout = () => {
-    setCurrentScreen("register")
+    // Clear current user session
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("currentUser")
+    }
+    setCurrentScreen("login")
     setUserData(null)
   }
 
@@ -120,6 +124,13 @@ export default function PaygoApp() {
   }
 
   const handleLogin = () => {
+    // Fetch current user from localStorage
+    if (typeof window !== "undefined") {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null")
+      if (currentUser) {
+        setUserData(currentUser)
+      }
+    }
     setCurrentScreen("dashboard")
   }
 
