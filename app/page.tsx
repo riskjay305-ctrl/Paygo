@@ -5,6 +5,7 @@ import RegisterScreen from "@/components/register-screen"
 import LoginScreen from "@/components/login-screen"
 import LoadingScreen from "@/components/loading-screen"
 import OnboardingScreen from "@/components/onboarding-screen"
+import PremiumOnboardingScreen from "@/components/premium-onboarding-screen"
 import WelcomeScreen from "@/components/welcome-screen"
 import DashboardScreen from "@/components/dashboard-screen"
 import BuyPayIdScreen from "@/components/buy-pay-id-screen"
@@ -21,6 +22,7 @@ import UpgradeScreen from "@/components/upgrade-screen"
 
 export default function PaygoApp() {
   const [currentScreen, setCurrentScreen] = useState<
+    | "premiumOnboarding"
     | "register"
     | "login"
     | "loading"
@@ -38,7 +40,7 @@ export default function PaygoApp() {
     | "group"
     | "earnMore"
     | "upgrade"
-  >("register")
+  >("premiumOnboarding")
   const [userData, setUserData] = useState<{ name: string; email: string } | null>(null)
   const [transactionDetails, setTransactionDetails] = useState<any>(null)
   const [userBalance, setUserBalance] = useState(180000)
@@ -64,6 +66,34 @@ export default function PaygoApp() {
 
   const handleLoadingComplete = () => {
     setCurrentScreen("onboarding")
+  }
+
+  const handlePremiumOnboardingSkip = () => {
+    // Check if user is logged in
+    if (typeof window !== "undefined") {
+      const currentUser = localStorage.getItem("currentUser")
+      if (currentUser) {
+        setCurrentScreen("dashboard")
+      } else {
+        setCurrentScreen("login")
+      }
+    } else {
+      setCurrentScreen("login")
+    }
+  }
+
+  const handlePremiumOnboardingGetStarted = () => {
+    // Check if user is logged in
+    if (typeof window !== "undefined") {
+      const currentUser = localStorage.getItem("currentUser")
+      if (currentUser) {
+        setCurrentScreen("dashboard")
+      } else {
+        setCurrentScreen("login")
+      }
+    } else {
+      setCurrentScreen("login")
+    }
   }
 
   const handleOnboardingComplete = () => {
@@ -170,7 +200,9 @@ export default function PaygoApp() {
 
   return (
     <div className="min-h-screen">
-      {currentScreen === "register" ? (
+      {currentScreen === "premiumOnboarding" ? (
+        <PremiumOnboardingScreen onSkip={handlePremiumOnboardingSkip} onGetStarted={handlePremiumOnboardingGetStarted} />
+      ) : currentScreen === "register" ? (
         <RegisterScreen
           onSwitchToLogin={() => setCurrentScreen("login")}
           onSuccessfulRegistration={handleSuccessfulRegistration}

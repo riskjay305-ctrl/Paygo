@@ -22,6 +22,8 @@ export default function RegisterScreen({
   const [showPaygoInfo, setShowPaygoInfo] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [isRegistering, setIsRegistering] = useState(false)
+  const [currentMessage, setCurrentMessage] = useState(0)
+  const [loadingProgress, setLoadingProgress] = useState(0)
 
   const handleRegister = () => {
     if (name && email && password) {
@@ -37,9 +39,35 @@ export default function RegisterScreen({
       
       setEmailError("")
       setIsRegistering(true)
+      setCurrentMessage(0)
+      setLoadingProgress(0)
       
-      // Simulate account creation process
+      const messages = [
+        "Creating your PAYgO LIMITED account...",
+        `Welcome, ${name}`,
+        `Email: ${email}`,
+        "Verifying your registration details...",
+        "Encrypting your account information...",
+        "Securely saving your details...",
+        "Storing your account on PAYgO LIMITED servers...",
+        "Setting up your personal dashboard...",
+        "Almost done...",
+        "Your account has been created successfully!",
+      ]
+      
+      let messageIndex = 0
+      const messageInterval = setInterval(() => {
+        if (messageIndex < messages.length) {
+          setCurrentMessage(messageIndex)
+          setLoadingProgress((messageIndex / messages.length) * 100)
+          messageIndex++
+        }
+      }, 1000)
+      
+      // Simulate account creation process - 10 seconds total
       setTimeout(() => {
+        clearInterval(messageInterval)
+        
         // Store user in localStorage for login validation (client-side only)
         if (typeof window !== "undefined") {
           const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
@@ -55,8 +83,10 @@ export default function RegisterScreen({
           setName("")
           setEmail("")
           setPassword("")
+          setCurrentMessage(0)
+          setLoadingProgress(0)
         }, 2000)
-      }, 3000)
+      }, 10000)
     }
   }
 
@@ -111,12 +141,37 @@ export default function RegisterScreen({
       {/* Loading Spinner */}
       {isRegistering && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-4">
+          <div className="bg-white rounded-lg p-8 text-center max-w-sm">
+            {/* Animated Spinner */}
+            <div className="w-16 h-16 mx-auto mb-6">
               <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600"></div>
             </div>
-            <p className="text-gray-800 font-semibold">Creating your PAYgO LIMITED account...</p>
-            <p className="text-gray-500 text-sm mt-2">Please wait while we create your account...</p>
+            
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-2 mb-6 overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-purple-600 to-orange-500 h-full transition-all duration-300"
+                style={{ width: `${loadingProgress}%` }}
+              ></div>
+            </div>
+            
+            {/* Dynamic Message */}
+            <p className="text-gray-800 font-semibold h-6 transition-opacity duration-300">
+              {
+                [
+                  "Creating your PAYgO LIMITED account...",
+                  `Welcome, ${name}`,
+                  `Email: ${email}`,
+                  "Verifying your registration details...",
+                  "Encrypting your account information...",
+                  "Securely saving your details...",
+                  "Storing your account on PAYgO LIMITED servers...",
+                  "Setting up your personal dashboard...",
+                  "Almost done...",
+                  "Your account has been created successfully!",
+                ][currentMessage]
+              }
+            </p>
           </div>
         </div>
       )}
