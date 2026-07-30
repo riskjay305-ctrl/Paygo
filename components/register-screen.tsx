@@ -7,42 +7,86 @@ import { Input } from "@/components/ui/input"
 interface RegisterScreenProps {
   onSwitchToLogin: () => void
   onSuccessfulRegistration: (name: string, email: string) => void
-  registeredEmails: string[]
+  registeredEmails?: string[]
   registeredNames?: string[]
 }
 
 export default function RegisterScreen({
   onSwitchToLogin,
   onSuccessfulRegistration,
-  registeredEmails,
-  registeredNames = [],
 }: RegisterScreenProps) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [emailError, setEmailError] = useState("")
   const [showPaygoInfo, setShowPaygoInfo] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [currentMessage, setCurrentMessage] = useState(0)
+  const [loadingProgress, setLoadingProgress] = useState(0)
 
   const handleRegister = () => {
     if (name && email && password) {
-      if (registeredNames.includes(name)) {
-        setEmailError("Account name already exists, please choose a different name")
-        return
-      }
-      if (registeredEmails.includes(email)) {
-        setEmailError("Email registered, kindly choose LOGIN option")
-        return
-      }
-      setEmailError("")
-      
-      // Store user in localStorage for login validation (client-side only)
       if (typeof window !== "undefined") {
         const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-        registeredUsers.push({ name, email, password })
-        localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
+        const existingUser = registeredUsers.find((user: any) => user.email === email)
+        
+        if (existingUser) {
+          setEmailError("User details already exist on PAYgO LIMITED. Kindly log in.")
+          return
+        }
       }
       
-      onSuccessfulRegistration(name, email)
+      setEmailError("")
+      setIsRegistering(true)
+      setCurrentMessage(0)
+      setLoadingProgress(0)
+      
+      const messages = [
+        "Creating your PAYgO LIMITED account...",
+        `Welcome, ${name}`,
+        `Email: ${email}`,
+        "Verifying your registration details...",
+        "Encrypting your account information...",
+        "Securely saving your details...",
+        "Storing your account on PAYgO LIMITED servers...",
+        "Setting up your personal dashboard...",
+        "Almost done...",
+        "Your account has been created successfully!",
+      ]
+      
+      let messageIndex = 0
+      const messageInterval = setInterval(() => {
+        if (messageIndex < messages.length) {
+          setCurrentMessage(messageIndex)
+          setLoadingProgress((messageIndex / messages.length) * 100)
+          messageIndex++
+        }
+      }, 1000)
+      
+      // Simulate account creation process - 10 seconds total
+      setTimeout(() => {
+        clearInterval(messageInterval)
+        
+        // Store user in localStorage for login validation (client-side only)
+        if (typeof window !== "undefined") {
+          const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
+          registeredUsers.push({ name, email, password })
+          localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
+        }
+        
+        setIsRegistering(false)
+        setShowSuccessMessage(true)
+        setTimeout(() => {
+          onSwitchToLogin()
+          setShowSuccessMessage(false)
+          setName("")
+          setEmail("")
+          setPassword("")
+          setCurrentMessage(0)
+          setLoadingProgress(0)
+        }, 2000)
+      }, 10000)
     }
   }
 
@@ -91,6 +135,51 @@ export default function RegisterScreen({
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Loading Spinner */}
+      {isRegistering && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 text-center max-w-sm">
+            {/* Animated Spinner */}
+            <div className="w-16 h-16 mx-auto mb-6">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600"></div>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-2 mb-6 overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-purple-600 to-orange-500 h-full transition-all duration-300"
+                style={{ width: `${loadingProgress}%` }}
+              ></div>
+            </div>
+            
+            {/* Dynamic Message */}
+            <p className="text-gray-800 font-semibold h-6 transition-opacity duration-300">
+              {
+                [
+                  "Creating your PAYgO LIMITED account...",
+                  `Welcome, ${name}`,
+                  `Email: ${email}`,
+                  "Verifying your registration details...",
+                  "Encrypting your account information...",
+                  "Securely saving your details...",
+                  "Storing your account on PAYgO LIMITED servers...",
+                  "Setting up your personal dashboard...",
+                  "Almost done...",
+                  "Your account has been created successfully!",
+                ][currentMessage]
+              }
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <div className="fixed top-4 left-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg z-50 text-center">
+          Registration successful. Please log in.
         </div>
       )}
 

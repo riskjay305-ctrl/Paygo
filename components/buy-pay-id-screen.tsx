@@ -11,10 +11,9 @@ interface BuyPayIdScreenProps {
   userName: string
   userEmail: string
   onBack: () => void
-  userBalance?: number
 }
 
-export default function BuyPayIdScreen({ userName, userEmail, onBack, userBalance = 8500 }: BuyPayIdScreenProps) {
+export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayIdScreenProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
@@ -320,8 +319,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack, userBalanc
               </div>
 
               <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-                <label className="text-gray-600 text-sm font-medium block mb-2">Current Wallet Balance</label>
-                <span className="text-orange-600 font-bold text-lg">#{userBalance?.toLocaleString()}.00</span>
+                <label className="text-gray-600 text-sm font-medium block mb-2">Amount to Pay</label>
+                <span className="text-orange-600 font-bold text-lg">₦10,150.00</span>
               </div>
             </div>
 
