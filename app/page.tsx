@@ -40,7 +40,7 @@ export default function PaygoApp() {
     | "group"
     | "earnMore"
     | "upgrade"
-  >("premiumOnboarding")
+  >("login")
   const [userData, setUserData] = useState<{ name: string; email: string } | null>(null)
   const [transactionDetails, setTransactionDetails] = useState<any>(null)
   const [userBalance, setUserBalance] = useState(180000)
@@ -69,31 +69,13 @@ export default function PaygoApp() {
   }
 
   const handlePremiumOnboardingSkip = () => {
-    // Check if user is logged in
-    if (typeof window !== "undefined") {
-      const currentUser = localStorage.getItem("currentUser")
-      if (currentUser) {
-        setCurrentScreen("dashboard")
-      } else {
-        setCurrentScreen("login")
-      }
-    } else {
-      setCurrentScreen("login")
-    }
+    // Skip onboarding and go to dashboard
+    setCurrentScreen("dashboard")
   }
 
   const handlePremiumOnboardingGetStarted = () => {
-    // Check if user is logged in
-    if (typeof window !== "undefined") {
-      const currentUser = localStorage.getItem("currentUser")
-      if (currentUser) {
-        setCurrentScreen("dashboard")
-      } else {
-        setCurrentScreen("login")
-      }
-    } else {
-      setCurrentScreen("login")
-    }
+    // Complete onboarding and go to dashboard
+    setCurrentScreen("dashboard")
   }
 
   const handleOnboardingComplete = () => {
@@ -161,7 +143,8 @@ export default function PaygoApp() {
         setUserData(currentUser)
       }
     }
-    setCurrentScreen("dashboard")
+    // Show onboarding after successful login
+    setCurrentScreen("premiumOnboarding")
   }
 
   const handleTransactionSuccess = (details: any) => {

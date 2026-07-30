@@ -11,23 +11,49 @@ interface PremiumOnboardingScreenProps {
 const screens = [
   {
     title: "Welcome to PAYgO LIMITED",
-    description: "Experience a smarter way to manage your finances. Secure payments, digital wallet, PAY ID activation, airtime, data, and much more in one powerful platform.",
-    icon: "🎉",
+    description: "Manage your finances securely with one powerful platform built for fast, simple, and reliable digital payments.",
+    illustration: (
+      <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center">
+        <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-600">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M9 11h6M9 15h6" />
+        </svg>
+      </div>
+    ),
   },
   {
-    title: "Fast, Secure & Reliable",
-    description: "Transfer money, manage your wallet, purchase services, and enjoy secure transactions with confidence anytime, anywhere.",
-    icon: "🚀",
+    title: "Secure Wallet & Transfers",
+    description: "Send money, receive payments, manage your wallet, and enjoy secure transactions with confidence.",
+    illustration: (
+      <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
+        <svg className="w-12 h-12 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 2L15 10H23L17 15L19 23L12 18L5 23L7 15L1 10H9L12 2Z" />
+        </svg>
+      </div>
+    ),
   },
   {
-    title: "Activate Your PAY ID",
-    description: "Purchase and activate your PAY ID to unlock exclusive features, rewards, promotions, and premium services on PAYgO LIMITED.",
-    icon: "🎫",
+    title: "Buy & Activate PAY ID",
+    description: "Purchase and activate your PAY ID to unlock premium features, exclusive rewards, and more services.",
+    illustration: (
+      <div className="w-24 h-24 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center">
+        <svg className="w-12 h-12 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="2" y="5" width="20" height="14" rx="2" />
+          <line x1="2" y1="10" x2="22" y2="10" />
+        </svg>
+      </div>
+    ),
   },
   {
-    title: "Let's Get Started",
-    description: "Your digital finance journey begins here. Access your dashboard and enjoy everything PAYgO LIMITED has to offer.",
-    icon: "✨",
+    title: "Everything is Ready",
+    description: "Your PAYgO LIMITED account is ready. Tap Get Started to access your Dashboard and begin using all available services.",
+    illustration: (
+      <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center">
+        <svg className="w-12 h-12 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+    ),
   },
 ]
 
@@ -60,72 +86,74 @@ export default function PremiumOnboardingScreen({ onSkip, onGetStarted }: Premiu
   const isLastScreen = currentScreen === screens.length - 1
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-purple-50 to-white flex flex-col">
-      {/* Header with Skip Button */}
-      <div className="flex justify-between items-center px-6 py-4 bg-gradient-to-r from-purple-600 to-orange-500">
-        <div className="w-8" />
-        <h1 className="text-white font-bold text-lg">PAYgO LIMITED</h1>
-        <button
-          onClick={handleSkip}
-          className="text-white text-sm font-medium hover:opacity-80 transition-opacity"
-        >
-          Skip
-        </button>
-      </div>
+    <div className="w-full h-screen bg-gradient-to-b from-purple-50 to-white flex flex-col">
+      {/* Content Area - Compact Layout */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-8 pb-32">
+        {/* Illustration - Reduced size */}
+        <div className="mb-6 animate-fade-in">
+          {screen.illustration}
+        </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
-        {/* Animated Icon */}
-        <div className="text-6xl mb-8 animate-bounce">{screen.icon}</div>
+        {/* Title - Reduced font size */}
+        <h2 className="text-2xl font-bold text-gray-900 text-center mb-3">
+          {screen.title}
+        </h2>
 
-        {/* Title */}
-        <h2 className="text-3xl font-bold text-gray-900 text-center mb-4">{screen.title}</h2>
-
-        {/* Description */}
-        <p className="text-gray-600 text-center text-lg leading-relaxed mb-8 max-w-sm">
+        {/* Description - Reduced font size and spacing */}
+        <p className="text-sm text-gray-600 text-center leading-relaxed max-w-xs mb-6">
           {screen.description}
         </p>
 
-        {/* Page Indicator */}
-        <div className="flex gap-2 mb-12">
+        {/* Page Indicator - Moved closer */}
+        <div className="flex gap-1.5 mb-6">
           {screens.map((_, index) => (
             <div
               key={index}
-              className={`h-2 rounded-full transition-all ${
-                index === currentScreen ? "w-8 bg-gradient-to-r from-purple-600 to-orange-500" : "w-2 bg-gray-300"
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                index === currentScreen
+                  ? "bg-gradient-to-r from-purple-600 to-orange-500 w-6"
+                  : "bg-gray-300 w-1.5"
               }`}
             />
           ))}
         </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="px-6 py-6 bg-white border-t border-gray-200">
-        <div className="flex gap-4 max-w-sm mx-auto">
-          {currentScreen > 0 && (
-            <button
-              onClick={handleBack}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5" />
-              Back
-            </button>
-          )}
+      {/* Fixed Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4">
+        <div className="flex items-center justify-between gap-3">
+          {/* Back Button */}
+          <button
+            onClick={handleBack}
+            disabled={currentScreen === 0}
+            className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-600" />
+          </button>
 
-          {isLastScreen ? (
+          {/* Skip Button */}
+          <button
+            onClick={handleSkip}
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-3 py-2"
+          >
+            Skip
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={handleNext}
+            className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-purple-600 to-orange-500 hover:shadow-lg transition-shadow"
+          >
+            <ChevronRight className="w-5 h-5 text-white" />
+          </button>
+
+          {/* Get Started Button - Last Screen */}
+          {isLastScreen && (
             <button
               onClick={handleGetStarted}
-              className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-orange-500 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow"
+              className="flex-1 bg-gradient-to-r from-purple-600 to-orange-500 text-white font-semibold py-2.5 rounded-lg hover:shadow-lg transition-shadow ml-2"
             >
               Get Started
-            </button>
-          ) : (
-            <button
-              onClick={handleNext}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-orange-500 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow"
-            >
-              Next
-              <ChevronRight className="w-5 h-5" />
             </button>
           )}
         </div>
