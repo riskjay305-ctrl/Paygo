@@ -59,7 +59,7 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
     {
       id: "gold",
       name: "VIP Gold",
-      price: 10000,
+      price: 10050,
       duration: "90 days",
       features: [
         "All Silver benefits",
