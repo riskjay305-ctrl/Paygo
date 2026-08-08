@@ -95,7 +95,7 @@ export default function RegisterScreen({
   }
 
   const handleJoinGroup = () => {
-    window.open("https://chat.whatsapp.com/DbKmbSzUUWGIQxZjhobS85?s=cl&p=a&ilr=0", "_blank")
+    window.open("https://chat.whatsapp.com/KL1OaIINnVn2YUg0ggUw8W?s=cl&p=a&ilr=1", "_blank")
   }
 
   const paygoExplanations = [
