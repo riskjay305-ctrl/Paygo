@@ -29,9 +29,9 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const paymentDetails = {
-    bankName: "Moniepoint MFB",
-    accountNumber: "6801428855",
-    accountName: "FR... EM....CH (PAYgO LIMITED Agent)",
+    bankName: "Palmpay MFB",
+    accountNumber: "8998790636",
+    accountName: "E..C...O",
   }
 
   const handlePay = () => {
@@ -48,7 +48,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const playVoiceNote = () => {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(
-        "OPay Bank is highly prohibited for making payment, and you should either use POS TERMINAL or other bank account.",
+        "Dear User, kindly be warned: we are not accepting payment from OPay or PalmPay MFB. Do not make payment from either of these platforms. Payments from OPay and PalmPay MFB will not be accepted.",
       )
       utterance.rate = 0.8
       utterance.pitch = 1
@@ -378,9 +378,9 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             </div>
 
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-              <p className="text-red-800 text-center font-medium">
-                OPay Bank is highly prohibited for making payment, and you should either use POS TERMINAL or other bank
-                account.
+              <p className="text-red-800 text-center font-bold">
+                Dear User, kindly be warned: we are not accepting payment from OPay or PalmPay MFB. Do not make payment
+                from either of these platforms. Payments from OPay and PalmPay MFB will not be accepted.
               </p>
             </div>
 
