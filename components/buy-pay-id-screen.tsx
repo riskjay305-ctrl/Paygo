@@ -31,7 +31,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   const paymentDetails = {
     bankName: "Palmpay MFB",
     accountNumber: "8998790636",
-    accountName: "E..C...O",
+    accountName: "E...C....O (PAYgO LIMITED Agent)",
   }
 
   const handlePay = () => {
@@ -304,7 +304,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                 <label className="text-gray-600 text-sm font-medium block mb-2">Account Name</label>
                 <div className="flex items-center justify-between">
                   <div className="flex flex-wrap items-center gap-1">
-                    <span className="text-gray-800 font-semibold">FR... EM....CH</span>
+                    <span className="text-gray-800 font-semibold">E...C....O</span>
                     <span className="text-gray-600 text-xs">(PAYgO LIMITED Agent)</span>
                   </div>
                   <Button
