@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Volume2 } from "lucide-react"
+import { ArrowLeft, Volume2, Eye } from "lucide-react"
 import { useState, useRef } from "react"
 import Image from "next/image"
 
@@ -97,8 +97,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showConfirmingPayment) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
-        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
+      <div className="min-h-screen bg-[#f4f7ff]">
+        <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
           <h1 className="text-white text-xl font-semibold text-center">Confirming Payment</h1>
         </div>
 
@@ -146,8 +146,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showPaymentNotReceived) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
-        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
+      <div className="min-h-screen bg-[#f4f7ff]">
+        <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
           <div className="flex items-center space-x-4 mb-4">
             <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
               <ArrowLeft className="h-5 w-5" />
@@ -186,7 +186,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
                   }}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2"
                 >
-                  👁️
+                      <Eye className="h-4 w-4 text-slate-500" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -194,7 +194,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             <div className="space-y-3">
               <Button
                 onClick={handleResubmit}
-                className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold"
+                className="w-full bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold"
               >
                 Try Again
               </Button>
@@ -217,8 +217,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showPaymentPage) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
-        <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-6">
+      <div className="min-h-screen bg-[#f4f7ff]">
+        <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
           <div className="flex items-center space-x-4 mb-4">
             <Button
               onClick={() => setShowPaymentPage(false)}
@@ -255,8 +255,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showPaymentDetails) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
-        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
+      <div className="min-h-screen bg-[#f4f7ff]">
+        <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
           <div className="flex items-center space-x-4 mb-4">
             <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
               <ArrowLeft className="h-5 w-5" />
@@ -343,7 +343,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
             <Button
               onClick={handleMadePayment}
               disabled={!uploadedReceipt}
-              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold disabled:opacity-50"
+              className="w-full bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold disabled:opacity-50"
             >
               I'VE MADE PAYMENT
             </Button>
@@ -357,8 +357,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
 
   if (showWarning) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
-        <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
+      <div className="min-h-screen bg-[#f4f7ff]">
+        <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
           <div className="flex items-center space-x-4 mb-4">
             <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
               <ArrowLeft className="h-5 w-5" />
@@ -420,8 +420,8 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100">
-      <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
+    <div className="min-h-screen bg-[#f4f7ff]">
+      <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
         <div className="flex items-center space-x-4 mb-4">
           <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
             <ArrowLeft className="h-5 w-5" />
@@ -470,7 +470,7 @@ export default function BuyPayIdScreen({ userName, userEmail, onBack }: BuyPayId
           <Button
             onClick={handlePay}
             disabled={isProcessing}
-            className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold"
+            className="w-full bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] hover:from-purple-700 hover:to-orange-600 text-white py-3 rounded-lg font-semibold"
           >
             {isProcessing ? "Processing..." : "PAY"}
           </Button>

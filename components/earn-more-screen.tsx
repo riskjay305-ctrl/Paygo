@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft, Gift, Clock, CheckCircle, Coins, Star, Users, Share2 } from "lucide-react"
+import { ArrowLeft, Gift, Clock, CheckCircle, Coins, Star, Users, Share2, Copy, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import type { LucideIcon } from "lucide-react"
@@ -67,6 +67,14 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
   ])
 
   const [completingTask, setCompletingTask] = useState<string | null>(null)
+  const [referralCopied, setReferralCopied] = useState(false)
+
+  const handleCopyReferral = async () => {
+    const referralLink = `${window.location.origin}/?ref=PAYGO`
+    await navigator.clipboard.writeText(referralLink)
+    setReferralCopied(true)
+    window.setTimeout(() => setReferralCopied(false), 2200)
+  }
 
   const handleCompleteTask = async (taskId: string) => {
     const task = tasks.find((t) => t.id === taskId)
@@ -86,7 +94,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
   const availableTasks = tasks.filter((t) => !t.completed).length
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-orange-500 p-4">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_80%_0%,rgba(50,190,255,0.35),transparent_35%),linear-gradient(145deg,#071956,#123fc1_55%,#5422ce)] p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:bg-white/20">
@@ -110,8 +118,23 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
         </div>
       </div>
 
+      <section className="mb-5 rounded-3xl border border-white/15 bg-white/10 p-4 text-white shadow-xl backdrop-blur-md">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200">Referral rewards</p>
+            <h2 className="mt-1 text-lg font-bold">Invite a new member</h2>
+            <p className="mt-1 text-xs text-blue-100">Share your PAYgO link so a new member can create an account.</p>
+          </div>
+          <Users className="h-9 w-9 shrink-0 text-cyan-200" />
+        </div>
+        <button onClick={handleCopyReferral} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-2xl bg-white font-bold text-blue-800 shadow-lg transition-transform hover:bg-blue-50 active:scale-[0.98]">
+          {referralCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          {referralCopied ? "Referral link copied" : "Copy referral link"}
+        </button>
+      </section>
+
       {/* Tasks List */}
-      <div className="bg-white rounded-3xl p-6 shadow-2xl">
+      <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-[0_18px_50px_rgba(33,60,130,0.14)]">
         <h2 className="text-xl font-bold text-gray-800 mb-4">Daily Tasks</h2>
 
         <div className="space-y-4">
@@ -170,7 +193,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
                       <Button
                         onClick={() => handleCompleteTask(task.id)}
                         size="sm"
-                        className="bg-purple-600 hover:bg-purple-700 text-white"
+                        className="bg-gradient-to-r from-[#123fc1] to-[#5422ce] hover:from-[#0d2d94] hover:to-[#4315ae] text-white"
                       >
                         Complete
                       </Button>
@@ -183,7 +206,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
         </div>
 
         {/* Progress Summary */}
-        <div className="mt-6 bg-gradient-to-r from-purple-100 to-orange-100 rounded-2xl p-4">
+        <div className="mt-6 bg-gradient-to-r from-blue-50 to-violet-50 rounded-2xl p-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-gray-800">Daily Progress</h3>

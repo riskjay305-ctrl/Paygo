@@ -69,9 +69,9 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
+    <div className="min-h-screen bg-[#f4f7ff]">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-6">
+      <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-4">
         <div className="flex items-center space-x-4 mb-4">
           <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
             <ArrowLeft className="h-5 w-5" />
@@ -81,8 +81,8 @@ export default function TransferScreen({ onBack, onSuccess, userBalance = 180000
       </div>
 
       {/* Content */}
-      <div className="px-4 py-8">
-        <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+      <div className="px-4 py-5">
+        <div className="rounded-[24px] border border-slate-100 bg-white p-5 shadow-[0_16px_40px_rgba(33,60,130,0.12)] max-w-md mx-auto">
           <h2 className="text-gray-800 text-lg font-semibold mb-6 text-center">
             {showCodeInput ? "Verify Transfer" : "Bank Transfer Details"}
           </h2>

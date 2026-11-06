@@ -12,12 +12,12 @@ export default function WelcomeScreen({ onContinueToDashboard }: WelcomeScreenPr
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-500 via-purple-400 to-orange-400 relative">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_80%_0%,rgba(50,190,255,0.35),transparent_35%),linear-gradient(145deg,#071956,#123fc1_55%,#5422ce)] relative">
       {/* Main content container */}
-      <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">
+      <div className="flex min-h-screen flex-col items-center justify-center px-4 py-6">
         {/* PAYGO Logo with animation */}
-        <div className="mb-12">
-          <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl px-8 py-4 shadow-lg">
+        <div className="mb-7">
+          <div className="bg-gradient-to-r from-blue-700 via-violet-600 to-blue-600 rounded-2xl px-8 py-4 shadow-lg">
             <h1
               className="text-white text-2xl font-bold tracking-wide animate-pulse"
               style={{
@@ -30,15 +30,15 @@ export default function WelcomeScreen({ onContinueToDashboard }: WelcomeScreenPr
           </div>
         </div>
 
-        <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 text-center">
-          <h2 className="text-2xl font-bold text-purple-500 mb-6">Welcome to PayGo!</h2>
+        <div className="w-full max-w-sm rounded-[28px] border border-white/50 bg-white p-6 text-center shadow-[0_24px_70px_rgba(2,16,80,0.28)]">
+          <h2 className="text-2xl font-bold text-blue-700 mb-6">Welcome to PayGo!</h2>
 
           <div className="space-y-3 mb-6">
             <p className="text-gray-600 text-base leading-relaxed">
               As a new user, you'll receive a generous welcome bonus of
             </p>
 
-            <div className="text-3xl font-bold text-purple-500 my-4">₦180,000</div>
+            <div className="text-3xl font-bold text-blue-700 my-4">₦180,000</div>
 
             <p className="text-gray-600 text-base leading-relaxed">
               which can be withdrawn at any time. Yes, you read that right - it's yours to keep!
@@ -48,7 +48,7 @@ export default function WelcomeScreen({ onContinueToDashboard }: WelcomeScreenPr
           {/* Continue Button */}
           <Button
             onClick={onContinueToDashboard}
-            className="w-full h-12 bg-gradient-to-r from-purple-500 to-orange-400 hover:from-purple-600 hover:to-orange-500 text-white text-base font-medium rounded-xl"
+            className="w-full h-12 bg-gradient-to-r from-[#123fc1] to-[#5422ce] hover:from-purple-600 hover:to-orange-500 text-white text-base font-medium rounded-xl"
           >
             Continue to Dashboard
           </Button>

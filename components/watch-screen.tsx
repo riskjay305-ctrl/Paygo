@@ -36,8 +36,8 @@ export default function WatchScreen({ onBack }: WatchScreenProps) {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-6">
+    <div className="min-h-screen bg-[#f4f7ff]">
+      <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
         <div className="flex items-center space-x-4 mb-4">
           <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-purple-500">
             <ArrowLeft className="h-5 w-5" />

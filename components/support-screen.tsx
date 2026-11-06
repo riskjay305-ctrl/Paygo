@@ -21,7 +21,7 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 p-4">
+    <div className="min-h-screen bg-[#f4f7ff] p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <Button variant="ghost" size="icon" onClick={onBack} className="text-gray-800 hover:bg-white/20">
@@ -78,7 +78,7 @@ export default function SupportScreen({ onBack }: SupportScreenProps) {
             <p className="text-sm font-medium text-green-700 mb-4">PAYgO WhatsApp Community</p>
             <Button
               onClick={handleJoinWhatsAppGroup}
-              className="w-full bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white"
+              className="w-full bg-gradient-to-r from-blue-700 via-violet-600 to-blue-600 hover:from-purple-700 hover:to-orange-600 text-white"
             >
               Join WhatsApp Group
             </Button>

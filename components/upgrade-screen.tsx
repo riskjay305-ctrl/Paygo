@@ -92,9 +92,9 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
   ]
 
   const paymentDetails = {
-    bankName: "Moniepoint MFB",
-    accountNumber: "6801428855",
-    accountName: "Francis Emmanuel Chukwu",
+    bankName: "Sterling Bank",
+    accountNumber: "0151197698",
+    accountName: "EL...CY...OB (PAYgO LIMITED)",
   }
 
   const handleSelectTier = (tierId: string) => {
@@ -112,7 +112,7 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
 
   if (showPayment && selectedTierData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 p-4">
+      <div className="min-h-screen bg-[#f4f7ff] p-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Button
@@ -247,7 +247,7 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-orange-500 p-4">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_80%_0%,rgba(50,190,255,0.35),transparent_35%),linear-gradient(145deg,#071956,#123fc1_55%,#5422ce)] p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:bg-white/20">

@@ -1,7 +1,25 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Bell, Eye, EyeOff, MoreVertical } from "lucide-react"
+import {
+  ArrowUpRight,
+  BarChart3,
+  Bell,
+  ChevronRight,
+  Coins,
+  Eye,
+  EyeOff,
+  Gift,
+  Headphones,
+  History,
+  Home,
+  MoreVertical,
+  ShieldCheck,
+  Smartphone,
+  Users,
+  UserRound,
+  WalletCards,
+} from "lucide-react"
 import { useState, useEffect } from "react"
 
 interface DashboardScreenProps {
@@ -26,6 +44,7 @@ interface DashboardScreenProps {
   onGroup: () => void
   onEarnMore: () => void
   onUpgrade: () => void
+  onHistory: () => void
 }
 
 export default function DashboardScreen({
@@ -43,6 +62,7 @@ export default function DashboardScreen({
   onGroup,
   onEarnMore,
   onUpgrade,
+  onHistory,
 }: DashboardScreenProps) {
   const [balanceVisible, setBalanceVisible] = useState(true)
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0)
@@ -106,8 +126,9 @@ export default function DashboardScreen({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative pb-24">
-      <div className="absolute top-20 right-4 w-32 h-24 rounded-2xl opacity-20 bg-gradient-to-r from-purple-600 to-orange-500"></div>
+    <div id="top" className="min-h-screen bg-[#f4f7ff] text-slate-900 relative overflow-x-hidden pb-28">
+      <div className="absolute inset-x-0 top-0 h-[430px] bg-[radial-gradient(circle_at_85%_5%,rgba(104,77,255,0.95),transparent_38%),linear-gradient(145deg,#071a62_0%,#0735b9_48%,#1b0c72_100%)]" />
+      <div className="absolute -right-20 top-32 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
 
       {showPaymentWarning && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -126,107 +147,112 @@ export default function DashboardScreen({
         </div>
       )}
 
-      <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 text-sm overflow-hidden">
+      <div className="relative z-20 border-b border-red-200 bg-red-50 px-3 py-1.5 text-[10px] font-medium text-red-700 overflow-hidden">
         <div className="animate-scroll whitespace-nowrap">
-          Warning ⚠️ We are currently experiencing network delaying on Opay bank but we advise user to go ahead with
+          Warning: We are currently experiencing network delays on OPay, but we advise users to continue with
           other banks account and we'll update all our users when OPay bank network is restored with 300 seconds.
         </div>
       </div>
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-orange-500 px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <span className="text-purple-600 font-bold text-lg">{userName.charAt(0).toUpperCase()}</span>
+      <div className="relative z-10 px-4 pb-5 pt-5 sm:px-6 lg:mx-auto lg:max-w-6xl">
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white shadow-lg shadow-blue-950/20">
+              <span className="text-xl font-black italic text-blue-700">P</span>
             </div>
             <div>
-              <h1 className="text-white text-sm font-medium">Hi, {userName} 👋</h1>
-              <p className="text-purple-200 text-sm">Welcome back!</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-cyan-200">PAYgO</p>
+              <p className="text-xs font-semibold text-white/80">LIMITED</p>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon" className="text-white hover:bg-purple-500">
+          <div className="flex items-center gap-2">
+            <button aria-label="Notifications" className="relative rounded-2xl border border-white/15 bg-white/10 p-3 text-white backdrop-blur-md">
               <Bell className="h-5 w-5" />
-            </Button>
-            <Button
-              onClick={handleSettingsClick}
-              variant="secondary"
-              className="bg-purple-500 hover:bg-purple-400 text-white px-4 py-2 rounded-lg"
-            >
-              <MoreVertical className="h-5 w-5" />
-            </Button>
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-400 text-[9px] font-bold text-white">2</span>
+            </button>
+            <button onClick={handleSettingsClick} aria-label="Open profile settings" className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-400 to-blue-500 text-white shadow-lg">
+              <span className="text-base font-bold">{userName.charAt(0).toUpperCase()}</span>
+            </button>
           </div>
         </div>
 
-        {/* Balance Card */}
-        <div className="bg-gradient-to-r from-purple-500 to-orange-400 rounded-2xl p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <p className="text-purple-200 text-sm mb-1">Available Balance</p>
-              <h2 className="text-white text-3xl font-bold">
-                {balanceVisible ? `₦${userBalance.toLocaleString()}.00` : "₦***,***.00"}
-              </h2>
-              <p className="text-purple-200 text-sm mt-1">Weekly Rewards: ₦180,000.00</p>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setBalanceVisible(!balanceVisible)}
-              className="text-purple-200 hover:bg-purple-400"
-            >
-              {balanceVisible ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
-            </Button>
-          </div>
+        <div className="mb-5">
+          <p className="text-sm font-medium text-blue-100">Welcome back</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-white">Hi, {userName}</h1>
+        </div>
 
-          <div className="flex space-x-3">
-            <Button onClick={onUpgrade} className="flex-1 bg-white text-purple-600 hover:bg-gray-100 rounded-full py-3">
-              <span className="mr-2">✓</span>
-              Upgrade
-            </Button>
-            <Button
-              onClick={onTransfer}
-              className="flex-1 bg-white text-purple-600 hover:bg-gray-100 rounded-full py-3"
-            >
-              <span className="mr-2">↑</span>
-              Transfer
-            </Button>
+        <div className="relative overflow-hidden rounded-[24px] border border-white/20 bg-gradient-to-br from-cyan-400 via-blue-600 to-violet-700 p-4 shadow-2xl shadow-blue-950/30 sm:p-7">
+          <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
+          <WalletCards className="absolute -bottom-8 -right-3 h-36 w-36 rotate-12 text-white/10" />
+          <div className="relative">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm font-medium text-blue-50"><WalletCards className="h-5 w-5" /> Available Balance</div>
+              <button onClick={() => setBalanceVisible(!balanceVisible)} aria-label={balanceVisible ? "Hide balance" : "Show balance"} className="rounded-full bg-white/15 p-2 text-white">{balanceVisible ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}</button>
+            </div>
+            <p className="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">{balanceVisible ? `₦${userBalance.toLocaleString()}.00` : "₦••••••••"}</p>
+            <div className="mt-3 flex items-center justify-between rounded-2xl bg-white/15 px-3 py-2.5 text-xs text-white backdrop-blur-sm">
+              <span className="flex items-center gap-2"><Gift className="h-4 w-4 text-yellow-300" /> Weekly Rewards</span>
+              <span className="flex items-center gap-1 font-bold">View rewards <ChevronRight className="h-4 w-4" /></span>
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <Button onClick={onUpgrade} className="h-11 rounded-2xl bg-white font-bold text-blue-700 hover:bg-blue-50"><ShieldCheck className="mr-2 h-4 w-4" />Upgrade</Button>
+              <Button onClick={onTransfer} className="h-11 rounded-2xl border border-white/25 bg-blue-950/25 font-bold text-white hover:bg-blue-950/40"><ArrowUpRight className="mr-2 h-4 w-4" />Transfer</Button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Services Grid */}
-      <div className="px-4 py-6">
-        <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-3 sm:px-6 lg:py-5">
+        <div className="mb-5 grid grid-cols-4 gap-1.5 rounded-[24px] bg-white/90 p-2.5 shadow-[0_16px_40px_rgba(44,66,140,0.12)] backdrop-blur sm:gap-4 sm:p-5">
           {[
-            { name: "Buy PAY ID", icon: "💳", onClick: onBuyPayId },
-            { name: "Watch", icon: "📺", onClick: onWatch },
-            { name: "Airtime", icon: "📊", onClick: onAirtime },
-            { name: "Data", icon: "💾", onClick: onData },
-            { name: "Support", icon: "🎧", onClick: onSupport },
-            { name: "Group", icon: "🌐", onClick: onGroup },
-            { name: "Earn More", icon: "💰", onClick: onEarnMore },
-            { name: "Profile", icon: "👤", onClick: onProfile },
-          ].map((service, index) => (
-            <div key={index} className="text-center">
-              <button
-                onClick={service.onClick}
-                className="bg-white rounded-2xl p-4 shadow-sm mb-2 w-full hover:shadow-md transition-shadow"
-              >
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-orange-500 rounded-xl flex items-center justify-center mx-auto text-white text-xl">
-                  {service.icon}
-                </div>
-              </button>
-              <p className="text-gray-600 text-xs">{service.name}</p>
-            </div>
-          ))}
+            { name: "Buy PAY ID", icon: WalletCards, tone: "from-cyan-400 to-blue-600", onClick: onBuyPayId },
+            { name: "Watch", icon: Smartphone, tone: "from-violet-500 to-purple-700", onClick: onWatch },
+            { name: "Airtime", icon: BarChart3, tone: "from-orange-400 to-amber-500", onClick: onAirtime },
+            { name: "Data", icon: Coins, tone: "from-emerald-400 to-green-600", onClick: onData },
+            { name: "Support", icon: Headphones, tone: "from-blue-400 to-indigo-600", onClick: onSupport },
+            { name: "Group", icon: Users, tone: "from-violet-500 to-fuchsia-600", onClick: onGroup },
+            { name: "Earn More", icon: Coins, tone: "from-green-400 to-emerald-600", onClick: onEarnMore },
+            { name: "Profile", icon: UserRound, tone: "from-sky-400 to-blue-600", onClick: onProfile },
+          ].map((service) => {
+            const Icon = service.icon
+            return (
+              <div key={service.name} className="text-center">
+                <button onClick={service.onClick} className="group w-full rounded-2xl border border-slate-100 bg-white p-1.5 shadow-[0_8px_24px_rgba(33,60,130,0.08)] transition-all hover:-translate-y-1 hover:shadow-lg active:scale-95 sm:p-4">
+                  <div className={`mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${service.tone} text-white shadow-lg shadow-blue-900/10 sm:h-14 sm:w-14`}><Icon className="h-6 w-6 sm:h-7 sm:w-7" /></div>
+                </button>
+                <p className="mt-1 text-[10px] font-semibold text-slate-600 sm:text-xs">{service.name}</p>
+              </div>
+            )
+          })}
         </div>
+
+        <section className="relative mb-5 overflow-hidden rounded-[22px] bg-gradient-to-r from-[#0a38b7] via-[#1627d5] to-[#6b18df] px-4 py-4 text-white shadow-lg shadow-blue-900/15 sm:px-6">
+          <div className="relative z-10 max-w-[68%]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-200">PAYgO LIMITED</p>
+            <h2 className="mt-1 text-lg font-black leading-tight sm:text-2xl">Grow Your Earnings</h2>
+            <p className="text-sm font-bold leading-tight sm:text-base">with <span className="text-yellow-300">PAYgO LIMITED</span></p>
+            <p className="mt-1 text-[11px] text-blue-100">More Services. More Rewards.</p>
+            <button onClick={onEarnMore} className="mt-3 inline-flex items-center gap-1 rounded-full bg-yellow-300 px-3 py-1.5 text-[11px] font-black text-blue-950 shadow-md hover:bg-yellow-200">Learn More <ArrowUpRight className="h-3.5 w-3.5" /></button>
+          </div>
+          <div className="absolute -right-4 -top-8 h-40 w-40 rounded-full bg-cyan-300/20 blur-2xl" />
+          <div className="absolute bottom-0 right-3 flex items-end gap-1 text-yellow-300" aria-hidden="true">
+            <div className="h-8 w-8 rounded-full border-4 border-yellow-200/70 bg-yellow-400 text-center text-lg font-black leading-6">₦</div>
+            <div className="h-12 w-10 rounded-t-lg bg-gradient-to-t from-yellow-500 to-yellow-200" />
+            <div className="h-16 w-10 rounded-t-lg bg-gradient-to-t from-orange-500 to-yellow-200" />
+          </div>
+          <Smartphone className="absolute bottom-3 right-20 h-20 w-11 rotate-12 rounded-lg border-2 border-white/70 bg-white/90 p-1 text-blue-700" aria-hidden="true" />
+        </section>
 
         {/* Current Promotions */}
         <div className="mb-6">
-          <h3 className="text-gray-800 text-lg font-semibold mb-4">Current Promotions</h3>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-xl font-bold tracking-tight text-[#0b1b59]">Current Promotions</h3>
+            <span className="flex items-center gap-1 text-sm font-bold text-violet-700">View All <ChevronRight className="h-4 w-4" /></span>
+          </div>
 
-          <div className="relative mb-4 h-48 rounded-2xl overflow-hidden">
+          <div className="relative mb-4 h-32 overflow-hidden rounded-2xl sm:h-40">
             {promoImages.map((image, index) => {
               const animationClass = [
                 "fadeInOut",
@@ -276,27 +302,36 @@ export default function DashboardScreen({
             </div>
           </div>
 
-          {/* Withdrawal History */}
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-6 relative overflow-hidden">
-            <h4 className="text-white text-2xl font-bold mb-4">Withdrawal History</h4>
-            <div className="space-y-3 max-h-32 overflow-y-auto">
+          <section id="history" className="rounded-[24px] border border-slate-100 bg-white p-4 shadow-[0_12px_32px_rgba(33,60,130,0.1)]">
+            <div className="mb-3 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-600">Activity</p>
+                <h4 className="text-lg font-black text-slate-900">Recent transactions</h4>
+              </div>
+              <button onClick={onHistory} className="text-xs font-bold text-violet-700">View All</button>
+            </div>
+            <div className="space-y-2">
               {withdrawalHistory.length > 0 ? (
                 withdrawalHistory.slice(0, 3).map((transaction) => (
-                  <div key={transaction.id} className="flex justify-between items-center text-sm">
-                    <div>
-                      <p className="text-white font-medium">{transaction.type}</p>
-                      <p className="text-gray-300 text-xs">
-                        {transaction.recipient || transaction.phone} • {transaction.date}
-                      </p>
+                  <div key={transaction.id} className="flex items-center justify-between rounded-2xl bg-slate-50 px-3 py-2.5 text-sm">
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold text-slate-800">{transaction.type}</p>
+                      <p className="truncate text-[11px] text-slate-500">{transaction.recipient || transaction.phone || "PAYgO wallet"} · {transaction.date}</p>
                     </div>
-                    <p className="text-red-400 font-medium">-₦{transaction.amount.toLocaleString()}</p>
+                    <div className="ml-3 text-right">
+                      <p className="font-bold text-slate-900">-₦{transaction.amount.toLocaleString()}</p>
+                      <p className="text-[10px] font-semibold text-emerald-600">Successful</p>
+                    </div>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-300 text-sm">No withdrawal history yet</p>
+                <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-center">
+                  <History className="mx-auto h-6 w-6 text-slate-300" />
+                  <p className="mt-1 text-xs font-medium text-slate-500">Your latest activity will appear here</p>
+                </div>
               )}
             </div>
-          </div>
+          </section>
         </div>
       </div>
 
@@ -526,18 +561,17 @@ export default function DashboardScreen({
         </div>
       )}
 
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40">
-        <button
-          onClick={handleJoinWhatsApp}
-          className="flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-lg transition-all animate-bounce"
-          style={{
-            animation: "float 2s ease-in-out infinite",
-          }}
-        >
-          <img src="/images/images-20-2819-29.jpeg" alt="WhatsApp" className="h-6 w-6" />
-          <span className="font-semibold">Join Group</span>
-        </button>
+      <div className="fixed inset-x-3 bottom-4 z-40 mx-auto max-w-lg rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-[0_16px_40px_rgba(16,38,103,0.2)] backdrop-blur-md sm:inset-x-auto sm:w-[440px]">
+        <div className="grid grid-cols-4 items-center gap-1">
+          <a href="#top" className="flex flex-col items-center gap-1 rounded-2xl bg-blue-50 py-2 text-blue-700"><Home className="h-5 w-5" /><span className="text-[10px] font-bold">Home</span></a>
+          <button onClick={onHistory} className="flex flex-col items-center gap-1 rounded-2xl py-2 text-slate-500 hover:bg-slate-50"><History className="h-5 w-5" /><span className="text-[10px] font-semibold">History</span></button>
+          <button onClick={onTransfer} className="flex flex-col items-center gap-1 rounded-2xl py-2 text-slate-500 hover:bg-slate-50"><ArrowUpRight className="h-5 w-5" /><span className="text-[10px] font-semibold">Withdraw</span></button>
+          <button onClick={onSupport} className="flex flex-col items-center gap-1 rounded-2xl py-2 text-slate-500 hover:bg-slate-50"><Headphones className="h-5 w-5" /><span className="text-[10px] font-semibold">Support</span></button>
+        </div>
       </div>
+      <button onClick={handleJoinWhatsApp} aria-label="Join PAYgO WhatsApp group" className="fixed bottom-24 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:scale-105 sm:right-6">
+        <img src="/images/images-20-2819-29.jpeg" alt="WhatsApp" className="h-7 w-7 rounded-full" />
+      </button>
 
       <style jsx>{`
         @keyframes scroll {

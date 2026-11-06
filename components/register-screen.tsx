@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -24,6 +24,17 @@ export default function RegisterScreen({
   const [isRegistering, setIsRegistering] = useState(false)
   const [currentMessage, setCurrentMessage] = useState(0)
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const [referralCode, setReferralCode] = useState("")
+
+  useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get("ref")
+    if (code) {
+      setReferralCode(code)
+      window.localStorage.setItem("paygoReferralCode", code)
+    } else {
+      setReferralCode(window.localStorage.getItem("paygoReferralCode") || "")
+    }
+  }, [])
 
   const handleRegister = () => {
     if (name && email && password) {
@@ -71,7 +82,7 @@ export default function RegisterScreen({
         // Store user in localStorage for login validation (client-side only)
         if (typeof window !== "undefined") {
           const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-          registeredUsers.push({ name, email, password })
+          registeredUsers.push({ name, email, password, referralCode: referralCode || undefined })
           localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
         }
         
@@ -112,7 +123,7 @@ export default function RegisterScreen({
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-100 to-orange-100 relative">
+    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_20%_10%,rgba(32,173,255,0.28),transparent_32%),linear-gradient(145deg,#061451_0%,#082a91_52%,#24106b_100%)] px-4 text-white">
       <div className="absolute top-2 right-6">
         <button onClick={handleNeedHelp} className="text-purple-500 text-lg font-medium hover:text-purple-600">
           Need Help?
@@ -186,7 +197,7 @@ export default function RegisterScreen({
       {/* Main content container */}
       <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">
         <div className="mb-10">
-          <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl px-8 py-4 shadow-lg">
+          <div className="bg-gradient-to-r from-cyan-400 via-blue-600 to-violet-600 rounded-2xl px-8 py-4 shadow-xl shadow-blue-950/30">
             <h1
               className="text-white text-2xl font-bold tracking-wide"
               style={{
@@ -199,7 +210,7 @@ export default function RegisterScreen({
           </div>
         </div>
 
-        <div className="w-full max-w-xs bg-white rounded-xl shadow-xl p-5">
+        <div className="w-full max-w-md rounded-[28px] border border-white/20 bg-white/95 p-6 text-slate-900 shadow-2xl shadow-blue-950/30 backdrop-blur sm:p-8">
           <h2 className="text-lg font-bold text-black text-center mb-5">Register to continue</h2>
 
           <div className="space-y-3">
@@ -209,7 +220,7 @@ export default function RegisterScreen({
               placeholder="Enter Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
+              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
             />
 
             {/* Email Input */}
@@ -221,7 +232,7 @@ export default function RegisterScreen({
                 setEmail(e.target.value)
                 if (emailError) setEmailError("")
               }}
-              className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
+              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
             />
 
             {emailError && <p className="text-red-500 text-xs mt-1">Email registered, kindly choose LOGIN option</p>}
@@ -240,13 +251,13 @@ export default function RegisterScreen({
               placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="h-10 text-sm bg-gray-100 border-0 rounded-lg placeholder:text-gray-500 focus:ring-0 focus:outline-none"
+              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
             />
 
             {/* Register Button */}
             <Button
               onClick={handleRegister}
-              className="w-full h-10 bg-black hover:bg-gray-800 text-white text-sm font-medium rounded-lg mt-4"
+              className="mt-4 h-12 w-full rounded-2xl bg-gradient-to-r from-blue-700 to-violet-600 text-sm font-bold text-white shadow-lg shadow-blue-700/20 hover:from-blue-800 hover:to-violet-700"
             >
               Register
             </Button>
