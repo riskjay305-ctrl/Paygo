@@ -19,6 +19,7 @@ import SupportScreen from "@/components/support-screen"
 import GroupScreen from "@/components/group-screen"
 import EarnMoreScreen from "@/components/earn-more-screen"
 import UpgradeScreen from "@/components/upgrade-screen"
+import HistoryScreen from "@/components/history-screen"
 
 export default function PaygoApp() {
   const [currentScreen, setCurrentScreen] = useState<
@@ -40,6 +41,7 @@ export default function PaygoApp() {
     | "group"
     | "earnMore"
     | "upgrade"
+    | "history"
   >("login")
   const [userData, setUserData] = useState<{ name: string; email: string } | null>(null)
   const [transactionDetails, setTransactionDetails] = useState<any>(null)
@@ -135,6 +137,10 @@ export default function PaygoApp() {
     setCurrentScreen("upgrade")
   }
 
+  const handleHistory = () => {
+    setCurrentScreen("history")
+  }
+
   const handleLogin = () => {
     // Fetch current user from localStorage
     if (typeof window !== "undefined") {
@@ -216,6 +222,7 @@ export default function PaygoApp() {
           onGroup={handleGroup}
           onEarnMore={handleEarnMore}
           onUpgrade={handleUpgrade}
+          onHistory={handleHistory}
         />
       ) : currentScreen === "buyPayId" ? (
         <BuyPayIdScreen
@@ -233,6 +240,8 @@ export default function PaygoApp() {
         <WatchScreen onBack={handleBackToDashboard} />
       ) : currentScreen === "success" ? (
         <SuccessScreen transactionDetails={transactionDetails} onBackToDashboard={handleBackToDashboard} />
+      ) : currentScreen === "history" ? (
+        <HistoryScreen transactions={withdrawalHistory} onBack={handleBackToDashboard} />
       ) : currentScreen === "profile" ? (
         <ProfileScreen
           userName={userData?.name || "User"}

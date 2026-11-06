@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -24,6 +24,17 @@ export default function RegisterScreen({
   const [isRegistering, setIsRegistering] = useState(false)
   const [currentMessage, setCurrentMessage] = useState(0)
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const [referralCode, setReferralCode] = useState("")
+
+  useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get("ref")
+    if (code) {
+      setReferralCode(code)
+      window.localStorage.setItem("paygoReferralCode", code)
+    } else {
+      setReferralCode(window.localStorage.getItem("paygoReferralCode") || "")
+    }
+  }, [])
 
   const handleRegister = () => {
     if (name && email && password) {
@@ -71,7 +82,7 @@ export default function RegisterScreen({
         // Store user in localStorage for login validation (client-side only)
         if (typeof window !== "undefined") {
           const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]")
-          registeredUsers.push({ name, email, password })
+          registeredUsers.push({ name, email, password, referralCode: referralCode || undefined })
           localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers))
         }
         

@@ -12,12 +12,12 @@ export default function WelcomeScreen({ onContinueToDashboard }: WelcomeScreenPr
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-500 via-purple-400 to-orange-400 relative">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_80%_0%,rgba(50,190,255,0.35),transparent_35%),linear-gradient(145deg,#071956,#123fc1_55%,#5422ce)] relative">
       {/* Main content container */}
       <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">
         {/* PAYGO Logo with animation */}
         <div className="mb-12">
-          <div className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl px-8 py-4 shadow-lg">
+          <div className="bg-gradient-to-r from-blue-700 via-violet-600 to-blue-600 rounded-2xl px-8 py-4 shadow-lg">
             <h1
               className="text-white text-2xl font-bold tracking-wide animate-pulse"
               style={{

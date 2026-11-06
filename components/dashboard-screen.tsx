@@ -44,6 +44,7 @@ interface DashboardScreenProps {
   onGroup: () => void
   onEarnMore: () => void
   onUpgrade: () => void
+  onHistory: () => void
 }
 
 export default function DashboardScreen({
@@ -61,6 +62,7 @@ export default function DashboardScreen({
   onGroup,
   onEarnMore,
   onUpgrade,
+  onHistory,
 }: DashboardScreenProps) {
   const [balanceVisible, setBalanceVisible] = useState(true)
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0)
@@ -300,27 +302,36 @@ export default function DashboardScreen({
             </div>
           </div>
 
-          {/* Withdrawal History */}
-          <div id="history" className="rounded-3xl bg-[#091a55] p-5 shadow-xl shadow-blue-950/15 relative overflow-hidden">
-            <h4 className="text-white text-2xl font-bold mb-4">Withdrawal History</h4>
-            <div className="space-y-3 max-h-32 overflow-y-auto">
+          <section id="history" className="rounded-[24px] border border-slate-100 bg-white p-4 shadow-[0_12px_32px_rgba(33,60,130,0.1)]">
+            <div className="mb-3 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-600">Activity</p>
+                <h4 className="text-lg font-black text-slate-900">Recent transactions</h4>
+              </div>
+              <button onClick={onHistory} className="text-xs font-bold text-violet-700">View All</button>
+            </div>
+            <div className="space-y-2">
               {withdrawalHistory.length > 0 ? (
                 withdrawalHistory.slice(0, 3).map((transaction) => (
-                  <div key={transaction.id} className="flex justify-between items-center text-sm">
-                    <div>
-                      <p className="text-white font-medium">{transaction.type}</p>
-                      <p className="text-gray-300 text-xs">
-                        {transaction.recipient || transaction.phone} • {transaction.date}
-                      </p>
+                  <div key={transaction.id} className="flex items-center justify-between rounded-2xl bg-slate-50 px-3 py-2.5 text-sm">
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold text-slate-800">{transaction.type}</p>
+                      <p className="truncate text-[11px] text-slate-500">{transaction.recipient || transaction.phone || "PAYgO wallet"} · {transaction.date}</p>
                     </div>
-                    <p className="text-red-400 font-medium">-₦{transaction.amount.toLocaleString()}</p>
+                    <div className="ml-3 text-right">
+                      <p className="font-bold text-slate-900">-₦{transaction.amount.toLocaleString()}</p>
+                      <p className="text-[10px] font-semibold text-emerald-600">Successful</p>
+                    </div>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-300 text-sm">No withdrawal history yet</p>
+                <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-center">
+                  <History className="mx-auto h-6 w-6 text-slate-300" />
+                  <p className="mt-1 text-xs font-medium text-slate-500">Your latest activity will appear here</p>
+                </div>
               )}
             </div>
-          </div>
+          </section>
         </div>
       </div>
 
@@ -553,7 +564,7 @@ export default function DashboardScreen({
       <div className="fixed inset-x-3 bottom-4 z-40 mx-auto max-w-lg rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-[0_16px_40px_rgba(16,38,103,0.2)] backdrop-blur-md sm:inset-x-auto sm:w-[440px]">
         <div className="grid grid-cols-4 items-center gap-1">
           <a href="#top" className="flex flex-col items-center gap-1 rounded-2xl bg-blue-50 py-2 text-blue-700"><Home className="h-5 w-5" /><span className="text-[10px] font-bold">Home</span></a>
-          <a href="#history" className="flex flex-col items-center gap-1 rounded-2xl py-2 text-slate-500 hover:bg-slate-50"><History className="h-5 w-5" /><span className="text-[10px] font-semibold">History</span></a>
+          <button onClick={onHistory} className="flex flex-col items-center gap-1 rounded-2xl py-2 text-slate-500 hover:bg-slate-50"><History className="h-5 w-5" /><span className="text-[10px] font-semibold">History</span></button>
           <button onClick={onTransfer} className="flex flex-col items-center gap-1 rounded-2xl py-2 text-slate-500 hover:bg-slate-50"><ArrowUpRight className="h-5 w-5" /><span className="text-[10px] font-semibold">Withdraw</span></button>
           <button onClick={onSupport} className="flex flex-col items-center gap-1 rounded-2xl py-2 text-slate-500 hover:bg-slate-50"><Headphones className="h-5 w-5" /><span className="text-[10px] font-semibold">Support</span></button>
         </div>

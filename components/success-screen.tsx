@@ -54,9 +54,9 @@ Thank you for using PAYGO!
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen bg-[#f4f7ff]">
       <div className="px-4 py-8">
-        <div className="bg-white rounded-2xl p-8 shadow-lg max-w-md mx-auto">
+        <div className="rounded-[28px] border border-slate-100 bg-white p-6 shadow-[0_18px_50px_rgba(33,60,130,0.12)] max-w-md mx-auto">
           <div className="text-center mb-8">
             <CheckCircle className="h-20 w-20 text-green-500 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-gray-800 mb-2">Transaction Successful!</h1>
@@ -128,7 +128,7 @@ Thank you for using PAYGO!
 
           <Button
             onClick={onBackToDashboard}
-            className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white py-3 rounded-lg font-semibold"
+            className="w-full bg-gradient-to-r from-blue-700 via-violet-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white py-3 rounded-lg font-semibold"
           >
             Back to Dashboard
           </Button>
