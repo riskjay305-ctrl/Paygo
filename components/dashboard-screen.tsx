@@ -145,16 +145,16 @@ export default function DashboardScreen({
         </div>
       )}
 
-      <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 text-sm overflow-hidden">
+      <div className="relative z-20 border-b border-red-200 bg-red-50 px-3 py-1.5 text-[10px] font-medium text-red-700 overflow-hidden">
         <div className="animate-scroll whitespace-nowrap">
-          Warning ⚠️ We are currently experiencing network delaying on Opay bank but we advise user to go ahead with
+          Warning: We are currently experiencing network delays on OPay, but we advise users to continue with
           other banks account and we'll update all our users when OPay bank network is restored with 300 seconds.
         </div>
       </div>
 
       {/* Header */}
-      <div className="relative z-10 px-4 pb-8 pt-7 sm:px-6 lg:mx-auto lg:max-w-6xl">
-        <div className="mb-7 flex items-center justify-between">
+      <div className="relative z-10 px-4 pb-5 pt-5 sm:px-6 lg:mx-auto lg:max-w-6xl">
+        <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white shadow-lg shadow-blue-950/20">
               <span className="text-xl font-black italic text-blue-700">P</span>
@@ -180,7 +180,7 @@ export default function DashboardScreen({
           <h1 className="mt-1 text-2xl font-bold tracking-tight text-white">Hi, {userName}</h1>
         </div>
 
-        <div className="relative overflow-hidden rounded-[28px] border border-white/20 bg-gradient-to-br from-cyan-400 via-blue-600 to-violet-700 p-5 shadow-2xl shadow-blue-950/30 sm:p-7">
+        <div className="relative overflow-hidden rounded-[24px] border border-white/20 bg-gradient-to-br from-cyan-400 via-blue-600 to-violet-700 p-4 shadow-2xl shadow-blue-950/30 sm:p-7">
           <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
           <WalletCards className="absolute -bottom-8 -right-3 h-36 w-36 rotate-12 text-white/10" />
           <div className="relative">
@@ -188,12 +188,12 @@ export default function DashboardScreen({
               <div className="flex items-center gap-2 text-sm font-medium text-blue-50"><WalletCards className="h-5 w-5" /> Available Balance</div>
               <button onClick={() => setBalanceVisible(!balanceVisible)} aria-label={balanceVisible ? "Hide balance" : "Show balance"} className="rounded-full bg-white/15 p-2 text-white">{balanceVisible ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}</button>
             </div>
-            <p className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">{balanceVisible ? `₦${userBalance.toLocaleString()}.00` : "₦••••••••"}</p>
-            <div className="mt-4 flex items-center justify-between rounded-2xl bg-white/15 px-4 py-3 text-sm text-white backdrop-blur-sm">
+            <p className="mt-2 text-2xl font-black tracking-tight text-white sm:text-3xl">{balanceVisible ? `₦${userBalance.toLocaleString()}.00` : "₦••••••••"}</p>
+            <div className="mt-3 flex items-center justify-between rounded-2xl bg-white/15 px-3 py-2.5 text-xs text-white backdrop-blur-sm">
               <span className="flex items-center gap-2"><Gift className="h-4 w-4 text-yellow-300" /> Weekly Rewards</span>
-              <span className="font-bold">₦180,000.00 <ChevronRight className="inline h-4 w-4" /></span>
+              <span className="flex items-center gap-1 font-bold">View rewards <ChevronRight className="h-4 w-4" /></span>
             </div>
-            <div className="mt-5 grid grid-cols-2 gap-3">
+            <div className="mt-3 grid grid-cols-2 gap-2">
               <Button onClick={onUpgrade} className="h-11 rounded-2xl bg-white font-bold text-blue-700 hover:bg-blue-50"><ShieldCheck className="mr-2 h-4 w-4" />Upgrade</Button>
               <Button onClick={onTransfer} className="h-11 rounded-2xl border border-white/25 bg-blue-950/25 font-bold text-white hover:bg-blue-950/40"><ArrowUpRight className="mr-2 h-4 w-4" />Transfer</Button>
             </div>
@@ -202,8 +202,8 @@ export default function DashboardScreen({
       </div>
 
       {/* Services Grid */}
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:py-8">
-        <div className="mb-8 grid grid-cols-4 gap-2 rounded-[26px] bg-white/90 p-3 shadow-[0_16px_40px_rgba(44,66,140,0.12)] backdrop-blur sm:gap-4 sm:p-5">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-3 sm:px-6 lg:py-5">
+        <div className="mb-5 grid grid-cols-4 gap-1.5 rounded-[24px] bg-white/90 p-2.5 shadow-[0_16px_40px_rgba(44,66,140,0.12)] backdrop-blur sm:gap-4 sm:p-5">
           {[
             { name: "Buy PAY ID", icon: WalletCards, tone: "from-cyan-400 to-blue-600", onClick: onBuyPayId },
             { name: "Watch", icon: Smartphone, tone: "from-violet-500 to-purple-700", onClick: onWatch },
@@ -217,23 +217,40 @@ export default function DashboardScreen({
             const Icon = service.icon
             return (
               <div key={service.name} className="text-center">
-                <button onClick={service.onClick} className="group w-full rounded-2xl border border-slate-100 bg-white p-2.5 shadow-[0_8px_24px_rgba(33,60,130,0.08)] transition-all hover:-translate-y-1 hover:shadow-lg active:scale-95 sm:p-4">
+                <button onClick={service.onClick} className="group w-full rounded-2xl border border-slate-100 bg-white p-1.5 shadow-[0_8px_24px_rgba(33,60,130,0.08)] transition-all hover:-translate-y-1 hover:shadow-lg active:scale-95 sm:p-4">
                   <div className={`mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${service.tone} text-white shadow-lg shadow-blue-900/10 sm:h-14 sm:w-14`}><Icon className="h-6 w-6 sm:h-7 sm:w-7" /></div>
                 </button>
-                <p className="mt-2 text-[11px] font-semibold text-slate-600 sm:text-xs">{service.name}</p>
+                <p className="mt-1 text-[10px] font-semibold text-slate-600 sm:text-xs">{service.name}</p>
               </div>
             )
           })}
         </div>
 
+        <section className="relative mb-5 overflow-hidden rounded-[22px] bg-gradient-to-r from-[#0a38b7] via-[#1627d5] to-[#6b18df] px-4 py-4 text-white shadow-lg shadow-blue-900/15 sm:px-6">
+          <div className="relative z-10 max-w-[68%]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-200">PAYgO LIMITED</p>
+            <h2 className="mt-1 text-lg font-black leading-tight sm:text-2xl">Grow Your Earnings</h2>
+            <p className="text-sm font-bold leading-tight sm:text-base">with <span className="text-yellow-300">PAYgO LIMITED</span></p>
+            <p className="mt-1 text-[11px] text-blue-100">More Services. More Rewards.</p>
+            <button onClick={onEarnMore} className="mt-3 inline-flex items-center gap-1 rounded-full bg-yellow-300 px-3 py-1.5 text-[11px] font-black text-blue-950 shadow-md hover:bg-yellow-200">Learn More <ArrowUpRight className="h-3.5 w-3.5" /></button>
+          </div>
+          <div className="absolute -right-4 -top-8 h-40 w-40 rounded-full bg-cyan-300/20 blur-2xl" />
+          <div className="absolute bottom-0 right-3 flex items-end gap-1 text-yellow-300" aria-hidden="true">
+            <div className="h-8 w-8 rounded-full border-4 border-yellow-200/70 bg-yellow-400 text-center text-lg font-black leading-6">₦</div>
+            <div className="h-12 w-10 rounded-t-lg bg-gradient-to-t from-yellow-500 to-yellow-200" />
+            <div className="h-16 w-10 rounded-t-lg bg-gradient-to-t from-orange-500 to-yellow-200" />
+          </div>
+          <Smartphone className="absolute bottom-3 right-20 h-20 w-11 rotate-12 rounded-lg border-2 border-white/70 bg-white/90 p-1 text-blue-700" aria-hidden="true" />
+        </section>
+
         {/* Current Promotions */}
         <div className="mb-6">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-xl font-bold tracking-tight text-[#0b1b59]">Current Promotions</h3>
-            <button className="flex items-center gap-1 text-sm font-bold text-violet-700">View All <ChevronRight className="h-4 w-4" /></button>
+            <span className="flex items-center gap-1 text-sm font-bold text-violet-700">View All <ChevronRight className="h-4 w-4" /></span>
           </div>
 
-          <div className="relative mb-4 h-48 rounded-2xl overflow-hidden">
+          <div className="relative mb-4 h-32 overflow-hidden rounded-2xl sm:h-40">
             {promoImages.map((image, index) => {
               const animationClass = [
                 "fadeInOut",
