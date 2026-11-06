@@ -193,7 +193,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
                       <Button
                         onClick={() => handleCompleteTask(task.id)}
                         size="sm"
-                        className="bg-purple-600 hover:bg-purple-700 text-white"
+                        className="bg-gradient-to-r from-[#123fc1] to-[#5422ce] hover:from-[#0d2d94] hover:to-[#4315ae] text-white"
                       >
                         Complete
                       </Button>
@@ -206,7 +206,7 @@ export default function EarnMoreScreen({ onBack, onUpdateBalance, userBalance }:
         </div>
 
         {/* Progress Summary */}
-        <div className="mt-6 bg-gradient-to-r from-purple-100 to-orange-100 rounded-2xl p-4">
+        <div className="mt-6 bg-gradient-to-r from-blue-50 to-violet-50 rounded-2xl p-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-gray-800">Daily Progress</h3>

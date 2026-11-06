@@ -51,8 +51,8 @@ export default function AirtimeScreen({ onBack, onSuccess }: AirtimeScreenProps)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-orange-50">
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-6">
+    <div className="min-h-screen bg-[#f4f7ff]">
+      <div className="bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] px-4 py-6">
         <div className="flex items-center space-x-4 mb-4">
           <Button onClick={onBack} variant="ghost" size="icon" className="text-white hover:bg-blue-500">
             <ArrowLeft className="h-5 w-5" />
@@ -62,7 +62,7 @@ export default function AirtimeScreen({ onBack, onSuccess }: AirtimeScreenProps)
       </div>
 
       <div className="px-4 py-8">
-        <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md mx-auto">
+        <div className="rounded-[24px] border border-slate-100 bg-white p-5 shadow-[0_16px_40px_rgba(33,60,130,0.12)] max-w-md mx-auto">
           <div className="text-center mb-6">
             <Phone className="h-12 w-12 text-blue-600 mx-auto mb-2" />
             <h2 className="text-gray-800 text-lg font-semibold">Airtime Purchase</h2>
@@ -111,7 +111,7 @@ export default function AirtimeScreen({ onBack, onSuccess }: AirtimeScreenProps)
               <Button
                 onClick={handleProceed}
                 disabled={!phoneNumber || !amount || !network}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-lg font-semibold"
+                className="w-full bg-gradient-to-r from-[#071956] via-[#123fc1] to-[#5422ce] hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-lg font-semibold"
               >
                 Proceed
               </Button>

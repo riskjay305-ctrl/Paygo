@@ -90,7 +90,7 @@ Thank you for using PAYGO!
               )}
               <div className="flex justify-between">
                 <span className="text-gray-600">Amount:</span>
-                <span className="font-medium text-green-600">{transactionDetails.amount}</span>
+                <span className="font-medium text-blue-700">{transactionDetails.amount}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Transaction ID:</span>
@@ -98,7 +98,7 @@ Thank you for using PAYGO!
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Status:</span>
-                <span className="font-medium text-green-600">{transactionDetails.status}</span>
+                <span className="font-medium text-blue-700">{transactionDetails.status}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Date:</span>
