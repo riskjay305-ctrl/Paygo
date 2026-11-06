@@ -92,9 +92,9 @@ export default function UpgradeScreen({ onBack }: UpgradeScreenProps) {
   ]
 
   const paymentDetails = {
-    bankName: "Moniepoint MFB",
-    accountNumber: "6801428855",
-    accountName: "Francis Emmanuel Chukwu",
+    bankName: "Sterling Bank",
+    accountNumber: "0151197698",
+    accountName: "EL...CY...OB (PAYgO LIMITED)",
   }
 
   const handleSelectTier = (tierId: string) => {
